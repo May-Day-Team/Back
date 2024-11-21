@@ -63,7 +63,15 @@ $(document).ready(function() {
         });
 
         Object.keys(dateEntries).forEach(date => {
-            storedData[date] = dateEntries[date]; // 기존 데이터를 지우고 새로운 데이터로 동기화
+            if (!storedData[date]) {
+                storedData[date] = [];
+            }
+            dateEntries[date].forEach(entry => {
+                // 중복 확인 후 추가
+                if (!storedData[date].some(e => e.place === entry.place && e.amount === entry.amount)) {
+                    storedData[date].push(entry);
+                }
+            });
         });
 
         const dateEntriesHtml = Object.keys(storedData).map(date => `
@@ -81,8 +89,13 @@ $(document).ready(function() {
     // 날짜별 항목 클릭 시 로드
     $(document).on('click', '#dateEntries li', function() {
         const date = $(this).data('date');
+
+        // 오른쪽 테이블 초기화
+        $('#accountTable tbody').empty();
+
+        // 선택된 날짜의 데이터를 테이블에 추가
         const rows = storedData[date].map(entry => `
-            <tr class="added-row">
+            <tr class="loaded-row">
                 <td><input type="date" class="date-input" value="${date}"/></td>
                 <td contenteditable="true">${entry.place}</td>
                 <td>
@@ -97,11 +110,34 @@ $(document).ready(function() {
             </tr>
         `).join('');
 
-        $('#accountTable tbody').empty().append(rows);
+        $('#accountTable tbody').append(rows);
     });
 
     // 저장 버튼 클릭 이벤트
     $(document).on('click', '.save-btn', function() {
+        const rows = $('#accountTable tbody tr').not('.loaded-row').get(); // 불러온 데이터는 제외하고 새로운 데이터만 저장
+
+        // 저장할 데이터가 없는 경우 리턴
+        if (rows.length === 0) {
+            return;
+        }
+
+        rows.forEach(row => {
+            const date = $(row).find('.date-input').val();
+            const place = $(row).find('td:nth-child(2)').text();
+            const amountType = $(row).find('.amount-type').val();
+            const amount = $(row).find('.amount-input').val();
+            const parsedAmount = parseFloat(amount.replace(/,/g, '')) || 0;
+            const finalAmount = amountType === "-" ? -parsedAmount : parsedAmount;
+
+            if (date) {
+                if (!storedData[date]) {
+                    storedData[date] = [];
+                }
+                storedData[date].push({ place, amount: finalAmount });
+            }
+        });
+
         updateDateList();
         $('#accountTable tbody').empty(); // 오른쪽 내용 초기화
     });

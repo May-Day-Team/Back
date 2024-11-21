@@ -83,3 +83,15 @@ body {
 .color-brown { color: brown; }
 .color-black { color: black; }
 .color-white { color: whitesmoke; }
+
+.color-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.color-box-container {
+    display: inline-flex;
+    align-items: center;
+}
