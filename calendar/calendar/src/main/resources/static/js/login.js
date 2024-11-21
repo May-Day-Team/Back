@@ -1,12 +1,12 @@
 async function handleLogin(event) {
     event.preventDefault(); // 기본 폼 제출 방지
-    
+
     const userId = document.getElementById('user_id').value;
     const userPw = document.getElementById('user_pw').value;
 
     const loginRequest = {
       user_id: userId,
-      user_pw: userPw
+      password: userPw
     }
 
     try {
@@ -15,7 +15,7 @@ async function handleLogin(event) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(loginRequest)
+        body: JSON.stringify({body : loginRequest})
       });
 
       if (data.result.result_code === 200) {

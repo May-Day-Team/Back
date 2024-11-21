@@ -55,7 +55,7 @@ $(document).ready(function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(scheduleRequest)
+                body: JSON.stringify({body: scheduleRequest})
             });
 
             if (response.ok) {

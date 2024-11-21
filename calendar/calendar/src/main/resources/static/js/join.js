@@ -24,7 +24,7 @@ async function handleJoin(event) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(joinRequest)
+        body: JSON.stringify({body : joinRequest})
       });
 
       if (data.result.result_code === 200) {
