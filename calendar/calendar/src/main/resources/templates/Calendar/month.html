@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Mayday : Calendar</title>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" rel="stylesheet" />
+<!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<link rel="stylesheet" href="/css/month.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header" onclick="resetDate()"></div>
+    <header>
+        <div class="current">
+        <div class="current-date"></div>
+        <div class="current-year"></div>
+        </div>
+        <!-- 캘린더 안의 좌우 일, 주, 월버튼 -->
+        <div class="icons">
+            <div class="current-toolbar">
+                <div class="view-buttons">
+                    <!-- 일, 주, 월 버튼 -->
+                    <button id="month-view">월</button>
+                    <button id="week-view">주</button> <!-- 여기를 누를 시 week.html로 연결 되게 만들어야 함. -->
+                    <button id="day-view">일</button>
+                </div>
+            </div>
+            <span id="prev" class="material-symbols-rounded">chevron_left</span>
+            <span id="next" class="material-symbols-rounded">chevron_right</span>
+        </div>
+    </header>
+    <div class="calendar">
+        <ul class="weeks">
+            <li class="sunday">Sun</li>
+            <li>Mon</li>
+            <li>Tue</li>
+            <li>Wed</li>
+            <li>Thu</li>
+            <li>Fri</li>
+            <li class="saturday">Sat</li>
+        </ul>
+        <ul class="days"> 
+            <li class="active" data-day="7" data-month="11" data-year="2024">7</li> 
+            <!-- 다른 날짜 항목도 유사하게 data-month와 data-year 속성을 설정 --> 
+        </ul>
+    </div>
+</div>     
+<script  src="../../static/js/month.js"></script>
+</body>
+</html>

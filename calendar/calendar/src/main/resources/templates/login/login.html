@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" rel="stylesheet" />
+    <title>Mayday - record your schedule</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>MAYDAY</h1>
+      <form id="login-form" onsubmit="return handleLogin(event)">
+        <div class="login">
+          <div class="login_input">
+            <input type="text" name="user_id" id="user_id" placeholder="ID" required />
+            <input type="password" name="user_pw" id="user_pw" placeholder="PASSWORD" required />
+          </div>
+          <div class="login_button">
+            <input type="submit" value="Login" name="Login" />
+          </div>
+        </div>
+
+        <div class="loginMenu">
+          <span class="autologin">
+            <input type="checkbox" id="rememberMe" name="rememberMe"> 
+            <label for="rememberMe">자동 로그인</label>
+          </span>
+          <span class="join">
+            <a href="/view/join">회원가입</a>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <script src="/js/login.js"></script>
+  </body>
+</html>

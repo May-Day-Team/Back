@@ -1,0 +1,85 @@
+/* 일정 추가 창 스타일 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #F6F5F0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 10px; /* 패딩 감소 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 80%; /* 너비 감소 */
+    max-height: 80vh; /* 최대 높이 감소 */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* 마진 감소 */
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* 간격 감소 */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px; /* 간격 감소 */
+}
+
+.button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button.primary {
+    background-color: #000000;
+    color: white;
+}
+
+.button.secondary {
+    background-color: #808080;
+    color: white;
+}
+
+.color-box {
+    display: inline-block;
+    width: 50px; /* 크기 감소 */
+    height: 50px; /* 크기 감소 */
+    margin-right: 10px;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+#c_color {
+    font-size: 100%;
+    padding: 10px; /* 패딩 감소 */
+    width: 150px; /* 너비 감소 */
+    height: 50px; /* 높이 감소 */
+    background-color: #ffffff;
+}
+
+.color-red { color: red; }
+.color-orange { color: orange; }
+.color-yellow { color: yellow; }
+.color-green { color: green; }
+.color-skyblue { color: skyblue; }
+.color-navy { color: navy; }
+.color-purple { color: purple; }
+.color-pink { color: pink; }
+.color-brown { color: brown; }
+.color-black { color: black; }
+.color-white { color: whitesmoke; }

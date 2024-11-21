@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/join.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" rel="stylesheet" />
+        <title>Mayday : 회원가입</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1 class="logo_mayday">
+                    <a href="/view/login" class="link">
+                        <img src="/image/logo_mayday.png" alt="Logo">
+                    </a>
+                </h1>   
+            </div>
+            <form id="insert-form">
+                <div class="information">
+                    <input type="text" name="user_id" placeholder="ID" />
+                    <input type="password" name="user_pw" placeholder="PASSWORD" />
+                    <input type="text" name="user_name" placeholder="NAME" />
+                    <input type="text" name="user_birthdate" placeholder="BIRTHDATE" />
+                    <input type="text" name="user_email" placeholder="EMAIL" />
+                    <input type="text" name="user_hpn" placeholder="Mobile phone number" />
+                    <form class="join">
+                        <div class="join__button">
+                            <input type="submit" value="회원가입" id="join" name="join" />
+                        </div>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script src="/js/join.js"></script>
+</html>

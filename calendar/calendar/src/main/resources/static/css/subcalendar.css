@@ -1,0 +1,28 @@
+.sub {
+    background-color: pink;
+    width: 250px;
+    height: 100%;
+}
+.schedule-list {
+    list-style: none;
+    padding: 0;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.schedule-color {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.schedule-title {
+    font-size: 14px;
+    flex-grow: 1;
+}

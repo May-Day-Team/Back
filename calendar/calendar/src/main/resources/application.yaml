@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:mysql://localhost:3306/calendar?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root1234!!
+  thymeleaf:
+    prefix: classpath:/templates/    # 템플릿 파일 경로
+    suffix: .html                   # 기본 확장자
+    cache: false                    # 캐시 비활성화 (개발 중에만 설정)
+    mode: HTML5                     # HTML5 템플릿 모드
+    encoding: UTF-8                 # 인코딩
+
+
+token:
+  secret:
+    key: SpringBootJWTHelperTokenSecretKeyValue123!@#
+  access-token:
+    plus-hour: 1
+  refresh-token:
+    plus-hour: 12
+

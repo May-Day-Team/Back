@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/calendarpage.css" />
+    <title>Mayday - record your schedule</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 상단 카테고리 -->
+        <div class="header">
+            <!-- 로고 -->
+            <span class="left-span">
+                <a href="mayday.html" class="link">
+                    <img src="../../static/image/logo_mayday2.png" alt="Logo">
+                </a>
+            </span>
+            <!-- 우측 상단 메뉴바 -->
+            <span class="right-span">
+                <!-- 카테고리 별 사항 -->
+                <div class="menu-item">
+                    Category
+                    <div class="submenu" id="submenu1">
+                        <div onclick="window.location.href='../mainpage/calendarpage.html'">Calendar</div>
+                        <div>AccountBook</div>
+                        <div>PC Usage</div>
+                        <div>Record</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    Guide
+                </div>
+                <div class="menu-item">
+                    Community
+                    <div class="submenu" id="submenu3">
+                        <div>Friends</div>
+                        <div>Groups</div>
+                        <div>Share</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    Setting
+                    <div class="submenu" id="submenu4">
+                        <div>Setting</div>
+                        <a href="../login/login.html">Logout</a>
+                    </div>
+                </div>
+            </span>
+        </div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="maincontent">
+            <!-- 좌측 화면 -->
+            <div class="mainleft" id="mainleft">
+                <!-- Calendar폴더의 index.html 자리 -->
+            </div>
+            <!-- 우측 화면 -->
+            <div class="mainright">
+                <div class="subbutton"> 
+                    <button id="addschedule" class="button primary">+</button> 
+                </div>
+                <div class="subcalendar" id="subcalendar">
+                    <!-- subcalendar.html이 이곳에 로드됩니다 -->
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+    <script src="../../static/js/calendarpage.js"></script>
+</body>
+</html>

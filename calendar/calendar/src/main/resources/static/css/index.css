@@ -1,0 +1,204 @@
+/* @import url('./schedule.css');
+@import url('./datePicker.css');
+@import url('./day_columns.css');
+@import url('./indexBtn.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  user-select: none;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+ol, ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #F6F5F0;
+}
+
+.calendar {
+  max-width: 700px;
+  margin: 20px auto;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Gulzar', serif;
+  /* font-family: "Poppins", sans-serif; */
+}
+.wrapper .header {
+  padding-top: 25px;
+  cursor: pointer;
+}
+.wrapper .header:active {
+  box-shadow: none;
+}
+body {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  justify-content: center;
+  min-height: 100vh;
+  background: #F6F5F0;
+  height: 600px;
+}
+.btn {
+  font-family: 'Gulzar', serif;
+  font-size: 1em;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: #f6f6f6;
+  color: #262626;
+  border-radius: 6px;
+  padding: 2px 12px;
+  transition: 0.2s ease;
+  cursor: pointer;
+  outline: 0;
+  box-shadow: 0.5px 0.5px 3px -1px #fff, 1.5px 2px 5px 0px #babebc;
+}
+.btn:active {
+  background: #f1f2f1;
+  box-shadow: inset 1px 1px 2px 1px #babebc, inset -1px -1px 2px #fff;
+}
+.btn-small {
+  min-width: 50px;
+}
+.wrapper {
+  position: relative;
+  width: 700px;
+  height: 670px;
+  background: #F6F5F0;
+  /* for black */
+  /* background: #222; */
+  /* color: #fff; */
+  /*   border: 2px solid #fff; */
+  border-radius: 10px;
+  /* box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.12); */  
+  overflow: hidden;
+}
+.wrapper header {
+  display: flex;
+  /* align-items: center; */
+  padding: 0px 30px 0px;
+  justify-content: space-between;
+}
+header .icons {
+  display: flex;
+  padding: 0px 0px 0px 0px;
+}
+header .icons span {
+  height: 38px;
+  width: 38px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  text-align: center;
+  line-height: 38px;
+  font-size: 1.9rem;
+  user-select: none;
+  border-radius: 50%;
+}
+.icons span:last-child {
+  margin-right: -10px;
+}
+header .icons span:hover {
+  background: #f2f2f2;
+}
+header .current {
+  display: flex;
+  padding: 0 0 0 0;
+}
+header .current-date {
+  font-size: 2.3rem;
+  font-weight: 500;
+  padding: 0 0 0 0;
+  cursor: pointer;
+}
+header .current-year {
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 16px 0 0 11px;
+  cursor: pointer;
+}
+ul.today__Btn {
+  padding-left: 86.4%;
+  margin: 0 0 8px 0;
+}
+.calendar {
+  position: relative;
+  padding: 20px;
+}
+.calendar ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+}
+.calendar .days {
+  margin-bottom: 20px;
+}
+.calendar li {
+  color: #333;
+  /* for black */
+  /* color: #fff; */
+  width: calc(100% / 7);
+  font-size: 1.07rem;
+}
+.weeks .sunday {
+  color: #ce0000;
+}
+.weeks .saturday {
+  color: #0060ce;
+}
+.calendar .weeks li {
+  font-weight: 500;
+  cursor: default;
+}
+.calendar .days li {
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 30px;
+}
+.days li.inactive {
+  color: #aaa;
+}
+.days li.active {
+  color: #fff;
+}
+.days li::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.days li.active::before {
+  /* background: #cf3c61; */
+  background: #272727;
+}
+.days li:not(.active):hover::before {
+  background: #d8d8d8;
+    /* for black */
+  /*background: #fff; */
+}

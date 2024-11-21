@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Schedule</title>
+    <link rel="stylesheet" href="/css/addschedule.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/addschedule.js" defer></script>
+    <style>
+        .color-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .color-box-container {
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="modal-header">
+            <h3>일정 추가</h3>
+            <button id="close-modal" class="button secondary">X</button>
+        </div>
+        <div class="modal-body">
+            <input type="date" id="c_startdate" placeholder="시작일시" />
+            <input type="date" id="c_enddate" placeholder="종료일시" />
+            <input type="text" id="c_title" placeholder="제목" />
+            <textarea id="c_content" placeholder="내용"></textarea>
+            <input type="text" id="c_place" placeholder="장소" />
+            <label>반복여부</label>
+            <select id="c_repeat">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <label>시작시간 / 종료시간</label>
+            <input type="time" id="c_starttime" placeholder="시작 시간" />
+            <input type="time" id="c_endtime" placeholder="종료 시간" />
+            <label>알람 시간</label>
+            <input type="text" id="c_alarm" placeholder="알림 시간" value="default" />
+            <label>방해금지모드</label>
+            <select id="c_block">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <label>표시색상</label>
+            <div id="color-selection" class="color-box-container">
+                <div id="color-box" class="color-box"></div>
+                <select id="c_color">
+                    <option value="red" class="color-option"><span class="color-box" style="background-color: red;"></span>RED</option>
+                    <option value="orange" class="color-option"><span class="color-box" style="background-color: orange;"></span>ORANGE</option>
+                    <option value="yellow" class="color-option"><span class="color-box" style="background-color: yellow;"></span>YELLOW</option>
+                    <option value="green" class="color-option"><span class="color-box" style="background-color: green;"></span>GREEN</option>
+                    <option value="skyblue" class="color-option"><span class="color-box" style="background-color: skyblue;"></span>SKYBLUE</option>
+                    <option value="navy" class="color-option"><span class="color-box" style="background-color: navy;"></span>NAVY</option>
+                    <option value="purple" class="color-option"><span class="color-box" style="background-color: purple;"></span>PURPLE</option>
+                    <option value="pink" class="color-option"><span class="color-box" style="background-color: pink;"></span>PINK</option>
+                    <option value="brown" class="color-option"><span class="color-box" style="background-color: brown;"></span>BROWN</option>
+                    <option value="black" class="color-option"><span class="color-box" style="background-color: black;"></span>BLACK</option>
+                    <option value="white" class="color-option"><span class="color-box" style="background-color: white;"></span>WHITE</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer"> 
+            <button id="save-schedule" class="button primary">저장</button> 
+            <button id="cancel-schedule" class="button secondary">취소</button> 
+        </div>
+    </div>
+</body>
+</html>

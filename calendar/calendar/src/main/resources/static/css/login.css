@@ -1,0 +1,108 @@
+/* Styling the container */
+body { background-color: #F6F5F0; }
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1200px;
+  max-height: 700px;  
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 2.5px 3.5px 15px -2px #babebc;   
+  /* box-shadow: 그림자 X좌표 그림자 Y좌표 그림자 범위/흐림 그림자 확장/축소 #색상; */
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  font-family: "Roboto", sans-serif; /* Apply Roboto font */
+}
+  
+  /* Styling the heading */
+  h1 {
+    font-family: 'Gulzar', serif;
+    font-weight: lighter;
+    font-size: 85px;
+    margin-bottom: 15px;
+    margin-top: 155px;
+    height: 150px;
+  }
+  .login {
+    display: flex;
+    text-align: center;
+    gap: 0px;
+  }
+  /* Styling the login form */
+  #login-form {
+    display: inline-block;
+    text-align: left;
+  }
+  .login_input{
+    width: 300px;
+  }
+  /* Styling the input fields and submit button */
+  .login_input input {
+    font-family: 'Roboto', serif;
+    /* border: 2px solid lightgrey; */
+    border: none;
+    box-shadow: inset 0.5px 1px 7px -1px #babebc;
+    border-radius: 10px;
+    outline: none;
+    width: 90%;
+    height: 35px;
+    text-indent: 10px;
+    margin-bottom: 8px;
+  }
+  
+  /* Styling the submit button */
+  .login_button input[type="submit"] {
+    font-family: 'Roboto', serif;
+    font-size: 14px;
+    color: #666;
+    width: 60px;
+    height: 84px;
+    background-color: #fff;
+    /* border: 2px solid lightgrey; */
+    border: none;
+    outline: none;
+    box-shadow: 0.5px 0.5px 3px -1px #fff, 1.5px 2px 5px 0px #babebc;
+    border-radius: 10px;
+    box-sizing: border-box; /* 추가: 박스 모델에 패딩과 테두리 포함 */
+  }
+  .login_button input:active {
+    box-shadow: inset 1px 1px 2px 1px #babebc, inset -1px -1px 2px #fff;
+  }
+
+  /* Styling the login menu */ 
+  .loginMenu { 
+    display: flex; 
+    align-items: center; 
+    justify-content: left; 
+    gap: 15px; /* 체크박스, 라벨, 링크 사이의 간격 설정 */ 
+    font-size: 12px;
+    font-family: "NotoSansKRRegular", "sans serif";
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .autologin { 
+    margin-left: 10px;
+    width: 175px; 
+  }
+  .autologin input[type="checkbox"] {
+    margin-right: 5px; /* 체크박스와 라벨 사이의 간격 설정 */ 
+    accent-color: black;
+  }
+  .autologin label {
+    cursor: pointer;
+    letter-spacing: -1px;
+    color: #666
+  }
+  .join a { 
+    margin-left: 35px;
+    color: #666; 
+    border: none; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-size: 12px;
+    letter-spacing: -1px;
+  }
