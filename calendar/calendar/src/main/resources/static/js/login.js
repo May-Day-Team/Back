@@ -8,23 +8,22 @@ async function handleLogin(event) {
       user_id: userId,
       user_pw: userPw
     }
-    console.log(loginRequest);
 
     try {
-      const response = await fetch('/open-api/user/login', {
+      const response = await fetch('/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({body: loginRequest})
+        body: JSON.stringify(loginRequest)
       });
 
-      if (response.ok) {
+      if (data.result.result_code === 200) {
         const userData = await response.json();
         // 로그인 성공 후 처리
         console.log('Login successful:', userData);
         // 예를 들어, 메인 페이지로 리다이렉트
-        window.location.href = '/mainpage/mayday.html';
+        window.location.href = '../mainpage/mayday.html';
       } else {
         const errorMessage = await response.text();
         alert('로그인 실패: ' + errorMessage);

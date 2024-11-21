@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/calendarpage.css" />
-    <title>Mayday - record your schedule</title>
+    <title>Journal</title>
+    <link rel="stylesheet" href="../css/record.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <!-- 일기장 콘텐츠 -->
     <div class="container">
         <!-- 상단 카테고리 -->
         <div class="header">
-            <!-- 로고 -->
             <span class="left-span">
                 <a href="../mainpage/mayday.html" class="link">
                     <img src="../image/logo_mayday2.png" alt="Logo">
                 </a>
             </span>
-            <!-- 우측 상단 메뉴바 -->
             <span class="right-span">
-                <!-- 카테고리 별 사항 -->
                 <div class="menu-item">
                     Category
                     <div class="submenu" id="submenu1">
@@ -29,19 +27,15 @@
                         <div>PC Usage</div>
                     </div>
                 </div>
-                <div class="menu-item">
-                    Guide
-                </div>
-                <div class="menu-item">
-                    Community
+                <div class="menu-item">Guide</div>
+                <div class="menu-item">Community
                     <div class="submenu" id="submenu3">
                         <div>Friends</div>
                         <div>Groups</div>
                         <div>Share</div>
                     </div>
                 </div>
-                <div class="menu-item">
-                    Setting
+                <div class="menu-item">Setting
                     <div class="submenu" id="submenu4">
                         <div>Setting</div>
                         <a href="../login/login.html">Logout</a>
@@ -50,26 +44,30 @@
             </span>
         </div>
 
-        <!-- 메인 콘텐츠 -->
         <div class="maincontent">
-            <!-- 좌측 화면 -->
-            <div class="mainleft" id="mainleft">
-                <!-- Calendar폴더의 index.html 자리 -->
+            <div class="journal-list">
+                <h2>Record List</h2>
+                <ul id="entries">
+                    <!-- 작성한 일기의 제목들이 뜸 -->
+                </ul>
             </div>
-            <!-- 우측 화면 -->
-            <div class="mainright">
-                <div class="subbutton"> 
-                    <button id="addschedule" class="button primary">+</button> 
-                </div>
-                <div class="subcalendar" id="subcalendar">
-                    <ul class="schedule-list" id="schedule-list">
-                        <!-- 일정 항목이 여기 표시됩니다 -->
-                    </ul>
-                </div>
+            <div class="journal-editor">
+                <h2>Record your story</h2>
+                <form id="journalForm">
+                    <div class="input-group">
+                        <input type="text" id="journalTitle" placeholder="Title" />
+                        <input type="date" id="journalDate" />
+                    </div>
+                    <textarea id="journalContent" placeholder="record your diary here..."></textarea>
+                    <br>
+                    <button type="button" onclick="saveOrUpdateJournal()">Save/Update</button>
+                    <button type="button" onclick="deleteJournal()">Delete</button>
+                    <button type="button" onclick="clearForm()">New</button>
+                </form>
             </div>
         </div>
-        <footer></footer>
     </div>
-    <script src="../js/calendarpage.js"></script>
+
+    <script src="../js/record.js"></script>
 </body>
 </html>

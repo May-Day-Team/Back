@@ -27,12 +27,12 @@ async function handleJoin(event) {
         body: JSON.stringify(joinRequest)
       });
 
-      if (response.ok) {
+      if (data.result.result_code === 200) {
         const userData = await response.json();
         // 회원가입 성공 후 처리
         console.log('Join successful:', userData);
         // 예를 들어, 메인 페이지로 리다이렉트
-        // window.location.href = '/main';
+        window.location.href = '../login/login.html';
       } else {
         const errorMessage = await response.text();
         alert('회원가입 실패: ' + errorMessage);

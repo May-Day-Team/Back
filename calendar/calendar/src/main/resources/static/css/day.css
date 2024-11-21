@@ -1,0 +1,246 @@
+h2 {
+    display: block;
+    font-size: 1.5em;
+    /* margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px; */
+    font-weight: bold;
+    unicode-bidi: isolate;    
+}
+
+div {
+    display: block;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+
+
+
+header, .day-area, .event-area, .event-bar, .event-area {
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.day-area, .daydate, .datehead, .daydate__emt, .end-edge {
+    display: flex;
+    flex: auto;
+}
+
+
+.datehead, .daydate__emt, .end-edge {
+    display: flex;
+    flex: auto;
+    align-items: center; /* 세로 정렬을 가운데로 맞춤 */
+    justify-content: center; /* 가로 정렬을 가운데로 맞춤 */
+    margin: 0;
+    text-align: center;
+    width: auto; /* 요소의 너비를 자동으로 설정 */
+    flex-direction: row; /* 가로 방향으로 정렬 */
+}
+
+
+
+
+.datehead {
+    position: re;
+    left: 0;
+    display: flex;
+    /* margin: 0;
+    text-align: center;
+    width: 100%; */
+    flex-direction: column;
+}
+
+.day {
+    line-height: 32px;
+    position: relative;
+    color: #70757a;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    margin-left: 0;
+    margin-top: 8px;
+    /* text-transform: uppercase; */
+}
+
+.date {
+cursor: pointer;
+outline: none;
+text-indent: -2.6px;
+font-size: 26px;
+letter-spacing: -2.6px;
+border-radius: 100%;
+font-family: "Google Sans", "Roboto", Arial, sans-serif;
+line-height: 46px;
+height: 46px;
+margin-left: auto;
+margin-right: auto;
+margin-top: -8px;
+width: 46px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.daydate__emt {
+    margin: 10px 20px;
+}
+
+.event {
+    position: relative;
+    height: 1000px;
+    margin: auto;
+}
+
+.event-area {
+    position: relative;
+    display: flex;
+    flex: 1 1 60%;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 50%;
+}
+
+.event-bar {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    margin-top: -1px;
+    padding: 1em;
+    left: .6em;
+    cursor: pointer;
+    font-family: "Google Sans", "Roboto", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.event-bar__colortack {
+    /* background: rgb(145, 58, 167); */
+    border-radius: .125em;
+    margin: 0 .5em 0 -.5em;
+    width: .25em
+}
+
+
+.event-bar__time {
+    flex: 0 0 auto;
+    text-align: right;
+    font-size: .875em;
+    line-height: 1.428572em;
+    width: 6em;
+}
+
+.event-bar__title {
+    overflow: hidden;
+    flex: 1 1 auto;
+    height: auto;
+}
+
+.event-bar__content {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.event-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.event-bar__alltime {
+    font-size: 105%;
+}
+
+.event-bar__endtime {
+    opacity: .7;
+}
+
+.none-events {
+    display: none; /* 기본적으로 숨겨두기 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+.none-events.show {
+    display: block; /* 이벤트가 없을 때 표시 */
+}
+
+
+
+
+
+/*---- 날짜 옮기는 버튼 ----*/
+header .icons {
+    display: flex;
+    padding: 0px 0px 0px 0px;
+  }
+  header .icons span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #878787;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+  }
+  .icons span:last-child {
+    margin-right: -10px;
+  }
+  header .icons span:hover {
+    background: #f2f2f2;
+  }
+
+
+  /*---- 모달 페이지 효과 ----*/
+  .modal {
+      display: none; /* 초기에는 모달을 숨깁니다 */
+      position: fixed; /* 화면을 고정 위치 */
+      z-index: 1; /* 다른 내용 위에 표시 */
+      left: 0;
+      top: 0;
+      width: 100%; /* 전체 화면 너비 */
+      height: 100%; /* 전체 화면 높이 */
+      overflow: auto; /* 필요 시 스크롤 추가 */
+      background-color: rgba(0,0,0,0.4); /* 배경 색상 */
+  }
+  
+  .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 화면 중앙에 배치 */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* 너비를 조정합니다 */
+      max-width: 600px; /* 최대 너비를 설정합니다 */
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+      border-radius: 10px; /* 모서리를 둥글게 합니다 */
+  }
+  
+  /* 모달 닫기 버튼 스타일 */
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  

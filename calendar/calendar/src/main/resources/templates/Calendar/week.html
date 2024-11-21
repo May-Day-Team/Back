@@ -9,10 +9,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" rel="stylesheet" />
 <!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<link rel="stylesheet" href="/css/week.css" />
-
+<link rel="stylesheet" href="../css/week.css" />
 </head>
 <body>
+
+<!-- 모달 -->
+<div id="modal" class="modal">
+   <div class="modal-content">
+       <span id="close-modal" class="close">&times;</span>
+       <h3 id="modal-title"></h3>
+       <p id="modal-details"></p>
+       <p id="modal-place"></p>
+       <!-- 삭제 버튼 추가 -->
+       <button id="delete-event-btn" class="delete-event-btn">삭제</button>
+   </div>
+</div>
+
 <div class="wrapper">
     <div class="header" onclick="resetDate()"></div>
     <header>
@@ -21,14 +33,16 @@
         <div class="current-year"></div>
         <!-- 일, 주, 월 / 일정 추가 버튼 -->
         <div class="current-toolbar">
-            <!-- <button class="fc-addEventButton-button fc-button fc-button-primary" type="button">
-            일정 추가
-            </button> -->
-            <div class="view-buttons">
-                <button id="month-view">월</button>
-                <button id="week-view">주</button>
-                <button id="day-view">일</button>
-            </div>
+         
+         <!-- 일정 추가 버튼 -->
+         <button id="addEventButton">일정 추가</button>
+
+         <div class="view-buttons">
+               <button id="month-view">월</button>
+               <button id="week-view">주</button>
+               <button id="day-view">일</button>
+         </div>
+         
         </div>
 
         </div>
@@ -37,66 +51,249 @@
             <span id="next" class="material-symbols-rounded">chevron_right</span>
         </div>
     </header>
-    <div class="calendar">
-      <div class="week">
-         <!-- 주간 일정 head 부분 -->
-         <div class="week__head">
-            <div class="week__headinbody">
-               <div class="KleIJ">
-                  <div aria-hidden="true" class="gije">
-                     <div class="GMT"></div>
+    <div class="totalcalendar" role="grid" aria-readonly="true" data-enable-grid-navigation="true">
+      <div class="calendar">
+         <div class="week">
+            <!-- 주간 일정 head 부분 -->
+            <div class="week__head">
+               <div class="week__headinbody">
+                  <div class="KleIJ">
+                     <div aria-hidden="true" class="gije">
+                        <div class="GMT"></div>
+                     </div>
                   </div>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw sunday">Sun</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw">Mon</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw">Tue</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw">Wed</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw">Thu</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw">Fri</div>
-                     <div class="dodw"></div>
-                  </h2>
-               </div>
-               <div class="datehead">
-                  <h2 class="datehead__h2" role="columnheader">
-                     <div class="dotw saturday">Sat</div>
-                     <div class="dodw"></div>
-                  </h2>
+                  <div class="HYOI">
+                     <div class="sdgh"></div>
+
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw sunday">Sun</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw">Mon</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw">Tue</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw">Wed</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw">Thu</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw">Fri</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div class="datehead">
+                           <h2 class="datehead__h2" role="columnheader">
+                              <div class="dotw saturday">Sat</div>
+                              <div class="dodw"></div>
+                           </h2>
+                        </div>
+                        <div aria-hidden="true" class="DdfW"></div>
+                     </div>
                </div>
             </div>
          </div>
+      <!-- <ul class=""></ul> -->
       </div>
 
+    <div class="week__body">
+      <div class="week__eoAE">
+         
+         <div class="eoAE">
+            <div aria-hidden="true" tapindex="" class="eoAE__timeline">
+               <div class="hwEa">
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+                  <div class="gmt09time">
+                     <span class="gmt09time__tm"></span>
+                  </div>
+               </div>      
+            </div>
+            <div class="week__bodyinbody">
+               <div role="row" class="yAWJ" data-dragsouce-type="4">
+                  <div aria-hidden="true" class="AJ4IY">
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                     <div class="ahjio"></div>
+                  </div>
+                  <div class="awhj"></div>
+                  
+                  <div role="gridcell" class="weekschedule">
 
-    <ul class=""></ul>
+                     <div class="mbsc-flex-1-1 mbsc-event-list mbsc-event-list-scroll">
+                        <div class="mbsc-ltr mbsc-font mbsc-list mbsc-ios">
+                            <div class="mbsc-event-group mbsc-ios">
+                                <div class="mbsc-event-day mbsc-list-header mbsc-ios" id="calendarDate"></div>
+                                <div id="eventListContainer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <h2 class="weekschedule__block" id="">
+                        <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne">
+                     </div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+                  <div role="gridcell" class="weekschedule">
+                     <h2 class="weekschedule__block" id="">
+                     1 <!-- 이벤트, 날짜를 받아서 넣을 곳. -->
+                     </h2>
+                     <div class="wahha"></div>
+                     <div class="awhne"></div>
+                  </div>
+               </div>
+            </div>
+         </div>  
+      </div> 
     </div>
+   </div>
+   
 </div>     
-<script  src="../../static/js/week.js"></script>
+<script  src="../js/week.js"></script>
 </body>
 </html>
