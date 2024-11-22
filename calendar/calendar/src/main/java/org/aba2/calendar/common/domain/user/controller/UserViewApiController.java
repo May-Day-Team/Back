@@ -22,5 +22,7 @@ public class UserViewApiController {
     public String mainPage() {
         return "mainpage/mayday";
     }
+
+
 }
 

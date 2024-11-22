@@ -4,16 +4,18 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aba2.calendar.common.annotation.Password;
+import org.aba2.calendar.common.annotation.UserId;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginRequest {
 
-    @NotBlank
+    @UserId
     private String userId;
 
-    @NotBlank
+    @Password
     private String password;
 
 }
