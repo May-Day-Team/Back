@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PhoneNumberValidator.class)
-@Size(min = 7, max = 11, message = "전화번호 양식에 맞지 않습니다.")
+@Size(min = 11, max = 11, message = "전화번호 양식에 맞지 않습니다. 010XXXXXXXX")
 @NotBlank(message = "전화번호는 필수 값입니다.")
 public @interface PhoneNumber {
 
