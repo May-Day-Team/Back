@@ -21,7 +21,7 @@ spring:
 
 token:
   secret:
-    key: SpringBootJWTHelperTokenSecretKeyValue123!@#
+    key: SpringBootJWTHelperTokenSecretKeyValueTeamProjectMayDayABA2
   access-token:
     plus-hour: 1
   refresh-token:

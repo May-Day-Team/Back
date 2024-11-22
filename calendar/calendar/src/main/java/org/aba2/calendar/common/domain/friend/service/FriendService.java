@@ -63,6 +63,14 @@ public class FriendService {
     }
 
     // 초대 응답
+    public void invitationResponse(String fromId, String toId) {
+
+        // 초대를 보낸 상태인지 확인하고 초대를 받은 사람이 수락한 것인지 확인하기
+
+
+
+        //
+    }
 
 
     // 상태 변환

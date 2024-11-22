@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/view")
 public class UserViewApiController {
 
-    @GetMapping("/")
-    public String mainPage() {
-        return "Calendar/index";
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login/login";
@@ -21,6 +16,11 @@ public class UserViewApiController {
     @GetMapping("/join")
     public String join() {
         return "login/join";
+    }
+
+    @GetMapping("/main-page")
+    public String mainPage() {
+        return "mainpage/mayday";
     }
 }
 
