@@ -29,47 +29,70 @@ public class FriendService {
 
         var friendId = getFriendId(fromUserId, toUserId);
 
-        var optionalEntity = friendRepository.findById(friendId);
+        // 요청을 보냈을 때 이미 요청이 있었다면 처리하기
+        var optionalFriendEntity = friendRepository.findById(friendId);
+        if (optionalFriendEntity.isPresent()) {
+            var friendEntity = optionalFriendEntity.get();
+            var status = friendEntity.getStatus();
 
-        if (optionalEntity.isEmpty()) {
-            var friendEntity = FriendEntity.builder()
-                    .friendId(friendId)
-                    .fromUserId(fromUserId)
-                    .toUserId(toUserId)
-                    .status(FriendStatus.WAIT)
-                    .build()
-                    ;
+            switch (status) {
+                // 승락, 차단 일 때 요청 무시하기
+                case ACCEPTANCE, BLOCK:
+                    return friendEntity;
+                // 거절, 삭제 한 상태일 때
+                case REJECTION, DELETE:
+                    friendEntity.setStatus(FriendStatus.WAIT);
+                    return friendRepository.save(friendEntity);
+                case WAIT:
+                    // 요청한 사람이 또 요청을 보냈을 때 (잘못된 요청)
+                    if (friendEntity.getFromUserId().equals(fromUserId)) {
+                        throw new ApiException(ErrorCode.BAD_REQUEST, "이미 친구 요청을 보냈습니다.");
+                    }
 
-            return friendRepository.save(friendEntity);
+                    // 요청 받은 사람도 요청을 보냈을 때 (서로 보냈으니 승락하기)
+                    else {
+                        friendEntity.setStatus(FriendStatus.ACCEPTANCE);
+                        return friendRepository.save(friendEntity);
+                    }
+            }
         }
 
-        var status = optionalEntity.get().getStatus();
+        // 요청이 없었다면 새로 생성해서 저장하기
 
-        // TODO 상태에 따라 처리하기
-        switch (status) {
-            case WAIT :
-                break;
-            case BLOCK, ACCEPTANCE:
-                throw new ApiException(ErrorCode.BAD_REQUEST);
-            case DELETE, REJECTION:
-                statusSettings(fromUserId, toUserId, FriendStatus.WAIT);
-                break;
-            default:
-                throw new ApiException(ErrorCode.SERVER_ERROR);
-        }
+        var newEntity = FriendEntity.builder()
+                .friendId(friendId)
+                .fromUserId(fromUserId)
+                .toUserId(toUserId)
+                .status(FriendStatus.WAIT)
+                .build()
+                ;
 
-        return null;
-
+        return friendRepository.save(newEntity);
     }
 
     // 초대 응답
-    public void invitationResponse(String fromId, String toId) {
+    public FriendEntity invitationResponse(String fromUserId, String toUserId) {
 
         // 초대를 보낸 상태인지 확인하고 초대를 받은 사람이 수락한 것인지 확인하기
+        var friendId = getFriendId(fromUserId, toUserId);
 
+        var friendEntity = findByFriendIdWithThrow(friendId);
 
+        // 대기 상태가 아닐 때
+        if (!friendEntity.getStatus().equals(FriendStatus.WAIT)) {
+            throw new ApiException(ErrorCode.BAD_REQUEST);
+        }
 
-        //
+        // 대기 상태이지만 받은 사람이 초대 응답을 받았는지
+        if (!friendEntity.getFromUserId().equals(toUserId)) {
+            throw new ApiException(ErrorCode.BAD_REQUEST);
+        }
+
+        // 해당 요청이 정상적일 때 친구 등록
+        friendEntity.setStatus(FriendStatus.ACCEPTANCE);
+
+        return friendRepository.save(friendEntity);
+
     }
 
 
@@ -77,8 +100,7 @@ public class FriendService {
     public FriendEntity statusSettings(String fromUserId, String toUserId, FriendStatus status) {
         var friendId = getFriendId(fromUserId, toUserId);
 
-        var friendEntity = friendRepository.findById(friendId)
-                .orElseThrow(() -> new ApiException(FriendErrorCode.FRIEND_NOT_FOUND));
+        var friendEntity = findByFriendIdWithThrow(friendId);
 
         friendEntity.setStatus(status);
 
@@ -92,5 +114,13 @@ public class FriendService {
         return String.join("_", arr);
     }
 
+    public FriendEntity findByFriendIdWithThrow(String friendId) {
+        return friendRepository.findById(friendId)
+                .orElseThrow(() -> new ApiException(FriendErrorCode.FRIEND_NOT_FOUND));
+    }
 
+    // TODO 자신에게 요청 온 친구 리스트 출력
+    public List<FriendEntity> findAllByInvitationRequest(String userId) {
+        return friendRepository.findAllByToUserIdAndStatus(userId, FriendStatus.WAIT);
+    }
 }

@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @NotBlank(message = "Password는 필수입니다.")
 public @interface Password {
 
-    String message() default "비밀번호 형식에 맞지 않습니다. 대소문자와 숫자가 1글자 이상 들어가야하며 !@#$ 중 하나 이상 사용하셔야합니다.";
+    String message() default "비밀번호 형식에 맞지 않습니다. 대소문자와 숫자가 1글자 이상 들어가야하며 !@#$? 중 하나 이상 사용하셔야합니다.";
 
     String regexp() default "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$?]).{8,}$";
 

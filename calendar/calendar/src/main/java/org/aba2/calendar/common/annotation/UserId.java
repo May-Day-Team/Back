@@ -20,6 +20,8 @@ public @interface UserId {
 
     String message() default "아이디 형식에 맞지 않습니다.";
 
+    String regexp() default "^[a-zA-Z0-9@.]+$";
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
