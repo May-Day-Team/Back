@@ -1,29 +1,25 @@
 package org.aba2.calendar.common.domain.group.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aba2.calendar.common.domain.groupuser.model.GroupUserResponse;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "group")
-public class GroupEntity {
+public class GroupResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String groupId;
 
     private String groupName;
 
     private String profileUrl;
 
-    private LocalDateTime createAt;
+    private List<GroupUserResponse> groupMembers;
 
 }
