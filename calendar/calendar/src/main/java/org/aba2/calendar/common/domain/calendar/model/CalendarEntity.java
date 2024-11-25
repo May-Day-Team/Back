@@ -70,9 +70,9 @@ public class CalendarEntity {
     @Column(name = "event_yn", length = 1)
     private String eventYn;
 
-    // 반복 여부
-    @Column(name = "repeat_yn", length = 1)
-    private String repeatYn;
+    //반복되는 요일 mon, tue 이렇게 들어옴 여러 날짜가 들어올 수도 있음
+    @Column(name = "repeat_day", length = 50)
+    private String repeatDay;
 
     // 태그 코드
     @Column(name = "tag_code", length = 50)

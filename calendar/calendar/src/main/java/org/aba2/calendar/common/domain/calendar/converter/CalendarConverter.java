@@ -39,7 +39,7 @@ public class CalendarConverter {
                 .memo("Null")
                 .place(req.getPlace())
                 .eventYn("N")
-                .repeatYn("N")
+                .repeatDay("None")
                 .tagCode("No Tage")
                 .ringAt(ringAt)
                 .color(req.getColor())
@@ -61,7 +61,7 @@ public class CalendarConverter {
                 .ringAt(entity.getRingAt())
                 .blockYn(entity.getBlockYn())
                 .place(entity.getPlace())
-                .repeatYn(entity.getRepeatYn())
+                .repeatDay(entity.getRepeatDay())
                 .color(entity.getColor())
                 .build()
                 ;
