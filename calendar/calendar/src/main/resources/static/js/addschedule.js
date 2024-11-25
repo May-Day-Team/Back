@@ -48,26 +48,28 @@ $(document).ready(function() {
             block_yn: c_block,
             color: c_color
         };
+
         console.log(scheduleRequest);
+
         try {
             const response = await fetch('/schedule/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({body: scheduleRequest})
+                body: JSON.stringify(scheduleRequest)
             });
 
-            if (response.ok) {
-                console.log('Schedule added successfully:', await response.json());
+            const data = await response.json();
+            if (data.result.result_code == 200) {
+                console.log('Schedule added successfully:', data.result.result_description);
                 $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
                     if (status == "error") {
                         console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
                     }
                 });
             } else {
-                const errorMessage = await response.text();
-                alert('일정 추가 실패: ' + errorMessage);
+                alert('일정 추가 실패: ' + data.result.result_description);
             }
         } catch (error) {
             console.error('Error during schedule addition:', error);
