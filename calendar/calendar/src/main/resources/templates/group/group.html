@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal</title>
-    <link rel="stylesheet" href="../../static/css/record.css">
+    <link rel="stylesheet" href="../../static/css/group.css" />
+    <title>Mayday - group category</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <!-- 일기장 콘텐츠 -->
     <div class="container">
         <!-- 상단 카테고리 -->
         <div class="header">
+            <!-- 로고 -->
             <span class="left-span">
                 <a href="../mainpage/mayday.html" class="link">
                     <img src="../../static/image/logo_mayday2.png" alt="Logo">
                 </a>
             </span>
+            <!-- 우측 상단 메뉴바 -->
             <span class="right-span">
+                <!-- 카테고리 별 사항 -->
                 <div class="menu-item">
                     Category
                     <div class="submenu" id="submenu1">
@@ -27,15 +29,19 @@
                         <div>PC Usage</div>
                     </div>
                 </div>
-                <div class="menu-item">Guide</div>
-                <div class="menu-item">Community
+                <div class="menu-item">
+                    Guide
+                </div>
+                <div class="menu-item">
+                    Community
                     <div class="submenu" id="submenu3">
                         <div>Friends</div>
                         <div onclick="window.location.href='../group/group.html'">Groups</div>
                         <div>Share</div>
                     </div>
                 </div>
-                <div class="menu-item">Setting
+                <div class="menu-item">
+                    Setting
                     <div class="submenu" id="submenu4">
                         <div>Setting</div>
                         <a href="../login/login.html">Logout</a>
@@ -44,30 +50,25 @@
             </span>
         </div>
 
+        <!-- 메인 콘텐츠 -->
         <div class="maincontent">
-            <div class="journal-list">
-                <h2>Record List</h2>
-                <ul id="entries">
-                    <!-- 작성한 일기의 제목들이 뜸 -->
-                </ul>
+            <!-- 1/3 영역 -->
+            <div class="groupheader-list">
+                <div class="groupheader">
+                    <h3>groupheader</h3>
+                    <!-- groupheader 콘텐츠 -->
+                </div>
+                <div class="grouplist">
+                    <h3>grouplist</h3>
+                    <!-- list 콘텐츠 -->
+                </div>
             </div>
-            <div class="journal-editor">
-                <h2>Record your story</h2>
-                <form id="journalForm">
-                    <div class="input-group">
-                        <input type="text" id="journalTitle" placeholder="Title" />
-                        <input type="date" id="journalDate" />
-                    </div>
-                    <textarea id="journalContent" placeholder="record your diary here..."></textarea>
-                    <br>
-                    <button type="button" onclick="saveOrUpdateJournal()">Save/Update</button>
-                    <button type="button" onclick="deleteJournal()">Delete</button>
-                    <button type="button" onclick="clearForm()">New</button>
-                </form>
+            <!-- 3/3 영역 -->
+            <div class="groupcalendar" id="groupcalendar">
+                <!-- calendar 콘텐츠 -->
             </div>
         </div>
     </div>
-
-    <script src="../../static/js/record.js"></script>
+    <script src="../../static/js/group.js"></script>
 </body>
 </html>
