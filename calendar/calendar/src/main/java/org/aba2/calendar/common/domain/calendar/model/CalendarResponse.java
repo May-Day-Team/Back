@@ -17,6 +17,8 @@ public class CalendarResponse {
 
     private Long calId;
 
+    private String groupId;
+
     private String userId;
 
     private String title;
@@ -36,8 +38,6 @@ public class CalendarResponse {
     private String place;
 
     private Colors color;
-
-    private String blockYn;
 
     private String repeatDay;
 

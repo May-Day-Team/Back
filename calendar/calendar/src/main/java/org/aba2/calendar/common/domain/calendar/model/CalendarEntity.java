@@ -27,6 +27,9 @@ public class CalendarEntity {
     @Column(name = "user_id", nullable = false, length = 20)
     private String userId;
 
+    @Column(name = "group_id")
+    private String groupId;
+
     // 제목
     @Column(name = "title", nullable = false, length = 50)
     private String title;

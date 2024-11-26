@@ -27,6 +27,7 @@ public class CalendarConverter {
         var ringAt = combineDateAndTime(req.getStartDate(), req.getRingAt());
 
         return CalendarEntity.builder()
+                .groupId(req.getGroupId() != null ? req.getGroupId() : null)
                 .userId(user.getId())
                 .title(req.getTitle())
                 .content(req.getContent())
@@ -50,6 +51,7 @@ public class CalendarConverter {
 
     public CalendarResponse toResponse(CalendarEntity entity) {
         return CalendarResponse.builder()
+                .groupId(entity.getGroupId() != null ? entity.getGroupId() : null)
                 .calId(entity.getCalId())
                 .userId(entity.getUserId())
                 .title(entity.getTitle())
@@ -59,7 +61,6 @@ public class CalendarConverter {
                 .endDate(entity.getEndDate())
                 .endTime(entity.getEndTime())
                 .ringAt(entity.getRingAt())
-                .blockYn(entity.getBlockYn())
                 .place(entity.getPlace())
                 .repeatDay(entity.getRepeatDay())
                 .color(entity.getColor())
