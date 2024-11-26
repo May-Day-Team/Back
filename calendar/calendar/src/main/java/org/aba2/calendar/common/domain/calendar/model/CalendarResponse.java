@@ -39,6 +39,6 @@ public class CalendarResponse {
 
     private String blockYn;
 
-    private String repeatYn;
+    private String repeatDay;
 
 }
