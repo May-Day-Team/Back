@@ -142,7 +142,7 @@ ul.today__Btn {
 }
 .calendar {
   position: relative;
-  padding: 20px;
+  padding: px;
 }
 .calendar ul {
   display: flex;
@@ -174,7 +174,7 @@ ul.today__Btn {
   z-index: 1;
   cursor: pointer;
   position: relative;
-  margin-top: 30px;
+  height: 90px;
 }
 .days li.inactive {
   color: #aaa;
@@ -186,7 +186,7 @@ ul.today__Btn {
   position: absolute;
   content: "";
   left: 50%;
-  top: 50%;
+  top: 23%;
   height: 40px;
   width: 40px;
   z-index: -1;
@@ -202,3 +202,7 @@ ul.today__Btn {
     /* for black */
   /*background: #fff; */
 }
+
+
+.days { display: flex; flex-wrap: wrap; width: 100%; } 
+.days li { width: calc(100% / 7); box-sizing: border-box; text-align: center; }

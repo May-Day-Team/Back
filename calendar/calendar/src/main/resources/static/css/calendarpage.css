@@ -22,16 +22,20 @@ body {
     text-align: center;
     font-family: "Roboto", sans-serif; /* Apply Roboto font */
     box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
+    overflow: hidden; /* 컨테이너 밖으로 콘텐츠가 벗어나지 않도록 설정 */
 }
 
 .header {
     width: 100%;
+    max-width: 1200px;
+    max-height: 45px;
+    margin-bottom: 10px;
     padding: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
+    justify-content: space-between; /* 좌우에 배치 */
+    align-items: center; /* 수직 중앙 정렬 */
 }
+
 
 .left-span {
     margin-left: 10px;
@@ -81,6 +85,7 @@ body {
     gap: 20px;
     box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
     padding: 10px; /* 간격 추가 */
+    overflow: hidden; /* 콘텐츠가 컨테이너 밖으로 벗어나지 않도록 설정 */
 }
 
 
@@ -93,8 +98,8 @@ body {
     justify-content: center;
     align-items: center;
     border: 2px solid black; /* 간격이 있기 때문에 보더 사용 */
-    width: calc(100% - 40px); /* 좌우폭을 늘리기 위해 width 조정 */
-    height: 100%;
+    width: 100%; /* 전체 너비를 사용 */
+    height: 100%; /* 전체 높이를 사용 */
     overflow: hidden;
 }
 
@@ -115,35 +120,44 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 세로 방향 가운데 정렬 */
-    align-items: center; /* 가로 방향 가운데 정렬 */
     gap: 20px; /* 요소들 간의 간격 설정 */
-}
-
-.mainright div {
-    display: flex;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-    border: 2px solid black; 
+    overflow: hidden; /* 콘텐츠가 컨테이너 밖으로 벗어나지 않도록 설정 */
 }
 
 .subbutton {
-    flex: 3;
-    background-color: #F6F5F0;
+    flex: 2;
+}
+
+.addschedule.button.primary {
+    width: 55px;
+    height: 55px;
+    font-size: 30px;
+    padding-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: center; /* 가로 가운데 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .subcalendar {
-    flex: 2;
+    flex: 3;
     background-color: #F6F5F0;
+    display: flex;
+    border-radius: 20px;
+    justify-content: center; /* 세로 방향 가운데 정렬 */
+    align-items: center; /* 가로 방향 가운데 정렬 */
+    width: 100%; 
+    border: 2px solid black; 
+    overflow: hidden; /* 콘텐츠가 컨테이너 밖으로 벗어나지 않도록 설정 */
 }
 
 
 /*---- 서브 캘린더 효과 부분 ----*/
 .subcalendarbody {
     display: block;
-
     align-items: center;
 }
 

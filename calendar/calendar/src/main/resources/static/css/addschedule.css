@@ -95,3 +95,47 @@ body {
     display: inline-flex;
     align-items: center;
 }
+
+/* 반복여부 체크박스 스타일 */
+#c_repeat_options {
+    display: flex;
+    flex-wrap: wrap; /* 가로로 배치하고 폭이 넘어가면 줄바꿈 */
+    gap: 10px; /* 간격 추가 */
+    font-size: 18px; /* 글씨 크기 조정 */
+}
+
+#c_repeat_options label {
+    display: flex;
+    align-items: center;
+}
+
+#c_repeat_options input[type="checkbox"] {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#c_repeat_options input[type="checkbox"]:checked {
+    background-color: #000;
+}
+
+#c_repeat_options input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
