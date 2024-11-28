@@ -20,7 +20,7 @@ public class CalendarService {
 
     // 그룹 일정 조회
     public List<CalendarEntity> getGroupScheduleList(String groupId) {
-        return calendarRepository.findAllGroupId(groupId);
+        return calendarRepository.findAllByGroupId(groupId);
     }
 
     //전체 일정 조회
