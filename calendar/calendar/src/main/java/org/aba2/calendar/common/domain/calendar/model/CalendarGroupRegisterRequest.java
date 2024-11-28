@@ -15,7 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CalendarRegisterRequest {
+public class CalendarGroupRegisterRequest {
+
+    // 그룹 캘린더의 groupId (그룹 캘린더에서만 사용)
+    private String groupId;
 
     // 시작 날짜
     private LocalDate startDate;
@@ -47,4 +50,6 @@ public class CalendarRegisterRequest {
     // 일정 색상
     private Colors color;
 
+    // 그룹 캘린더의 멤버들 목록 (이벤트가 그룹 캘린더에 추가될 때, 모든 그룹 멤버의 캘린더에 추가)
+    private List<String> groupMembers;
 }

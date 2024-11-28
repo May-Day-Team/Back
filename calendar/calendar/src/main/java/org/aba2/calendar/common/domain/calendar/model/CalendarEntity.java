@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "calendar")
@@ -27,6 +29,7 @@ public class CalendarEntity {
     @Column(name = "user_id", nullable = false, length = 20)
     private String userId;
 
+    //group_id
     @Column(name = "group_id")
     private String groupId;
 
@@ -40,18 +43,18 @@ public class CalendarEntity {
 
     // 날짜
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     // 시작 시간
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     // 종료 시간
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     // 기념일 여부
     @Column(name = "memorial_yn", length = 1)

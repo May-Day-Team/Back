@@ -9,4 +9,7 @@ public interface CalendarRepository extends JpaRepository<CalendarEntity, Long> 
 
     List<CalendarEntity> findAllByUserId(String userId);
 
+    //그룹 ID 조회 메서드
+    List<CalendarEntity> findAllGroupId(String groupId);
+
 }

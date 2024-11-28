@@ -2,6 +2,7 @@ package org.aba2.calendar.common.domain.calendar.converter;
 
 import org.aba2.calendar.common.annotation.Converter;
 import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
+import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.user.model.User;
@@ -19,22 +20,21 @@ public class CalendarConverter {
 
     public CalendarEntity toEntity(CalendarRegisterRequest req, User user) {
 
-        var startDate = combineDateAndTime(req.getStartDate(), "00:00");
-        var endDate = combineDateAndTime(req.getEndDate(), "00:00");
+        var startDate = combineDateAndTime(req.getStartDate(), LocalTime.MIDNIGHT);
+        var endDate = combineDateAndTime(req.getEndDate(), LocalTime.MIDNIGHT);
 
         var startTime = combineDateAndTime(req.getStartDate(), req.getStartTime());
         var endTime = combineDateAndTime(req.getEndDate(), req.getEndTime());
-        var ringAt = combineDateAndTime(req.getStartDate(), req.getRingAt());
+        var ringAt = combineDateAndTime(req.getStartDate(), req.getRingAt().toLocalTime());
 
         return CalendarEntity.builder()
-                .groupId(req.getGroupId() != null ? req.getGroupId() : null)
                 .userId(user.getId())
                 .title(req.getTitle())
                 .content(req.getContent())
-                .startDate(startDate)
-                .startTime(startTime)
-                .endDate(endDate)
-                .endTime(endTime)
+                .startDate(startDate.toLocalDate())
+                .startTime(startTime.toLocalTime())
+                .endDate(endDate.toLocalDate())
+                .endTime(endTime.toLocalTime())
                 .memorialYn("N")
                 .blockYn("N")
                 .memo("Null")
@@ -47,6 +47,36 @@ public class CalendarConverter {
                 .build()
                 ;
     }
+
+    public CalendarEntity toGroupEntity(CalendarGroupRegisterRequest req, User user) {
+
+        var startDate = combineDateAndTime(req.getStartDate(), LocalTime.MIDNIGHT);
+        var endDate = combineDateAndTime(req.getEndDate(), LocalTime.MIDNIGHT);
+
+
+        return CalendarEntity.builder()
+                .groupId(req.getGroupId())
+                .userId(user.getId())
+                .title(req.getTitle())
+                .content(req.getContent())
+                .startDate(startDate.toLocalDate())
+                .endTime(endDate.toLocalTime())
+                .startTime(req.getStartTime())
+                .endTime(req.getEndTime())
+                .memorialYn("N")
+                .blockYn("N")
+                .memo("Null")
+                .place(req.getPlace())
+                .eventYn("N")
+                .repeatDay("None")
+                .tagCode("No Tage")
+                .ringAt(req.getRingAt())
+                .color(req.getColor())
+                .build();
+
+
+    }
+
 
 
     public CalendarResponse toResponse(CalendarEntity entity) {
@@ -68,12 +98,17 @@ public class CalendarConverter {
                 ;
     }
 
-    public LocalDateTime combineDateAndTime(String date, String time) {
+//    public LocalDateTime combineDateAndTime(String date, String time) {
+//
+//        var localDate = LocalDate.parse(date, dateFormatter);
+//        var localTime = LocalTime.parse(time, timeFormatter);
+//
+//        return LocalDateTime.of(localDate, localTime);
+//    }
 
-        var localDate = LocalDate.parse(date, dateFormatter);
-        var localTime = LocalTime.parse(time, timeFormatter);
-
-        return LocalDateTime.of(localDate, localTime);
+    public LocalDateTime combineDateAndTime(LocalDate date, LocalTime time) {
+        return LocalDateTime.of(date, time);
     }
+
 
 }
