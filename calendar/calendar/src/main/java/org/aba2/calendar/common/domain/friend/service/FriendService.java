@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.domain.friend.db.FriendRepository;
 import org.aba2.calendar.common.domain.friend.model.FriendEntity;
 import org.aba2.calendar.common.domain.friend.model.enums.FriendStatus;
+import org.aba2.calendar.common.domain.user.db.UserRepository;
 import org.aba2.calendar.common.errorcode.ErrorCode;
 import org.aba2.calendar.common.errorcode.FriendErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
@@ -17,6 +18,7 @@ import java.util.List;
 public class FriendService {
 
     private final FriendRepository friendRepository;
+    private final UserRepository userRepository;
 
 
     // 친구 목록 요청
@@ -25,7 +27,9 @@ public class FriendService {
     }
 
     // 친구 초대 요청
-    public FriendEntity invitationRequest(String fromUserId, String toUserId) {
+    public FriendEntity invitationRequest(String fromUserId, String toUser) {
+        // 전화번호 혹은 유저 아이디로 친구 추가
+        String toUserId = getUserIdByRequestWithThrow(toUser);
 
         var friendId = getFriendId(fromUserId, toUserId);
 
@@ -58,7 +62,6 @@ public class FriendService {
         }
 
         // 요청이 없었다면 새로 생성해서 저장하기
-
         var newEntity = FriendEntity.builder()
                 .friendId(friendId)
                 .fromUserId(fromUserId)
@@ -68,6 +71,12 @@ public class FriendService {
                 ;
 
         return friendRepository.save(newEntity);
+    }
+
+    private String getUserIdByRequestWithThrow(String toUser) {
+        return userRepository.findByIdOrPhoneNumber(toUser, toUser)
+                .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST))
+                .getUserId();
     }
 
     // 초대 응답
@@ -96,7 +105,7 @@ public class FriendService {
     }
 
 
-    // 상태 변환
+    // 상태 변환 (친구 삭제, 요청, 대기, 수락, 차단)
     public FriendEntity statusSettings(String fromUserId, String toUserId, FriendStatus status) {
         var friendId = getFriendId(fromUserId, toUserId);
 
@@ -119,7 +128,7 @@ public class FriendService {
                 .orElseThrow(() -> new ApiException(FriendErrorCode.FRIEND_NOT_FOUND));
     }
 
-    // TODO 자신에게 요청 온 친구 리스트 출력
+    // 자신에게 요청 온 친구 리스트 출력
     public List<FriendEntity> findAllByInvitationRequest(String userId) {
         return friendRepository.findAllByToUserIdAndStatus(userId, FriendStatus.WAIT);
     }

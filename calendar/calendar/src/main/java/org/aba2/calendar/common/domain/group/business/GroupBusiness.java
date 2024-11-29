@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
 import org.aba2.calendar.common.domain.group.model.GroupCreateRequest;
 import org.aba2.calendar.common.domain.group.model.GroupResponse;
+import org.aba2.calendar.common.domain.group.model.GroupUpdateRequest;
 import org.aba2.calendar.common.domain.group.service.GroupConverter;
 import org.aba2.calendar.common.domain.group.service.GroupService;
 import org.aba2.calendar.common.domain.groupuser.business.GroupUserBusiness;
@@ -31,7 +32,7 @@ public class GroupBusiness {
 
         // url == null 이라면 기본 url
         if (url == null) {
-            url = ""; // todo 기본 url
+            url = "default.png"; // todo 기본 url
         }
 
         var response = groupService.create(groupName, url);
@@ -41,5 +42,27 @@ public class GroupBusiness {
 
         return groupConverter.toResponse(response);
     }
+
+
+    // 그룹 정보 수정하기
+    public GroupResponse updateGroupInfo(GroupUpdateRequest groupUpdateRequest) {
+
+        // TODO 요청하는 사람 권한 확인하기
+
+        var response = groupService.updateGroup(groupUpdateRequest);
+
+        return groupConverter.toResponse(response);
+    }
+
+
+    // 그룹 삭제하기
+    public void deleteGroup(String groupId) {
+
+        // TODO 요청하는 사람 권한 확인하기
+
+        groupService.deleteGroup(groupId);
+
+    }
+
 
 }

@@ -3,6 +3,7 @@ package org.aba2.calendar.common.domain.group.service;
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.domain.group.db.GroupRepository;
 import org.aba2.calendar.common.domain.group.model.GroupEntity;
+import org.aba2.calendar.common.domain.group.model.GroupUpdateRequest;
 import org.aba2.calendar.common.domain.user.db.UserRepository;
 import org.aba2.calendar.common.errorcode.ErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
@@ -15,7 +16,6 @@ import java.util.UUID;
 public class GroupService {
 
     private final GroupRepository groupRepository;
-    private final UserRepository userRepository;
 
 
     // 그룹 생성하기
@@ -32,4 +32,26 @@ public class GroupService {
         return groupRepository.findById(groupId)
                 .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST, "해당 그룹을 찾을 수 없음"));
     }
+
+
+    // 그룹 삭제하기
+    public void deleteGroup(String groupId) {
+        groupRepository.deleteById(groupId);
+    }
+
+
+    // 그룹 수정하기
+    public GroupEntity updateGroup(GroupUpdateRequest groupUpdateRequest) {
+        var groupId = groupUpdateRequest.getGroupId();
+
+        var entity = findByIdWithThrow(groupId);
+
+        entity.setGroupName(groupUpdateRequest.getGroupName());
+        entity.setGroupName(groupUpdateRequest.getGroupName());
+        entity.setProfileUrl(groupUpdateRequest.getProfileUrl());
+
+        return groupRepository.save(entity);
+    }
+
+
 }
