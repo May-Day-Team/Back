@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "calendar")
@@ -24,8 +26,12 @@ public class CalendarEntity {
     private Long calId;
 
     // user_id
-    @Column(name = "user_id", nullable = false, length = 20)
+    @Column(name = "user_id", nullable = false, length = 30)
     private String userId;
+
+    //group_id
+    @Column(name = "group_id")
+    private String groupId;
 
     // 제목
     @Column(name = "title", nullable = false, length = 50)
@@ -37,18 +43,18 @@ public class CalendarEntity {
 
     // 날짜
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     // 시작 시간
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     // 종료 시간
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     // 기념일 여부
     @Column(name = "memorial_yn", length = 1)
@@ -86,5 +92,27 @@ public class CalendarEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "color", length = 40, nullable = false, columnDefinition = "VARCHAR(40) DEFAULT 'BLACK'")
     private Colors color;
+
+
+    // CalendarEntity 클래스
+    public void update(CalendarEntity updatedEntity) {
+        this.title = updatedEntity.getTitle();
+        this.content = updatedEntity.getContent();
+        this.startDate = updatedEntity.getStartDate();
+        this.endDate = updatedEntity.getEndDate();
+        this.startTime = updatedEntity.getStartTime();
+        this.endTime = updatedEntity.getEndTime();
+        this.memorialYn = updatedEntity.getMemorialYn();
+        this.place = updatedEntity.getPlace();
+        this.color = updatedEntity.getColor();
+        this.ringAt = updatedEntity.getRingAt();
+        this.repeatDay = updatedEntity.getRepeatDay();
+        this.tagCode = updatedEntity.getTagCode();
+        this.blockYn = updatedEntity.getBlockYn();
+        this.eventYn = updatedEntity.getEventYn();
+        this.memo = updatedEntity.getMemo();
+    }
+
+
 
 }

@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -17,27 +19,27 @@ public class CalendarResponse {
 
     private Long calId;
 
+    private String groupId;
+
     private String userId;
 
     private String title;
 
     private String content;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     private LocalDateTime ringAt;
 
     private String place;
 
     private Colors color;
-
-    private String blockYn;
 
     private String repeatDay;
 
