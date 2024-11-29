@@ -2,6 +2,7 @@ package org.aba2.calendar.common.domain.calendar.business;
 
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
+import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.calendar.converter.CalendarConverter;
 import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
 import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
@@ -9,6 +10,8 @@ import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.calendar.service.CalendarService;
 import org.aba2.calendar.common.domain.user.model.User;
+import org.aba2.calendar.common.errorcode.CalendarErrorCode;
+import org.aba2.calendar.common.exception.ApiException;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -40,6 +43,11 @@ public class CalendarBusiness {
 
     //개인 스케줄
     public CalendarResponse register(CalendarRegisterRequest req, User user) {
+
+        // 검증 로직 추가
+        if (req.getStartDate() == null || req.getEndDate() == null) {
+            throw new ApiException(CalendarErrorCode.MISSING_REQUIRED_FIELDS);
+        }
 
         var entity = calendarConverter.toEntity(req, user);
 

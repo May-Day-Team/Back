@@ -26,7 +26,7 @@ public class CalendarEntity {
     private Long calId;
 
     // user_id
-    @Column(name = "user_id", nullable = false, length = 20)
+    @Column(name = "user_id", nullable = false, length = 30)
     private String userId;
 
     //group_id

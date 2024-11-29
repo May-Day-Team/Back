@@ -1,6 +1,8 @@
 package org.aba2.calendar.common.domain.calendar.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aba2.calendar.common.annotation.UserSession;
 import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.calendar.business.CalendarBusiness;
@@ -10,13 +12,19 @@ import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterReque
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.user.model.User;
+import org.aba2.calendar.common.errorcode.CalendarErrorCode;
+import org.aba2.calendar.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/calendar")
 @RequiredArgsConstructor
+@Slf4j
 public class CalendarApiController {
 
     private final CalendarBusiness calendarBusiness;
@@ -27,19 +35,45 @@ public class CalendarApiController {
             @UserSession User user
     ){
         var response = calendarBusiness.getMainScheduleList(user.getId());
+        if (response == null || response.isEmpty()) {
+            return Api.OK(Collections.emptyList());
+        }
+
         return Api.OK(response);
     }
 
     //개인 스케줄 등록
     @PostMapping("/register")
-    public Api<CalendarResponse> register(
-            @RequestBody
-            CalendarRegisterRequest req,
+    public ResponseEntity<Api<CalendarResponse>> register(
+            @Valid
+            @RequestBody CalendarRegisterRequest req,
             @UserSession User user
     ) {
-        System.out.println(req);
-        return Api.OK(calendarBusiness.register(req, user));
+        try {
+            // 정상적으로 요청이 처리되었을 때
+            CalendarResponse response = calendarBusiness.register(req, user);
+            return ResponseEntity.ok(Api.OK(response));
+        } catch (ApiException e) {
+            e.printStackTrace();
+            // ApiException 발생 시, 에러 코드와 설명을 포함하여 응답을 생성
+            Api<?> errorResponse = Api.ERROR(e.getErrorCodeIfs());
+            // ResponseEntity로 변환할 때, 제네릭 타입을 Api<CalendarResponse>로 변경
+            return ResponseEntity.badRequest().body((Api<CalendarResponse>) errorResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 일반적인 예외 발생 시, 에러 코드와 설명을 포함하여 응답을 생성
+            Api<?> errorResponse = Api.ERROR(CalendarErrorCode.UNKNOWN_ERROR);
+            // ResponseEntity로 변환할 때, 제네릭 타입을 Api<CalendarResponse>로 변경
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body((Api<CalendarResponse>) errorResponse);
+        }
     }
+
+
+
+
+
+
 
 
     //개인 스케줄 리스트
@@ -59,7 +93,7 @@ public class CalendarApiController {
             @RequestBody CalendarGroupRegisterRequest req,
             @UserSession User user
             ){
-        System.out.println(req);
+        log.info("Request: {}", req);
         return Api.OK(calendarBusiness.registerGroupCalendar(req,user));
     }
 

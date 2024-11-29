@@ -5,6 +5,7 @@ import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
 import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
+import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
 import org.aba2.calendar.common.domain.user.model.User;
 
 import java.time.LocalDate;
@@ -25,7 +26,9 @@ public class CalendarConverter {
 
         var startTime = combineDateAndTime(req.getStartDate(), req.getStartTime());
         var endTime = combineDateAndTime(req.getEndDate(), req.getEndTime());
-        var ringAt = combineDateAndTime(req.getStartDate(), req.getRingAt().toLocalTime());
+        var ringAt = req.getRingAt() != null ? combineDateAndTime(req.getStartDate(), req.getRingAt().toLocalTime()) : null;
+        Colors color = req.getColor() != null ? Colors.valueOf(req.getColor().toString()) : Colors.WHITE;
+
 
         return CalendarEntity.builder()
                 .userId(user.getId())
@@ -43,7 +46,7 @@ public class CalendarConverter {
                 .repeatDay("None")
                 .tagCode("No Tage")
                 .ringAt(ringAt)
-                .color(req.getColor())
+                .color(color)
                 .build()
                 ;
     }
@@ -52,6 +55,7 @@ public class CalendarConverter {
 
         var startDate = combineDateAndTime(req.getStartDate(), LocalTime.MIDNIGHT);
         var endDate = combineDateAndTime(req.getEndDate(), LocalTime.MIDNIGHT);
+        Colors color = req.getColor() != null ? Colors.valueOf(req.getColor().toString()) : Colors.WHITE;
 
 
         return CalendarEntity.builder()
@@ -70,8 +74,8 @@ public class CalendarConverter {
                 .eventYn("N")
                 .repeatDay("None")
                 .tagCode("No Tage")
-                .ringAt(req.getRingAt())
-                .color(req.getColor())
+                .ringAt(null)
+                .color(color)
                 .build();
 
 
