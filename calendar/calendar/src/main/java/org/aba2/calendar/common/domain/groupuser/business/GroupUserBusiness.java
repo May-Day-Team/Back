@@ -31,11 +31,8 @@ public class GroupUserBusiness {
         return groupUserConverter.toResponse(response);
     }
 
-    // TODO 초대 응하기
-
-
-    // 탈퇴, 나가기
-    public GroupUserResponse toLeaveGroup(String groupId, String userId, GroupStatus status) {
+    // 상태 변경하기
+    public GroupUserResponse statusChange(String groupId, String userId, GroupStatus status) {
         var groupUserId = groupUserService.getGroupUserId(groupId, userId);
 
         var response = groupUserService.statusChange(groupUserId, status);

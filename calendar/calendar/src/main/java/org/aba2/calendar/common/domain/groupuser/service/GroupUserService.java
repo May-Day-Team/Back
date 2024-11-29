@@ -18,7 +18,7 @@ public class GroupUserService {
 
     private final GroupUserRepository groupUserRepository;
 
-
+    // 그룹 생성하기 (자동으로 권한 어드민)
     public void initialization(String groupId, String userId) {
         var entity = GroupUserEntity.builder()
                 .groupId(groupId)
@@ -40,24 +40,30 @@ public class GroupUserService {
     }
 
 
-    // 권한 변경
+    // 역할 변경
     public GroupUserEntity roleChange(GroupUserId id, GroupRole role) {
+
+        // todo 요청하는 사람이 권한이 있는지 확인하기
+
         var entity = findByIdWithThrow(id);
 
         entity.setRole(role);
         return groupUserRepository.save(entity);
     }
 
+    // 해당 그룹의 일정 리스트 제공
     public List<GroupUserEntity> findAllByGroupId(String groupId) {
         return groupUserRepository.findAllByGroupId(groupId);
     }
 
 
+    // 그룹 찾기
     private GroupUserEntity findByIdWithThrow(GroupUserId id) {
         return groupUserRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST));
     }
 
+    // GroupUserId 제공
     public GroupUserId getGroupUserId(String groupId, String userId) {
         return GroupUserId.builder()
                 .groupId(groupId)
@@ -65,10 +71,11 @@ public class GroupUserService {
                 .build();
     }
 
+    // 유저 초대하기
     public GroupUserEntity invitationUser(GroupUserId groupUserId) {
-        // TODO 이미 존재하고 있을 때
+        // 이미 그룹에 존재하는지
         if (groupUserRepository.existsById(groupUserId)) {
-
+            throw new ApiException(ErrorCode.BAD_REQUEST, "이미 초대한 유저입니다.");
         }
 
 
