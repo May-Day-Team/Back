@@ -20,17 +20,20 @@ body {
     padding-bottom: 50px;
     background-color: #fff;
     text-align: center;
-    font-family: "Roboto", sans-serif; /* Apply Roboto font */
-    box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .header {
     width: 100%;
+    max-width: 1200px;
+    max-height: 45px;
+    margin-bottom: 10px;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
 }
 
 .left-span {
@@ -39,36 +42,36 @@ body {
 
 .right-span {
     margin-right: 20px;
-    position: relative; /* 부모 요소 기준으로 하부 영역 포지셔닝 */
+    position: relative;
     display: flex;
-    gap: 30px; /* 메뉴 간의 간격 설정 */
+    gap: 30px;
     font-size: 20px;
 }
 
 .menu-item {
     position: relative;
     cursor: pointer;
-    padding: 5px 10px; /* 메뉴 아이템 패딩 설정 */
+    padding: 5px 10px;
 }
 
 .menu-item:hover .submenu {
-    display: block; /* 마우스를 올렸을 때 하부 영역 보이기 */
+    display: block;
 }
 
 .submenu {
-    display: none; /* 기본적으로 숨김 */
+    display: none;
     position: absolute;
-    top: 100%; /* 부모 요소의 아래에 위치 */
+    top: 100%;
     left: 0;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 2.5px 3.5px 15px -2px #babebc;
     padding: 10px;
-    z-index: 1000; /* 하부 영역을 위로 올리기 */
-    min-width: 100%; /* 메뉴 아이템의 너비에 맞추기 */
-    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 */
-    width: fit-content; /* 부모 메뉴의 너비에 맞추기 */
+    z-index: 1000;
+    min-width: 100%;
+    white-space: nowrap;
+    width: fit-content;
 }
 
 .submenu div {
@@ -79,10 +82,10 @@ body {
     display: flex;
     flex: 1;
     gap: 20px;
-    box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
-    padding: 10px; /* 간격 추가 */
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden;
 }
-
 
 /*---메인화면 좌측 캘린더 화면---*/
 .mainleft {
@@ -92,8 +95,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid black; /* 간격이 있기 때문에 보더 사용 */
-    width: calc(100% - 40px); /* 좌우폭을 늘리기 위해 width 조정 */
+    border: 2px solid black;
+    width: 100%;
     height: 100%;
     overflow: hidden;
 }
@@ -106,76 +109,119 @@ body {
 .calendar * {
     max-width: 100%;
     max-height: 100%;
-    box-sizing: border-box; /* 전체 너비와 높이를 맞추기 위해 */
+    box-sizing: border-box;
 }
-
 
 /*---메인화면 우측 카테고리---*/
 .mainright {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 세로 방향 가운데 정렬 */
-    align-items: center; /* 가로 방향 가운데 정렬 */
-    gap: 20px; /* 요소들 간의 간격 설정 */
-}
-
-.mainright div {
-    display: flex;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-    border: 2px solid black; 
+    gap: 20px;
+    overflow: hidden;
 }
 
 .subbutton {
-    flex: 3;
-    background-color: #F6F5F0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+button {
+    width: 60px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.active {
+    background-color: #000; /* 검정색 배경 */
+    color: #fff; /* 흰색 글씨 */
+}
+
+.addschedule.button.primary {
+    width: 55px;
+    height: 55px;
+    font-size: 30px;
+    padding-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.mainright .subcalendar {
+    flex: 1;
+    background-color: #f6f5f0;
+    overflow: hidden;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
 }
 
 .subcalendar {
-    flex: 2;
-    background-color: #F6F5F0;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f6f5f0;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-
-/*---- 서브 캘린더 효과 부분 ----*/
-.subcalendarbody {
-    display: block;
-
-    align-items: center;
-}
-
-.sub {
-    /* background-color:; */
-    width: auto;
-    height: auto;
+.subcalendar h3 {
+    color: #333;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
 }
 
 .schedule-list {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
+    margin: 50px 0 0;
+    text-align: left;
+}
+
+.schedule-item {
+    display: flex;
+    width: 300px;
+    align-items: center;
+    padding: 0px 30px;
+    border-bottom: 1px solid #ddd;
+    justify-content: space-between;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+/* Subcalendar styles */
+.schedule-color {
+    width: 50px;
+    height: 30px;
+    border-radius: 10%;
+    margin-right: 10px;
 }
 
 .schedule-item {
     display: flex;
     align-items: center;
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
-}
-
-.schedule-color {
-    display: grid;
-    max-width: 15px;
-    max-height: 15px;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    border-radius: 50%;
-}
-
-.schedule-title {
-    font-size: 14px;
-    flex-grow: 1;
 }
