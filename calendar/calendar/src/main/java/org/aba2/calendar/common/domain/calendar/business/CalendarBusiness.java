@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
 import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.calendar.converter.CalendarConverter;
+import org.aba2.calendar.common.domain.calendar.db.CalendarRepository;
 import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
 import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
@@ -23,6 +24,13 @@ public class CalendarBusiness {
     private final CalendarService calendarService;
     private final CalendarConverter calendarConverter;
 
+    private final CalendarRepository calendarRepository;
+
+    public CalendarEntity getCalendarEntityById(Long calId) {
+        return calendarRepository.findById(calId)
+                .orElseThrow(() -> new ApiException(CalendarErrorCode.CALENDAR_NOT_FOUND));
+    }
+
     // 메인 스케줄 조회 (개인 + 그룹 일정 합치기)
     public List<CalendarResponse> getMainScheduleList(String userId) {
 
@@ -41,7 +49,7 @@ public class CalendarBusiness {
 
 
 
-    //개인 스케줄
+    //개인 스케줄 등록
     public CalendarResponse register(CalendarRegisterRequest req, User user) {
 
         // 검증 로직 추가
@@ -57,7 +65,22 @@ public class CalendarBusiness {
 
     }
 
-    //그룹 스케줄
+    //개인 스케줄 업데이트
+    public CalendarResponse updatePersonalCalendar(Long calId, CalendarRegisterRequest req, User user) {
+        CalendarEntity updateEntity = calendarConverter.toEntity(req, user);
+        updateEntity.setCalId(calId); // 기존 일정 ID 설정
+        CalendarEntity updatedEntity = calendarService.updatePersonalCalendar(updateEntity);
+        return calendarConverter.toResponse(updatedEntity);
+    }
+
+    // 개인 일정 삭제
+    public void deletePersonalCalendar(Long calId, String userId) {
+        calendarService.deletePersonalCalendar(calId, userId);
+    }
+
+
+
+    //그룹 스케줄 등록
     public CalendarResponse registerGroupCalendar(CalendarGroupRegisterRequest req, User user) {
 
         //CalendarGroupRegisterRequest -> CalendarEntity 변환
@@ -70,6 +93,23 @@ public class CalendarBusiness {
         return calendarConverter.toResponse(newEntity);
 
     }
+
+    // 그룹 일정 업데이트
+//    public CalendarResponse updateGroupCalendar(Long calId, CalendarRegisterRequest req, String groupId, User user) {
+//        CalendarEntity updateEntity = calendarConverter.toEntity(req, user);
+//        updateEntity.setCalId(calId); // 기존 일정 ID 설정
+//        updateEntity.setGroupId(groupId); // 그룹 ID 설정
+//        CalendarEntity updatedEntity = calendarService.updateGroupCalendar(updateEntity);
+//        return calendarConverter.toResponse(updatedEntity);
+//    }
+
+
+    //그룹 일정 삭제
+    public void deleteGroupCalendar(Long calId, String groupId) {
+        calendarService.deleteGroupCalendar(calId, groupId);
+    }
+
+
 
     //그룹 스케줄 리스트
     public List<CalendarResponse> getScheduleGroupList(String groupId) {

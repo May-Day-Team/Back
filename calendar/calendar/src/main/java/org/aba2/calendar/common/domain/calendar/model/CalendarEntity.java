@@ -93,4 +93,26 @@ public class CalendarEntity {
     @Column(name = "color", length = 40, nullable = false, columnDefinition = "VARCHAR(40) DEFAULT 'BLACK'")
     private Colors color;
 
+
+    // CalendarEntity 클래스
+    public void update(CalendarEntity updatedEntity) {
+        this.title = updatedEntity.getTitle();
+        this.content = updatedEntity.getContent();
+        this.startDate = updatedEntity.getStartDate();
+        this.endDate = updatedEntity.getEndDate();
+        this.startTime = updatedEntity.getStartTime();
+        this.endTime = updatedEntity.getEndTime();
+        this.memorialYn = updatedEntity.getMemorialYn();
+        this.place = updatedEntity.getPlace();
+        this.color = updatedEntity.getColor();
+        this.ringAt = updatedEntity.getRingAt();
+        this.repeatDay = updatedEntity.getRepeatDay();
+        this.tagCode = updatedEntity.getTagCode();
+        this.blockYn = updatedEntity.getBlockYn();
+        this.eventYn = updatedEntity.getEventYn();
+        this.memo = updatedEntity.getMemo();
+    }
+
+
+
 }

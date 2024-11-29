@@ -70,9 +70,38 @@ public class CalendarApiController {
     }
 
 
+    // 일정 수정
+    @PutMapping("/{calId}")
+    public ResponseEntity<Api<CalendarResponse>> update(
+            @PathVariable Long calId,
+            @RequestBody CalendarRegisterRequest req,
+            @UserSession User user
+    ) {
+        CalendarEntity existingEntity = calendarBusiness.getCalendarEntityById(calId);
 
+        CalendarResponse response = calendarBusiness.updatePersonalCalendar(calId, req, user);
 
+        return ResponseEntity.ok(Api.OK(response));
 
+    }
+
+    // 일정 삭제
+    @DeleteMapping("/{calId}")
+    public ResponseEntity<Api<Void>> delete(
+            @PathVariable Long calId,
+            @UserSession User user
+    ) {
+        // 개인 일정만 삭제할 수 있도록 확인
+        CalendarEntity existingEntity = calendarBusiness.getCalendarEntityById(calId);
+        if (!existingEntity.getUserId().equals(user.getId())) {
+            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
+        // 개인 일정 삭제
+        calendarBusiness.deletePersonalCalendar(calId, user.getId());
+
+        return ResponseEntity.ok(Api.OK(null));
+    }
 
 
 
