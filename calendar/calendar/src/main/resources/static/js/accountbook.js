@@ -120,7 +120,7 @@ $(document).ready(function() {
         // 저장할 데이터가 없는 경우 리턴
         if (rows.length === 0) {
             return;
-        }
+        } 
 
         rows.forEach(row => {
             const date = $(row).find('.date-input').val();
@@ -170,4 +170,22 @@ $(document).ready(function() {
     $(document).on('click', '.clear-btn', function() {
         $('#accountTable tbody').empty(); // 오른쪽 내용 초기화
     });
+
+    // 'Friends' 메뉴 클릭 시 모달 띄우기
+    $('#friends-option').click(function() {
+        $('#friends-modal-overlay').fadeIn();
+    });
+
+    // 모달 바깥 부분 클릭 시 모달 닫기
+    $('#friends-modal-overlay').click(function(e) {
+        if ($(e.target).is('#friends-modal-overlay')) {
+            $('#friends-modal-overlay').fadeOut();
+        }
+    });
+
+    // 모달 내에서 '닫기' 버튼 클릭 시 모달 닫기
+    $(document).on('click', '#friends-modal-overlay .friends-window__bg', function() {
+        $('#friends-modal-overlay').fadeOut();
+});
+
 });

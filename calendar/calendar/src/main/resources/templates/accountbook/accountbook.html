@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/accountbook.css" />
     <title>Mayday - Account Book</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/accountbook.css" />
     <script src="../../static/js/accountbook.js"></script>
+    <script src="../../static/js/friendswindow.js"></script>
+    <link rel="stylesheet" href="../../static/css/friendswindow.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
 <body>
     <div class="container">
@@ -24,13 +27,12 @@
                         <div onclick="window.location.href='../mainpage/calendarpage.html'">Calendar</div>
                         <div onclick="window.location.href='../accountbook/accountbook.html'">AccountBook</div>
                         <div onclick="window.location.href='../record/record.html'">Record</div>
-                        <div>PC Usage</div>
                     </div>
                 </div>
                 <div class="menu-item">Guide</div>
                 <div class="menu-item">Community
                     <div class="submenu" id="submenu3">
-                        <div>Friends</div>
+                        <div id="friends-option">Friends</div> <!-- friends-option 클릭 시 모달 띄우기 -->
                         <div onclick="window.location.href='../group/group.html'">Groups</div>
                         <div>Share</div>
                     </div>
@@ -73,6 +75,47 @@
                         <button class="add-row-btn">Add</button>
                         <button class="save-btn">Save/Update</button>
                         <button class="clear-btn">New</button>
+                        <ul id="dateEntries" class="date-entries"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="friends-modal-overlay" id="friends-modal-overlay">
+            <div class="friends-window">
+                <div class="friends-window__area">
+                    <div class="friends-window__head">
+                        <div class="friends-plus"> 
+                            <div class="material-icons">person_add</div>    
+                        </div>
+                        <div class="friends-search">
+                            <div class="material-icons">search</div>
+                        </div>
+                    </div>
+                    <div class="friends-plus-input-container">
+                    </div>    
+                    <div class="friends-search-input-container">
+                    </div>
+
+                    <div class="friends-window__body">
+                        <div class="friends-online">
+                            <input class="friends-plus__text" type="text" placeholder="아이디 또는 전화번호" /> 
+                            <input class="friends-search__text" type="text" placeholder="" />   
+                            <div class="friends-online__bar">
+                                <div class="friends-online__count"></div>
+                                <li class="friendsGawEI">친구</li>
+                                <div id="expandsion" class="material-icons">keyboard_arrow_left</div>
+                            </div>
+                            <div class="online-list">
+                            </div>
+                        </div>
+                        
+                        <div class="friends-waiting">
+                            <span id="prev" class="material-icons">chevron_left</span>
+                            <span id="next" class="material-icons">chevron_right</span>
+                            <div class="friends-waiting__list"></div>
+                        </div>
+
+                        <div class="friends-window__bg"></div>
                     </div>
                 </div>
             </div>

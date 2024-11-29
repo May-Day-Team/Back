@@ -22,30 +22,34 @@ $(document).ready(function() {
 
     // 일정 저장 버튼 클릭 시 일정을 추가하는 로직
     $('#save-schedule').click(async function() {
+        // 사용자 아이디를 임의로 "test"로 설정
+        const userId = "test";
+
         // 필드 값 가져오기
         const c_startdate = $('#c_startdate').val();
         const c_enddate = $('#c_enddate').val();
         const c_title = $('#c_title').val();
         const c_content = $('#c_content').val();
         const c_place = $('#c_place').val();
-        const c_repeat = $('#c_repeat').val();
+        const c_repeat = $('input[name="c_repeat"]:checked').map(function() {
+            return this.value;
+        }).get();  // 선택된 요일들을 배열로 가져옴
         const c_starttime = $('#c_starttime').val();
         const c_endtime = $('#c_endtime').val();
         const c_alarm = $('#c_alarm').val();
-        const c_block = $('#c_block').val();
         const c_color = $('#c_color').val();
 
         const scheduleRequest = {
+            user_id: userId,  // 사용자 아이디 추가
             start_date: c_startdate,
             end_date: c_enddate,
             title: c_title,
             content: c_content,
             place: c_place,
-            repeat_yn: c_repeat,
+            repeat_yn: c_repeat,  // 선택된 요일 배열 추가
             start_time: c_starttime,
             end_time: c_endtime,
             ring_at: c_alarm,
-            block_yn: c_block,
             color: c_color
         };
 
@@ -77,6 +81,32 @@ $(document).ready(function() {
         }
     });
 
+    // 반복 여부 선택 이벤트 처리
+    $('input[name="c_repeat"]').change(function() {
+        const selectedValue = $(this).val();
+
+        // '없음' 선택 시 다른 옵션 초기화
+        if (selectedValue === 'none' && $(this).prop('checked')) {
+            $('input[name="c_repeat"]').not(this).prop('checked', false).prop('disabled', false); // 다른 옵션들 체크 해제 및 활성화
+        }
+
+        // 다른 요일 선택 시 '없음' 초기화
+        else if (selectedValue !== 'none' && $(this).prop('checked')) {
+            $('input[name="c_repeat"][value="none"]').prop('checked', false); // '없음' 체크 해제
+        } 
+        
+        // 다른 요일 선택 해제 시 '없음' 비활성화 해제
+        let anyChecked = false;
+        $('input[name="c_repeat"]').not('[value="none"]').each(function() {
+            if ($(this).prop('checked')) {
+                anyChecked = true;
+            }
+        });
+        if (!anyChecked) {
+            $('input[name="c_repeat"][value="none"]').prop('disabled', false);
+        }
+    });
+
     // Color 옵션에 네모난 색상 박스를 추가하는 로직
     $('#c_color').on('change', function() {
         const color = $(this).val();
@@ -85,7 +115,10 @@ $(document).ready(function() {
 
     // 시작 시간을 알람 시간에 기본값으로 설정
     $('#c_starttime').on('input', function() {
-        $('#c_alarm').val($(this).val());
+        const startTime = $(this).val();
+        $('#c_endtime').val(startTime);  // 종료 시간을 시작 시간과 동일하게 설정
+        $('#c_endtime').attr('min', startTime);  // 종료 시간의 최소값을 시작 시간으로 설정
+        $('#c_alarm').val(startTime);  // 알람 시간을 시작 시간에 맞추어 설정
     });
 
     // 페이지 로드 시 시작 시간을 알람 시간에 기본값으로 설정

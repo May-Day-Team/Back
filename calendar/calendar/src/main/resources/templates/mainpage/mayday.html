@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/mainpage.css" />
     <title>Mayday - record your schedule</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../static/js/mainpage.js"></script>
+    <link rel="stylesheet" href="../../static/css/mainpage.css" />
+    <script src="../../static/js/friendswindow.js"></script>
+    <link rel="stylesheet" href="../../static/css/friendswindow.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
 <body>
     <div class="container">
@@ -14,28 +18,24 @@
             <!-- 로고 -->
             <span class="left-span">
                 <a href="../mainpage/mayday.html" class="link">
-                    <img src="../../image/logo_mayday2.png" alt="Logo">
+                    <img src="../../static/image/logo_mayday2.png" alt="Logo">
                 </a>
             </span>
             <!-- 우측 상단 메뉴바 -->
             <span class="right-span">
-                <!-- 카테고리 별 사항 -->
                 <div class="menu-item">
                     Category
                     <div class="submenu" id="submenu1">
                         <div onclick="window.location.href='../mainpage/calendarpage.html'">Calendar</div>
                         <div onclick="window.location.href='../accountbook/accountbook.html'">AccountBook</div>
                         <div onclick="window.location.href='../record/record.html'">Record</div>
-                        <div>PC Usage</div>
                     </div>
                 </div>
-                <div class="menu-item">
-                    Guide
-                </div>
+                <div class="menu-item">Guide</div>
                 <div class="menu-item">
                     Community
                     <div class="submenu" id="submenu3">
-                        <div>Friends</div>
+                        <div id="friends-option">Friends</div> <!-- friends-option 클릭 시 모달 띄우기 -->
                         <div onclick="window.location.href='../group/group.html'">Groups</div>
                         <div>Share</div>
                     </div>
@@ -58,19 +58,58 @@
             </div>
             <!-- 우측 화면 -->
             <div class="mainright">
-                <div id="subcalendar" class="subcalendar"></div>
-                <div class="pcmobileusage">PC Mobile Usage</div>
+                <div id="subcalendar" class="subcalendar">
+                    <h4>Schedules</h4>
+                    <ul id="schedule-list" class="schedule-list"></ul>
+                </div>
+                <div id="subaccount" class="subaccount">
+                    <h4>Account Book</h4>
+                    <ul id="account-list" class="account-list"></ul>
+                </div>
             </div>
         </div>
+
+        <div class="friends-modal-overlay" id="friends-modal-overlay">
+            <div class="friends-window">
+                <div class="friends-window__area">
+                    <div class="friends-window__head">
+                        <div class="friends-plus"> 
+                            <div class="material-icons">person_add</div>    
+                        </div>
+                        <div class="friends-search">
+                            <div class="material-icons">search</div>
+                        </div>
+                    </div>
+                    <div class="friends-plus-input-container">
+                    </div>    
+                    <div class="friends-search-input-container">
+                    </div>
+
+                    <div class="friends-window__body">
+                        <div class="friends-online">
+                            <input class="friends-plus__text" type="text" placeholder="아이디 또는 전화번호" /> 
+                            <input class="friends-search__text" type="text" placeholder="" />   
+                            <div class="friends-online__bar">
+                                <div class="friends-online__count"></div>
+                                <li class="friendsGawEI">친구</li>
+                                <div id="expandsion" class="material-icons">keyboard_arrow_left</div>
+                            </div>
+                            <div class="online-list">
+                            </div>
+                        </div>
+                        
+                        <div class="friends-waiting">
+                            <span id="prev" class="material-icons">chevron_left</span>
+                            <span id="next" class="material-icons">chevron_right</span>
+                            <div class="friends-waiting__list"></div>
+                        </div>
+
+                        <div class="friends-window__bg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#mainleft').load('../Calendar/index.html', function(response, status, xhr) {
-                if (status == "error") {
-                    console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
-                }
-            });
-        });
-    </script>
 </body>
 </html>

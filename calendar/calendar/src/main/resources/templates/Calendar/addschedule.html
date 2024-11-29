@@ -21,20 +21,21 @@
             <textarea id="c_content" placeholder="내용"></textarea>
             <input type="text" id="c_place" placeholder="장소" />
             <label>반복여부</label>
-            <select id="c_repeat">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+            <div id="c_repeat_options">
+                <label><input type="checkbox" name="c_repeat" value="mon"> 월</label>
+                <label><input type="checkbox" name="c_repeat" value="tue"> 화</label>
+                <label><input type="checkbox" name="c_repeat" value="wed"> 수</label>
+                <label><input type="checkbox" name="c_repeat" value="thu"> 목</label>
+                <label><input type="checkbox" name="c_repeat" value="fri"> 금</label>
+                <label><input type="checkbox" name="c_repeat" value="sat"> 토</label>
+                <label><input type="checkbox" name="c_repeat" value="sun"> 일</label>
+                <label><input type="checkbox" name="c_repeat" value="none" checked> 없음</label>
+            </div>
             <label>시작시간 / 종료시간</label>
             <input type="time" id="c_starttime" placeholder="시작 시간" />
             <input type="time" id="c_endtime" placeholder="종료 시간" />
             <label>알람 시간</label>
-            <input type="text" id="c_alarm" placeholder="알림 시간" value="default" />
-            <label>방해금지모드</label>
-            <select id="c_block">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+            <input type="time" id="c_alarm" placeholder="알림 시간" />
             <label>표시색상</label>
             <div id="color-selection" class="color-box-container">
                 <div id="color-box" class="color-box"></div>

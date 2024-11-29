@@ -26,12 +26,15 @@ body {
 
 .header {
     width: 100%;
+    max-width: 1200px;
+    max-height: 45px;
+    margin-bottom: 10px;
     padding: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
+    justify-content: space-between; /* 좌우에 배치 */
+    align-items: center; /* 수직 중앙 정렬 */
 }
+
 
 .left-span {
     margin-left: 10px;

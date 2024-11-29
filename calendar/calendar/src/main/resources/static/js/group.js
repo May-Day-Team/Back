@@ -1,5 +1,5 @@
 // 초기 로드 시 캘린더 로드
-$('#groupcalendar').load('../Calendar/month.html', function(response, status, xhr) {
+$('#groupcalendar').load('../Calendar/index.html', function(response, status, xhr) {
     if (status === "error") {
         console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
     } else {
@@ -21,4 +21,22 @@ $('#groupcalendar').load('../Calendar/month.html', function(response, status, xh
             loadSchedule(formattedDate); // 선택된 날짜의 일정을 로드
         });
     }
+});
+$(document).ready(function() {
+    // 'Friends' 메뉴 클릭 시 모달 띄우기
+    $('#friends-option').click(function() {
+        $('#friends-modal-overlay').fadeIn();
+    });
+
+    // 모달 바깥 부분 클릭 시 모달 닫기
+    $('#friends-modal-overlay').click(function(e) {
+        if ($(e.target).is('#friends-modal-overlay')) {
+            $('#friends-modal-overlay').fadeOut();
+        }
+    });
+
+    // 모달 내에서 '닫기' 버튼 클릭 시 모달 닫기
+    $(document).on('click', '#friends-modal-overlay .friends-window__bg', function() {
+        $('#friends-modal-overlay').fadeOut();
+    });
 });
