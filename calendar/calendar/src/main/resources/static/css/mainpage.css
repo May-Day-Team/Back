@@ -170,7 +170,7 @@ body {
 .account-list, .schedule-list {
     list-style-type: none;
     padding: 0;
-    margin: 50px 0 0;
+    margin: 0 0 0;
     text-align: left;
     max-height: 200px;
     overflow-y: auto;

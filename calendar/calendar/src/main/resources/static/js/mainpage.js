@@ -1,27 +1,31 @@
 // 더미 데이터
 const dummyData = {
-    '2024-11-28': [
-        { place: 'Restaurant', amount: 25000 },
-        { place: 'Cafe', amount: 8000 }
-    ],
-    '2024-11-27': [
-        { place: 'Supermarket', amount: 15000 },
-        { place: 'Bookstore', amount: 12000 }
-    ],
-    '2024-11-29': [
-        { place: 'Gym', amount: 20000 },
-        { place: 'Pharmacy', amount: 5000 }
-    ],
     '2024-12-01': [
         { place: 'Restaurant', amount: 25000 },
         { place: 'Cafe', amount: 8000 }
     ],
-    '2024-11-11': [
+    '2024-12-02': [
+        { place: 'Supermarket', amount: 15000 },
+        { place: 'Bookstore', amount: 12000 }
+    ],
+    '2024-12-03': [
+        { place: 'Gym', amount: 20000 },
+        { place: 'Pharmacy', amount: 5000 }
+    ],
+    '2024-11-01': [
+        { place: 'Restaurant', amount: 25000 },
+        { place: 'Cafe', amount: 8000 }
+    ],
+    '2024-12-11': [
         { place: '데이트', amount: 100000 },
         { place: '대실', amount: 20000 }
     ],
-    '2024-11-21': [
+    '2024-12-21': [
         { place: '롤스킨', amount: 25000 },
+        { place: '피시방', amount: 8000 },
+        { place: '피시방', amount: 8000 },
+        { place: '피시방', amount: 8000 },
+        { place: '피시방', amount: 8000 },
         { place: '피시방', amount: 8000 }
     ]
 };
@@ -58,27 +62,27 @@ function updateAccountBook(date) {
 
 // 더미 데이터
 const dummySchedules = {
-    '2024-11-28': [
-        { color: 'red', title: '회의' },
-        { color: 'blue', title: '운동' }
-    ],
-    '2024-11-27': [
-        { color: 'green', title: '저녁 약속' },
-        { color: 'purple', title: '프레젠테이션 준비' }
-    ],
-    '2024-11-29': [
-        { color: 'orange', title: '점심 약속' },
-        { color: 'gray', title: '산책' }
-    ],
     '2024-12-01': [
         { color: 'red', title: '회의' },
         { color: 'blue', title: '운동' }
     ],
-    '2024-11-11': [
+    '2024-12-02': [
+        { color: 'green', title: '저녁 약속' },
+        { color: 'purple', title: '프레젠테이션 준비' }
+    ],
+    '2024-12-03': [
+        { color: 'orange', title: '점심 약속' },
+        { color: 'gray', title: '산책' }
+    ],
+    '2024-11-01': [
+        { color: 'red', title: '회의' },
+        { color: 'blue', title: '운동' }
+    ],
+    '2024-12-11': [
         { color: 'black', title: '데이트' },
         { color: 'yellow', title: '외박' }
     ],
-    '2024-11-21': [
+    '2024-12-21': [
         { color: 'skyblue', title: '내전' },
         { color: 'pink', title: '친구랑 피시방' },
         { color: 'white', title: '외식' },
