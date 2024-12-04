@@ -1,4 +1,4 @@
-package org.aba2.calendar.common.domain.diary.model;
+package org.aba2.calendar.common.domain.record.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,37 +12,30 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @DynamicUpdate
-@Table(name = "diary")
-public class DiaryEntity {
+@Table(name = "record")
+public class RecordEntity {
 
     @EmbeddedId
-    private DiaryId diaryId;
+    private RecordId recordId;
 
     private String title;
 
     private String content;
 
-    private String tag;
-
     private String weather;
 
-    private LocalDate createAt;
+    private boolean isFavorite;
 
     private LocalDate updateAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("userId") // recordId의 userId를 UserEntity와 매핑
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @PrePersist
-    public void prePersist() {
-        this.diaryId = new DiaryId(createAt, user.getUserId());
-    }
-
-    public void updateDiary(String title, String content, String tag, String weather) {
+    public void updateRecord(String title, String content, String weather) {
         this.title = title;
         this.content = content;
-        this.tag = tag;
         this.weather = weather;
         this.updateAt = LocalDate.now();
     }

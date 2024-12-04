@@ -3,6 +3,7 @@ package org.aba2.calendar.common.domain.user.model;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,8 @@ public class UserRegisterRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
+//    @NotBlank
+    @NotNull
     private LocalDateTime birthdate;
 
     @Email
