@@ -7,10 +7,14 @@ import java.util.List;
 
 public interface CalendarRepository extends JpaRepository<CalendarEntity, Long> {
 
-    //user Id 조회 메서드
-    List<CalendarEntity> findAllByUserId(String userId);
+    //개인 캘린더 일정만 조회
+    List<CalendarEntity> findAllByUserIdAndIsGroupCalendarFalse(String userId);
 
-    //group ID 조회 메서드
-    List<CalendarEntity> findAllByGroupId(String groupId);
+
+    //그룹 캘린더 일정만 조회
+    List<CalendarEntity> findAllByGroupIdAndIsGroupCalendarTrue(String groupId);
+
+    //개인 캘린더 + 그룹 캘린더 조회
+    List<CalendarEntity> findAllByUserId(String userId);
 
 }

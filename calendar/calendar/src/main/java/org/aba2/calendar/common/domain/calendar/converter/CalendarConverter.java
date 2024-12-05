@@ -102,13 +102,7 @@ public class CalendarConverter {
                 ;
     }
 
-//    public LocalDateTime combineDateAndTime(String date, String time) {
-//
-//        var localDate = LocalDate.parse(date, dateFormatter);
-//        var localTime = LocalTime.parse(time, timeFormatter);
-//
-//        return LocalDateTime.of(localDate, localTime);
-//    }
+
 
     public LocalDateTime combineDateAndTime(LocalDate date, LocalTime time) {
         return LocalDateTime.of(date, time);
