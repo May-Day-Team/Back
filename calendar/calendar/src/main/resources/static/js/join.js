@@ -9,6 +9,7 @@ async function handleJoin(event) {
     const userEmail = document.getElementById('user_email').value;
     const userPhoneNumber = document.getElementById('user_phone_number').value;
 
+<<<<<<< Updated upstream
     // 객체로 데이터 준비
     const data = {
         user_id: userId,
@@ -21,6 +22,20 @@ async function handleJoin(event) {
 
     // POST 요청 보내기
     const response = await fetch('/your-endpoint-url', {
+=======
+
+    const joinRequest = {
+      user_id: userId,
+      password: userPw,
+      name: userName,
+      birthdate: userBirthdate,
+      email: userEmail,
+      phone_number: userHpn
+    };
+
+    try {
+      const response = await fetch('/open-api/user/register', {
+>>>>>>> Stashed changes
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
