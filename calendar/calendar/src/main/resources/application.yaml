@@ -5,12 +5,10 @@ spring:
       format_sql: true
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-<<<<<<< HEAD
-  #      ddl-auto: validate
-=======
+
+
       ddl-auto: update
-#      ddl-auto: validate
->>>>>>> diary
+
   datasource:
     url: jdbc:mysql://localhost:3306/calendar?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver

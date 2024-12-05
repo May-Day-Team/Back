@@ -21,7 +21,6 @@ import java.util.List;
 public class UserEntity {
 
     @Id
-    @Column(name = "user_id")
     private String userId;
 
     private String password;

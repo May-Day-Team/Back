@@ -74,7 +74,7 @@ public class FriendService {
     }
 
     private String getUserIdByRequestWithThrow(String toUser) {
-        return userRepository.findByIdOrPhoneNumber(toUser, toUser)
+        return userRepository.findByUserIdOrPhoneNumber(toUser, toUser)
                 .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST))
                 .getUserId();
     }
