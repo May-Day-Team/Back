@@ -7,8 +7,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum IncomeExpense {
 
-    INCOME("Income"),  // 수입
-    EXPENSE("Expense"); // 지출
+    INCOME("INCOME","+"),  // 수입
+    EXPENSE("EXPENSE", "-"); // 지출
 
-    private final String description;
+    private final String incomeExpense;
+    private final String symbol;
+
+    public static IncomeExpense get(String symbol) {
+        for (IncomeExpense value : IncomeExpense.values()) {
+            if (value.symbol.equals(symbol)) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid symbol: " + symbol);
+    }
 }

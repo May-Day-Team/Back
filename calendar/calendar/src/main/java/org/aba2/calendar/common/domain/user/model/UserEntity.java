@@ -35,13 +35,4 @@ public class UserEntity {
     private String phoneNumber;
 
     private LocalDateTime createAt;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<RecordEntity> records;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<AccountBookEntity> acctBooks;
-
 }

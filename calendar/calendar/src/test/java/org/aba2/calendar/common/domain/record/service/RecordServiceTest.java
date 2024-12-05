@@ -1,7 +1,6 @@
 package org.aba2.calendar.common.domain.record.service;
 
 import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +13,6 @@ class RecordServiceTest {
     private RecordService recordService;
 
     private RecordFormRequest record;
-
-    @BeforeEach
-    void setUp() {
-        record = new RecordFormRequest();
-        record.setWeather("Sunny");
-    }
 
 //    pagenation으로 바꿔서 이건 못쓴다.
 //    @Test
@@ -46,20 +39,46 @@ class RecordServiceTest {
     @Test
     void createRecord() {
         //given
-        for(int i=0; i<100; i++){
+//        for(int i=0; i<100; i++){
+//            LocalDate date = LocalDate.now().plusDays(i);
+//            RecordFormRequest recordFormRequest = RecordFormRequest.builder()
+//                    .createAt(date)
+//                    .title("Title"+i)
+//                    .content("Content"+i)
+//                    .weather("Sunny")
+//                    .createAt(date)
+//                    .build();
+//            recordService.handleRecordSaveOrUpdate(recordFormRequest, "sjhoon1212!");
+//        }
+        for(int i=0; i<10; i++){
             LocalDate date = LocalDate.now().plusDays(i);
-            record.setTitle("test"+i);
-            record.setContent("test"+i);
-            record.setCreateAt(date);
-            recordService.handleRecordSaveOrUpdate(record, "sjhoon1212!");
+            RecordFormRequest recordFormRequest = RecordFormRequest.builder()
+                    .createAt(date)
+                    .title("Title"+i)
+                    .content("Content"+i)
+                    .weather("Sunny")
+                    .createAt(date)
+                    .build();
+            recordService.handleRecordSaveOrUpdate(recordFormRequest, "kkkkkk999!");
         }
     }
 
     @Test
     void updateRecord() {
+        LocalDate date = LocalDate.now().plusDays(1);
+        RecordFormRequest recordFormRequest = RecordFormRequest.builder()
+                .createAt(date)
+                .title("고칠까"+2)
+                .content("말까"+2)
+                .weather("Sunny")
+                .createAt(date)
+                .build();
+        recordService.handleRecordSaveOrUpdate(recordFormRequest, "kkkkkk999!");
     }
 
     @Test
     void deleteDiary() {
+        LocalDate date = LocalDate.now().plusDays(1);
+        recordService.deleteRecord("sjhoon1212!", date);
     }
 }
