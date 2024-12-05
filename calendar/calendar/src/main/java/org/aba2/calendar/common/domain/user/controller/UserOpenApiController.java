@@ -33,8 +33,6 @@ public class UserOpenApiController {
             Api<UserLoginRequest> userLoginRequestApi,
             HttpServletResponse res
     ) {
-
-        System.out.println("hi");
         var response = userBusiness.login(userLoginRequestApi, res);
 
         return Api.OK(response);
@@ -42,7 +40,7 @@ public class UserOpenApiController {
 
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("/join")
     public Api<UserResponse> register(
 //            @Valid
             @RequestBody
