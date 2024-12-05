@@ -20,14 +20,14 @@
     </div>
 
     <!-- Form을 추가하고 submit을 JavaScript로 처리 -->
-    <form id="join-form">
+    <form id="join-form" onclick="handleJoin(event)">
         <div class="information">
             <input type="text" id="user_id" name="user_id" placeholder="ID" required />
             <input type="password" id="user_pw" name="password" placeholder="PASSWORD" required />
             <input type="text" id="user_name" name="name" placeholder="NAME" required />
             <input type="text" id="user_birthdate" name="birthdate" placeholder="BIRTHDATE" required />
             <input type="email" id="user_email" name="email" placeholder="EMAIL" required />
-            <input type="text" id="user_hpn" name="phone_number" placeholder="Mobile phone number" required />
+            <input type="text" id="user_phone_number" name="phone_number" placeholder="Mobile phone number" required />
             <div class="join__button">
                 <input type="submit" value="회원가입" id="join" />
             </div>

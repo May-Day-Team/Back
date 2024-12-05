@@ -47,6 +47,7 @@ public class UserOpenApiController {
             Api<UserRegisterRequest> userRegisterRequestApi
     ) {
 
+        System.out.println(userRegisterRequestApi);
         var response = userBusiness.register(userRegisterRequestApi);
 
         return Api.OK(response);
