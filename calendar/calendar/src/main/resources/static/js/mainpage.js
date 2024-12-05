@@ -1,5 +1,6 @@
 // 더미 데이터
 const dummyData = {
+<<<<<<< HEAD
     '2024-11-28': [
         { place: 'Restaurant', amount: 25000 },
         { place: 'Cafe', amount: 8000 }
@@ -9,12 +10,24 @@ const dummyData = {
         { place: 'Bookstore', amount: 12000 }
     ],
     '2024-11-29': [
+=======
+    '2024-11-26': [
+        { place: 'Restaurant', amount: 25000 },
+        { place: 'Cafe', amount: 8000 }
+    ],
+    '2024-11-25': [
+        { place: 'Supermarket', amount: 15000 },
+        { place: 'Bookstore', amount: 12000 }
+    ],
+    '2024-11-27': [
+>>>>>>> zeyhnos
         { place: 'Gym', amount: 20000 },
         { place: 'Pharmacy', amount: 5000 }
     ],
     '2024-12-01': [
         { place: 'Restaurant', amount: 25000 },
         { place: 'Cafe', amount: 8000 }
+<<<<<<< HEAD
     ],
     '2024-11-11': [
         { place: '데이트', amount: 100000 },
@@ -23,6 +36,8 @@ const dummyData = {
     '2024-11-21': [
         { place: '롤스킨', amount: 25000 },
         { place: '피시방', amount: 8000 }
+=======
+>>>>>>> zeyhnos
     ]
 };
 
@@ -58,7 +73,11 @@ function updateAccountBook(date) {
 
 // 더미 데이터
 const dummySchedules = {
+<<<<<<< HEAD
     '2024-11-28': [
+=======
+    '2024-11-26': [
+>>>>>>> zeyhnos
         { color: 'red', title: '회의' },
         { color: 'blue', title: '운동' }
     ],
@@ -66,13 +85,18 @@ const dummySchedules = {
         { color: 'green', title: '저녁 약속' },
         { color: 'purple', title: '프레젠테이션 준비' }
     ],
+<<<<<<< HEAD
     '2024-11-29': [
+=======
+    '2024-11-25': [
+>>>>>>> zeyhnos
         { color: 'orange', title: '점심 약속' },
         { color: 'gray', title: '산책' }
     ],
     '2024-12-01': [
         { color: 'red', title: '회의' },
         { color: 'blue', title: '운동' }
+<<<<<<< HEAD
     ],
     '2024-11-11': [
         { color: 'black', title: '데이트' },
@@ -86,6 +110,8 @@ const dummySchedules = {
         { color: 'white', title: '외식' },
         { color: 'pink', title: '친구랑 피시방' },
         { color: 'white', title: '외식' }
+=======
+>>>>>>> zeyhnos
     ]
 };
 
@@ -138,6 +164,7 @@ $(document).ready(function() {
     $('#mainleft').load('../Calendar/index.html', function(response, status, xhr) {
         if (status == "error") {
             console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+<<<<<<< HEAD
         } else {
             const todayFormattedDate = new Date().toISOString().split('T')[0];
             localStorage.setItem("selectedDate", todayFormattedDate);
@@ -147,6 +174,17 @@ $(document).ready(function() {
         }
     });
 
+=======
+        }
+    });
+
+    // 초기 로딩 시 localStorage에서 선택된 날짜를 불러옴
+    const selectedDate = localStorage.getItem("selectedDate") || new Date().toISOString().split('T')[0];
+    console.log("Loaded page with date:", selectedDate); // 디버깅용 로그
+    updateAccountBook(selectedDate);
+    updateSchedules(selectedDate);
+
+>>>>>>> zeyhnos
     // 'Friends' 메뉴 클릭 시 모달 띄우기
     $('#friends-option').click(function() {
         $('#friends-modal-overlay').fadeIn();
@@ -163,8 +201,13 @@ $(document).ready(function() {
     $(document).on('click', '#friends-modal-overlay .friends-window__bg', function() {
         $('#friends-modal-overlay').fadeOut();
     });
+<<<<<<< HEAD
 });
 
+=======
+
+});
+>>>>>>> zeyhnos
 
 // 외부에서 호출할 수 있는 subcalendar 업데이트 함수
 window.updateSubCalendar = function(date) {

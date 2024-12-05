@@ -185,6 +185,7 @@ $(document).ready(function() {
        $('#month-view').click(function() {
         loadCalendar("month");
     });
+<<<<<<< HEAD
 
     $('#week-view').click(function() {
         loadCalendar("week");
@@ -192,6 +193,15 @@ $(document).ready(function() {
 
     $('#day-view').click(function() {
         loadCalendar("day");
+=======
+    // subcalendar.html 로드
+    $('#subcalendar').load('../Calendar/subcalendar.html', function(response, status, xhr) {
+        if (status === "error") {
+            console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+        } else {
+            console.log("Sub Calendar page loaded successfully.");
+        }
+>>>>>>> zeyhnos
     });
 
     // + 버튼 클릭 시 addschedule.html 로드
