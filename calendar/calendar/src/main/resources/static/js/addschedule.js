@@ -12,12 +12,14 @@ $(document).ready(function() {
 
     // 모달 닫기 버튼 클릭 시 모달 숨기기
     $('#close-modal, #cancel-schedule').click(function() {
-        // mainleft에 month.html 로드
-        $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
-            if (status == "error") {
-                console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
-            }
-        });
+        // mainleft에 month.html 로드 (단, 이미 로드된 상태에서는 다시 로드하지 않음)
+        if ($('#mainleft').children().length === 0) {
+            $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
+                if (status == "error") {
+                    console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+                }
+            });
+        }
     });
 
     // 일정 저장 버튼 클릭 시 일정을 추가하는 로직
