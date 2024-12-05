@@ -1,16 +1,16 @@
 package org.aba2.calendar.common.domain.user.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aba2.calendar.common.domain.accountBook.model.AccountBookEntity;
+import org.aba2.calendar.common.domain.record.model.RecordEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 public class UserEntity {
 
     @Id
+    @Column(name = "user_id")
     private String userId;
 
     private String password;
@@ -34,5 +35,4 @@ public class UserEntity {
     private String phoneNumber;
 
     private LocalDateTime createAt;
-
 }

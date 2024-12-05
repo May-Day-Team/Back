@@ -44,7 +44,7 @@ public class UserOpenApiController {
     // 회원가입
     @PostMapping("/register")
     public Api<UserResponse> register(
-            @Valid
+//            @Valid
             @RequestBody
             Api<UserRegisterRequest> userRegisterRequestApi
     ) {
