@@ -18,44 +18,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CalendarRegisterRequest {
 
-    // 시작 날짜
-    @NotNull(message = "시작 날짜는 필수 입력값입니다.")
-    private LocalDate startDate;
-
-    // 종료 날짜
-    @NotNull(message = "종료 날짜는 필수 입력값입니다.")
-    private LocalDate endDate;
-
-    // 일정 제목
-    @NotBlank(message = "제목은 필수 입력값입니다.")
-    private String title;
-
-    // 일정 내용
-    private String content;
-
-    // 일정 장소
-    private String place;
-
-    //반복여부
-    private String repeatDay;
-
-    // 일정 시작 시간
-    @NotNull(message = "시작 시간은 필수 입력값입니다.")
-    private LocalTime startTime;
-
-    // 일정 종료 시간
-    @NotNull(message = "종료 시간은 필수 입력값입니다.")
-    private LocalTime endTime;
-
-    // 일정 알람 시간
-    private LocalDateTime ringAt;
-
-    // 일정 색상
-    private Colors color;
+public class CalendarRegisterRequest extends BaseCalendarRequest{
 
 }

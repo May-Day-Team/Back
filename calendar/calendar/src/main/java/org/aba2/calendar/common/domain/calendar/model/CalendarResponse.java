@@ -21,6 +21,8 @@ public class CalendarResponse {
 
     private String groupId;
 
+    private String groupName;
+
     private String userId;
 
     private String title;

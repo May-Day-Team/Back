@@ -10,6 +10,7 @@ import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterReque
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.calendar.service.CalendarService;
+import org.aba2.calendar.common.domain.groupuser.db.GroupUserRepository;
 import org.aba2.calendar.common.domain.user.model.User;
 import org.aba2.calendar.common.errorcode.CalendarErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
@@ -23,6 +24,7 @@ public class CalendarBusiness {
 
     private final CalendarService calendarService;
     private final CalendarConverter calendarConverter;
+    private final GroupUserRepository groupUserRepository;
 
     private final CalendarRepository calendarRepository;
 
@@ -59,7 +61,7 @@ public class CalendarBusiness {
 
         var entity = calendarConverter.toEntity(req, user);
 
-        var newEntity = calendarService.register(entity);
+        var newEntity = calendarService.registerPersonalSchedule(entity);
 
         return calendarConverter.toResponse(newEntity);
 
@@ -69,13 +71,13 @@ public class CalendarBusiness {
     public CalendarResponse updatePersonalCalendar(Long calId, CalendarRegisterRequest req, User user) {
         CalendarEntity updateEntity = calendarConverter.toEntity(req, user);
         updateEntity.setCalId(calId); // 기존 일정 ID 설정
-        CalendarEntity updatedEntity = calendarService.updatePersonalCalendar(updateEntity);
+        CalendarEntity updatedEntity = calendarService.updatePersonSchedule(updateEntity);
         return calendarConverter.toResponse(updatedEntity);
     }
 
-    // 개인 일정 삭제
+    // 개인 스케줄 삭제
     public void deletePersonalCalendar(Long calId, String userId) {
-        calendarService.deletePersonalCalendar(calId, userId);
+        calendarService.deletePersonalSchedule(calId, userId);
     }
 
 
@@ -83,41 +85,62 @@ public class CalendarBusiness {
     //그룹 스케줄 등록
     public CalendarResponse registerGroupCalendar(CalendarGroupRegisterRequest req, User user) {
 
+        if (!isUserInGroup(req.getGroupId(), user.getId())) {
+            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
         //CalendarGroupRegisterRequest -> CalendarEntity 변환
         var entity = calendarConverter.toGroupEntity(req, user);
 
         // 그룹 일정 저장
-        var newEntity = calendarService.register(entity);
+        var newEntity = calendarService.registerGroupSchedule(entity);
 
         // 저장된 데이터 응답으로 반환
         return calendarConverter.toResponse(newEntity);
 
     }
 
-    // 그룹 일정 업데이트
-//    public CalendarResponse updateGroupCalendar(Long calId, CalendarRegisterRequest req, String groupId, User user) {
-//        CalendarEntity updateEntity = calendarConverter.toEntity(req, user);
-//        updateEntity.setCalId(calId); // 기존 일정 ID 설정
-//        updateEntity.setGroupId(groupId); // 그룹 ID 설정
-//        CalendarEntity updatedEntity = calendarService.updateGroupCalendar(updateEntity);
-//        return calendarConverter.toResponse(updatedEntity);
-//    }
+    // 그룹 스케줄 업데이트
+    public CalendarResponse updateGroupCalendar(Long calId, CalendarGroupRegisterRequest req, String groupId, User user) {
+
+        if (!isUserInGroup(groupId, user.getId())) {
+            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
+        CalendarEntity updateEntity = calendarConverter.toGroupEntity(req, user);
+        updateEntity.setCalId(calId); // 기존 일정 ID 설정
+        updateEntity.setGroupId(groupId); // 그룹 ID 설정
+
+        CalendarEntity updatedEntity = calendarService.updateGroupSchedule(updateEntity);
+
+        return calendarConverter.toResponse(updatedEntity);
+    }
 
 
     //그룹 일정 삭제
-    public void deleteGroupCalendar(Long calId, String groupId) {
-        calendarService.deleteGroupCalendar(calId, groupId);
+    public void deleteGroupCalendar(Long calId, String groupId, User user) {
+
+        if (!isUserInGroup(groupId, user.getId())) {
+            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
+        calendarService.deleteGroupSchedule(calId, groupId);
     }
 
 
 
     //그룹 스케줄 리스트
-    public List<CalendarResponse> getScheduleGroupList(String groupId) {
+    public List<CalendarResponse> getScheduleGroupList(String groupId, String user) {
+
+        if (!isUserInGroup(groupId, user)) {
+            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
         // userId로 일정을 조회
-        List<CalendarEntity> entities = calendarService.getGroupScheduleList(groupId);
+        List<CalendarEntity> groupSchedules = calendarService.getGroupScheduleList(groupId);
 
         // CalendarEntity -> CalendarResponse 변환
-        return entities.stream()
+        return groupSchedules.stream()
                 .map(calendarConverter::toResponse)
                 .toList()
                 ;
@@ -127,13 +150,18 @@ public class CalendarBusiness {
     //개인 스케줄 리스트
     public List<CalendarResponse> getScheduleList(String userId) {
         // userId로 일정을 조회
-        List<CalendarEntity> entities = calendarService.getScheduleList(userId);
+        List<CalendarEntity> entities = calendarService.getAllSchedules(userId);
 
         // CalendarEntity -> CalendarResponse 변환
         return entities.stream()
                 .map(calendarConverter::toResponse)
                 .toList()
                 ;
+    }
+
+    //그룹 사용자 소속 확인 로직
+    private boolean isUserInGroup (String groupId, String userId) {
+        return groupUserRepository.existsByGroupIdAndUserId(groupId, userId);
     }
 
 

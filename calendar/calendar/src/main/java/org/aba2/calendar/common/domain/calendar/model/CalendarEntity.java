@@ -33,6 +33,9 @@ public class CalendarEntity {
     @Column(name = "group_id")
     private String groupId;
 
+    @Column(name = "is_group_calendar")
+    private boolean isGroupCalendar;
+
     // 제목
     @Column(name = "title", nullable = false, length = 50)
     private String title;
