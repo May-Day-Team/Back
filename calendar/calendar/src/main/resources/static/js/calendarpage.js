@@ -49,7 +49,7 @@ $(document).ready(function () {
     let isAddSchedule = false; // 상태 변수 추가
 
     // 초기 화면에 month.html 로드
-    $('#mainleft').load('../calendar/month.html', function (response, status, xhr) {
+    $('#mainleft').load('/view/month', function (response, status, xhr) {
         if (status === "error") {
             console.error("Failed to load month.html:", xhr.status, xhr.statusText);
         } else {

@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('#close-modal, #cancel-schedule').click(function() {
         // mainleft에 month.html 로드 (단, 이미 로드된 상태에서는 다시 로드하지 않음)
         if ($('#mainleft').children().length === 0) {
-            $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
+            $('#mainleft').load('/view/month', function(response, status, xhr) {
                 if (status == "error") {
                     console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
                 }
