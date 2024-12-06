@@ -2,7 +2,6 @@ package org.aba2.calendar.common.domain.calendar.business;
 
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
-import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.calendar.converter.CalendarConverter;
 import org.aba2.calendar.common.domain.calendar.db.CalendarRepository;
 import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
@@ -10,10 +9,13 @@ import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterReque
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.calendar.service.CalendarService;
+import org.aba2.calendar.common.domain.group.db.GroupRepository;
+import org.aba2.calendar.common.domain.group.model.GroupEntity;
 import org.aba2.calendar.common.domain.groupuser.db.GroupUserRepository;
 import org.aba2.calendar.common.domain.user.model.User;
 import org.aba2.calendar.common.errorcode.CalendarErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,6 +27,7 @@ public class CalendarBusiness {
     private final CalendarService calendarService;
     private final CalendarConverter calendarConverter;
     private final GroupUserRepository groupUserRepository;
+    private final GroupRepository groupRepository;
 
     private final CalendarRepository calendarRepository;
 
@@ -60,6 +63,7 @@ public class CalendarBusiness {
         }
 
         var entity = calendarConverter.toEntity(req, user);
+        entity.setGroupCalendar(false); // 개인 일정인 경우
 
         var newEntity = calendarService.registerPersonalSchedule(entity);
 
@@ -91,7 +95,7 @@ public class CalendarBusiness {
 
         //CalendarGroupRegisterRequest -> CalendarEntity 변환
         var entity = calendarConverter.toGroupEntity(req, user);
-
+        entity.setGroupCalendar(true); // 그룹 일정인 경우
         // 그룹 일정 저장
         var newEntity = calendarService.registerGroupSchedule(entity);
 
@@ -109,12 +113,20 @@ public class CalendarBusiness {
 
         CalendarEntity updateEntity = calendarConverter.toGroupEntity(req, user);
         updateEntity.setCalId(calId); // 기존 일정 ID 설정
-        updateEntity.setGroupId(groupId); // 그룹 ID 설정
+
+        // GroupEntity를 GroupRepository로 조회
+        GroupEntity group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new ApiException(CalendarErrorCode.GROUP_NOT_FOUND));
+
+        // 그룹 정보 설정
+        updateEntity.setGroup(group); // GroupEntity 설정
 
         CalendarEntity updatedEntity = calendarService.updateGroupSchedule(updateEntity);
 
         return calendarConverter.toResponse(updatedEntity);
     }
+
+
 
 
     //그룹 일정 삭제

@@ -1,12 +1,16 @@
 package org.aba2.calendar.common.domain.calendar.converter;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.aba2.calendar.common.annotation.Converter;
 import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
 import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
+import org.aba2.calendar.common.domain.group.db.GroupRepository;
+import org.aba2.calendar.common.domain.group.model.GroupEntity;
 import org.aba2.calendar.common.domain.user.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +19,14 @@ import java.time.format.DateTimeFormatter;
 
 @Converter
 public class CalendarConverter {
+
+
+    private final GroupRepository groupRepository;
+
+    @Autowired
+    public CalendarConverter(GroupRepository groupRepository) {
+        this.groupRepository = groupRepository;
+    }
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -57,9 +69,12 @@ public class CalendarConverter {
         var endDate = combineDateAndTime(req.getEndDate(), LocalTime.MIDNIGHT);
         Colors color = req.getColor() != null ? Colors.valueOf(req.getColor().toString()) : Colors.WHITE;
 
+        GroupEntity group = groupRepository.findById(req.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("그룹을 찾을 수 없습니다."));
+
 
         return CalendarEntity.builder()
-                .groupId(req.getGroupId())
+                .group(group)
                 .userId(user.getId())
                 .title(req.getTitle())
                 .content(req.getContent())
@@ -85,7 +100,7 @@ public class CalendarConverter {
 
     public CalendarResponse toResponse(CalendarEntity entity) {
         return CalendarResponse.builder()
-                .groupId(entity.getGroupId() != null ? entity.getGroupId() : null)
+                .groupId(entity.getGroup() != null ? entity.getGroup().getGroupId() : null)
                 .calId(entity.getCalId())
                 .userId(entity.getUserId())
                 .title(entity.getTitle())
@@ -101,6 +116,8 @@ public class CalendarConverter {
                 .build()
                 ;
     }
+
+
 
 
 

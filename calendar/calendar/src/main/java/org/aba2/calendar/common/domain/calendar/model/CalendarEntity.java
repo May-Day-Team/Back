@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aba2.calendar.common.domain.calendar.model.enums.Colors;
+import org.aba2.calendar.common.domain.group.model.GroupEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,10 +31,15 @@ public class CalendarEntity {
     private String userId;
 
     //group_id
-    @Column(name = "group_id")
-    private String groupId;
+//    @Column(name = "group_id", nullable = false, length = 30)
+//    private String groupId;
 
-    @Column(name = "is_group_calendar")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", insertable = false, updatable = false)
+    private GroupEntity group;
+
+    // 그룹 일정 여부
+    @Column(name = "is_group_calendar", nullable = false)
     private boolean isGroupCalendar;
 
     // 제목

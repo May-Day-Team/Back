@@ -38,13 +38,11 @@ public class CalendarService {
 
     //새로운 개인 일정 등록
     public CalendarEntity registerPersonalSchedule(CalendarEntity entity) {
-        entity.setGroupCalendar(false);
         return calendarRepository.save(entity);
     }
 
     // 새로운 그룹 일정 등록
     public CalendarEntity registerGroupSchedule(CalendarEntity entity) {
-        entity.setGroupCalendar(true);
         return calendarRepository.save(entity);
     }
 
@@ -57,7 +55,7 @@ public class CalendarService {
 
     // 그룹 일정 수정
     public CalendarEntity updateGroupSchedule(CalendarEntity entity) {
-        validateOwnership(entity.getCalId(), entity.getGroupId(), true);
+        validateOwnership(entity.getCalId(), entity.getGroup().getGroupId(), true);
         return calendarRepository.save(entity);
     }
 
