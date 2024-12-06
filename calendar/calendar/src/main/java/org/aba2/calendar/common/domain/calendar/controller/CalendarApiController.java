@@ -6,19 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aba2.calendar.common.annotation.UserSession;
 import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.calendar.business.CalendarBusiness;
-import org.aba2.calendar.common.domain.calendar.db.CalendarRepository;
-import org.aba2.calendar.common.domain.calendar.model.CalendarEntity;
 import org.aba2.calendar.common.domain.calendar.model.CalendarGroupRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarRegisterRequest;
 import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.user.model.User;
-import org.aba2.calendar.common.errorcode.CalendarErrorCode;
-import org.aba2.calendar.common.exception.ApiException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 import java.util.List;
 
 @RestController
