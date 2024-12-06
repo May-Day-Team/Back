@@ -1,0 +1,43 @@
+<html layout:decorate="~{layout}">
+
+<div layout:fragment="content" class="container my-3">
+    <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>번호</th>
+            <th>날짜</th>
+            <th>손익 합산</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 날짜별 손익 합산을 반복 출력 -->
+        <tr class="text-center" th:each="item, loop : ${paging.content}">
+            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td th:text="${item.date}"></td>
+            <td th:text="${item.totalAmount + '원'}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이지네이션 처리 시작 -->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${!paging.hasPrevious() ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{|?page=${paging.number - 1}|}">Previous</a>
+            </li>
+
+            <li th:each="page : ${#numbers.sequence(paging.number / 10 * 10, (paging.number / 10 + 1) * 10 - 1)}"
+                th:if="${page <= paging.totalPages - 1 }"
+                class="page-item"
+                th:classappend="${page == paging.number ? 'active' : ''}">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${!paging.hasNext() ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{|?page=${paging.number + 1}|}">Next</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이지네이션 처리 끝 -->
+</div>
+</html>

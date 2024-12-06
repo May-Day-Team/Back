@@ -58,6 +58,8 @@ public class UserBusiness {
 
         var data = userRegisterRequestApi.getBody();
 
+        System.out.println(data);
+
         var entity = userConverter.toEntity(data);
 
         var saveEntity = userService.register(entity);

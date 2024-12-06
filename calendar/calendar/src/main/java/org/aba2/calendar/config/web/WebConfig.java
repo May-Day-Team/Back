@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     private List<String> DEFAULT_EXCLUDE = List.of(
             "/",
-            "favicon.ico",
+            "/favicon.ico",
             "/error"
     );
 

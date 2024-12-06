@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "group")
+@Table(name = "user_groups")
 public class GroupEntity {
 
     @Id

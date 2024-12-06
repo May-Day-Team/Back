@@ -169,6 +169,7 @@ ul.today__Btn {
     /* for black */
   /*background: #fff; */
 }
+<<<<<<< HEAD
 .days { display: flex; flex-wrap: wrap; width: 100%; } 
 .days li { width: calc(100% / 7); box-sizing: border-box; text-align: center; }
 
@@ -181,3 +182,9 @@ ul.today__Btn {
   margin-left: auto; /* 색상 박스를 중앙에 맞추기 위해 자동 여백 설정 */
   margin-right: auto; /* 색상 박스를 중앙에 맞추기 위해 자동 여백 설정 */
 }
+=======
+
+
+.days { display: flex; flex-wrap: wrap; width: 100%; } 
+.days li { width: calc(100% / 7); box-sizing: border-box; text-align: center; }
+>>>>>>> zeyhnos

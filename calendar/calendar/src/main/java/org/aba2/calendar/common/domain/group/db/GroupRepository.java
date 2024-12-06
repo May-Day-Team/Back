@@ -1,3 +1,4 @@
+
 package org.aba2.calendar.common.domain.group.db;
 
 import org.aba2.calendar.common.domain.group.model.GroupEntity;

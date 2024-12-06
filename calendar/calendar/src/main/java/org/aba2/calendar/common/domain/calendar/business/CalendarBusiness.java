@@ -89,9 +89,9 @@ public class CalendarBusiness {
     //그룹 스케줄 등록
     public CalendarResponse registerGroupCalendar(CalendarGroupRegisterRequest req, User user) {
 
-        if (!isUserInGroup(req.getGroupId(), user.getId())) {
-            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
-        }
+//        if (!isUserInGroup(req.getGroupId(), user.getId())) {
+//            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+//        }
 
         //CalendarGroupRegisterRequest -> CalendarEntity 변환
         var entity = calendarConverter.toGroupEntity(req, user);
@@ -107,9 +107,9 @@ public class CalendarBusiness {
     // 그룹 스케줄 업데이트
     public CalendarResponse updateGroupCalendar(Long calId, CalendarGroupRegisterRequest req, String groupId, User user) {
 
-        if (!isUserInGroup(groupId, user.getId())) {
-            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
-        }
+//        if (!isUserInGroup(groupId, user.getId())) {
+//            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+//        }
 
         CalendarEntity updateEntity = calendarConverter.toGroupEntity(req, user);
         updateEntity.setCalId(calId); // 기존 일정 ID 설정
@@ -132,9 +132,9 @@ public class CalendarBusiness {
     //그룹 일정 삭제
     public void deleteGroupCalendar(Long calId, String groupId, User user) {
 
-        if (!isUserInGroup(groupId, user.getId())) {
-            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
-        }
+//        if (!isUserInGroup(groupId, user.getId())) {
+//            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+//        }
 
         calendarService.deleteGroupSchedule(calId, groupId);
     }
@@ -144,9 +144,9 @@ public class CalendarBusiness {
     //그룹 스케줄 리스트
     public List<CalendarResponse> getScheduleGroupList(String groupId, String user) {
 
-        if (!isUserInGroup(groupId, user)) {
-            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
-        }
+//        if (!isUserInGroup(groupId, user)) {
+//            throw new ApiException(CalendarErrorCode.UNAUTHORIZED_ACCESS);
+//        }
 
         // userId로 일정을 조회
         List<CalendarEntity> groupSchedules = calendarService.getGroupScheduleList(groupId);
@@ -172,9 +172,9 @@ public class CalendarBusiness {
     }
 
     //그룹 사용자 소속 확인 로직
-    private boolean isUserInGroup (String groupId, String userId) {
-        return groupUserRepository.existsByGroupIdAndUserId(groupId, userId);
-    }
+//    private boolean isUserInGroup (String groupId, String userId) {
+//        return groupUserRepository.existsByGroupIdAndUserId(groupId, userId);
+//    }
 
 
 }
