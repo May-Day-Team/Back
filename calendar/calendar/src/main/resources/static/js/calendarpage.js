@@ -49,7 +49,7 @@ $(document).ready(function () {
     let isAddSchedule = false; // 상태 변수 추가
 
     // 초기 화면에 month.html 로드
-    $('#mainleft').load('../calendar/month.html', function (response, status, xhr) {
+    $('#mainleft').load('/view/month', function (response, status, xhr) {
         if (status === "error") {
             console.error("Failed to load month.html:", xhr.status, xhr.statusText);
         } else {
@@ -62,7 +62,7 @@ $(document).ready(function () {
     $('#addschedule').click(function () {
         if (!isAddSchedule) {
             // addschedule.html 로드
-            $('#mainleft').load('../calendar/addschedule.html', function (response, status, xhr) {
+            $('#mainleft').load('/view/addschedule', function (response, status, xhr) {
                 if (status === "error") {
                     console.error("Failed to load addschedule.html:", xhr.status, xhr.statusText);
                 } else {
@@ -95,7 +95,7 @@ $(document).ready(function () {
     // 'x' 버튼이나 '취소' 버튼 클릭 시 addschedule.html을 닫고 calendarpage.html 로드
     $(document).on('click', '#close-modal, #cancel-schedule', function () {
         // `mainleft`에 calendarpage.html을 다시 로드
-        $('#mainleft').load('../calendar/month.html', function (response, status, xhr) {
+        $('#mainleft').load('/view/month', function (response, status, xhr) {
             if (status === "error") {
                 console.error("Failed to load month.html:", xhr.status, xhr.statusText);
             } else {
@@ -104,50 +104,6 @@ $(document).ready(function () {
                 isAddSchedule = false;
             }
         });
-<<<<<<< HEAD
-    }
-    
-        // 초기 로드 시 month.html 로드
-        loadCalendar("month");
-       // 월, 주, 일 버튼 클릭 시 해당 뷰 로드
-       $('#month-view').click(function() {
-        loadCalendar("month");
-    });
-<<<<<<< HEAD
-
-    $('#week-view').click(function() {
-        loadCalendar("week");
-    });
-
-    $('#day-view').click(function() {
-        loadCalendar("day");
-=======
-    // subcalendar.html 로드
-    $('#subcalendar').load('../Calendar/subcalendar.html', function(response, status, xhr) {
-        if (status === "error") {
-            console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
-        } else {
-            console.log("Sub Calendar page loaded successfully.");
-        }
->>>>>>> zeyhnos
-    });
-
-    // + 버튼 클릭 시 addschedule.html 로드
-    $('#addschedule').click(function() {
-        $('#mainleft').load('../calendar/addschedule.html', function(response, status, xhr) {
-            if (status === "error") {
-                console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
-            } else {
-                console.log("Add Schedule page loaded successfully.");
-            }
-        });
-    });
-
-    // X 버튼과 취소 버튼 클릭 시 calendarpage.html로 이동
-    $(document).on('click', '#close-modal, #cancel-schedule', function() {
-        window.location.href = '../mainpage/calendarpage.html';
-=======
->>>>>>> bigjihoon
     });
 });
 
