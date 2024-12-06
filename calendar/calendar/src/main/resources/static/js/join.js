@@ -35,6 +35,7 @@ async function handleJoin(event) {
             // 성공적으로 처리된 경우
             const result = await response.json();
             console.log('성공:', result);
+            window.location.href = '/view/login';
         } else {
             // 오류가 발생한 경우
             const errorText = await response.text();
