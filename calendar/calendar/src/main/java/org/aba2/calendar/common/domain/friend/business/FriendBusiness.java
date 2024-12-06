@@ -94,4 +94,13 @@ public class FriendBusiness {
                 ;
     }
 
+    public List<FriendResponse> getBlockList(User user) {
+        if (Objects.isNull(user) || user.getId() == null) {
+            throw new ApiException(ErrorCode.NULL_POINT);
+        }
+
+        return friendService.getBlockList(user.getId()).stream()
+                .map(friendConverter::toResponse)
+                .toList();
+    }
 }
