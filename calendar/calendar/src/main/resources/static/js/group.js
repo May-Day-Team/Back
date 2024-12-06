@@ -1,5 +1,5 @@
 // 초기 로드 시 캘린더 로드
-$('#groupcalendar').load('../Calendar/index.html', function(response, status, xhr) {
+$('#groupcalendar').load('/view/index', function(response, status, xhr) {
     if (status === "error") {
         console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
     } else {
