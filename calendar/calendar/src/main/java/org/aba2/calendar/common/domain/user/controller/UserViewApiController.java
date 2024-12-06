@@ -18,10 +18,23 @@ public class UserViewApiController {
         return "login/join";
     }
 
-    @GetMapping("/main-page")
-    public String mainPage() {
+    @GetMapping("/mayday")
+    public String mayday() {
         return "mainpage/mayday";
     }
+    @GetMapping("/calendar")
+    public String calendar() {
+        return "mainpage/calendarpage";
+    }
+    @GetMapping("/accountbook")
+    public String accountbook() {
+        return "accountbook/accountbook";
+    }
+    @GetMapping("/record")
+    public String record() {
+        return "record/record";
+    }
+
 
 
 }
