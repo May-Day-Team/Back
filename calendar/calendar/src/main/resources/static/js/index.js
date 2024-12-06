@@ -2,12 +2,12 @@ const daysTag = document.querySelector(".days"),
       currentDate = document.querySelector(".current-date"),
       currentYear = document.querySelector(".current-year"),
       prevNextIcon = document.querySelectorAll(".icons span"),
-      resetDateButton = document.querySelector(".reset-date-button"); // Reset 버튼을 선택하기 위한 변수
+      resetDateButton = document.querySelector(".reset-date-button");
 
 let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth(),
-    selectedDay = date.getDate(); // 선택된 날짜
+    selectedDay = date.getDate();
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -45,7 +45,10 @@ const renderCalendar = () => {
         let scheduleColors = dummySchedules[formattedDate] || [];
         let limitedScheduleColors = scheduleColors.slice(0, 4); // 최대 4개로 제한
         let scheduleColorDivs = limitedScheduleColors.map(schedule => `<div class="schedule-color" style="background-color: ${schedule.color};"></div>`).join("");
-        liTag += `<li class="${isSelected}" data-month="${currMonth}" data-year="${currYear}" data-day="${i}">${i}</li>`;
+        liTag += `<li class="${isSelected}" data-month="${currMonth}" data-year="${currYear}" data-day="${i}">
+                    ${i}
+                    ${scheduleColorDivs}
+                  </li>`;
     }
 
     // 다음 달의 빈 날짜
@@ -59,11 +62,6 @@ const renderCalendar = () => {
     daysTag.innerHTML = liTag;
     currentDate.innerHTML = `${months[currMonth]} ${selectedDay}<sup>${getOrdinalSuffix(selectedDay)}</sup>`;
     currentYear.innerHTML = currYear.toString();
-
-    // 중복 이벤트 제거 후 새 이벤트 등록
-    document.querySelectorAll(".days li").forEach(day => {
-        day.replaceWith(day.cloneNode(true)); // 기존 노드를 복제하여 이벤트 제거
-    });
 
     document.querySelectorAll(".days li").forEach(day => {
         day.addEventListener("click", function () {
@@ -84,12 +82,6 @@ const renderCalendar = () => {
             const formattedDate = `${clickedYear}-${String(clickedMonth + 1).padStart(2, "0")}-${String(clickedDay).padStart(2, "0")}`;
             localStorage.setItem("selectedDate", formattedDate);
 
-            // 선택된 날짜를 localStorage에 저장
-            const formattedDate = `${clickedYear}-${String(clickedMonth + 1).padStart(2, "0")}-${String(clickedDay).padStart(2, "0")}`;
-            console.log("Selected Date:", formattedDate); // 로그 출력
-            localStorage.setItem("selectedDate", formattedDate);
-
-            // mayday.html의 subcalendar 업데이트 함수 호출
             if (window.updateSubCalendar) {
                 window.updateSubCalendar(formattedDate);
             }
@@ -118,6 +110,7 @@ renderCalendar();
 if (resetDateButton) {
     resetDateButton.addEventListener("click", resetDate);
 }
+
 // 월 변경 시 1일로 고정
 prevNextIcon.forEach(icon => {
     icon.addEventListener("click", () => {
@@ -139,18 +132,6 @@ prevNextIcon.forEach(icon => {
 
         // 선택된 날짜를 localStorage에 저장 및 subcalendar 업데이트
         const formattedDate = `${currYear}-${String(currMonth + 1).padStart(2, "0")}-01`;
-prevNextIcon.forEach(icon => {
-    icon.addEventListener("click", () => {
-        currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-        if (currMonth < 0 || currMonth > 11) {
-            currYear = icon.id === "prev" ? currYear - 1 : currYear + 1;
-            currMonth = icon.id === "prev" ? 11 : 0;
-        }
-        selectedDay = 1; // 월 변경 시 첫째 날로 설정
-        renderCalendar();
-
-        // 월 변경 시 첫째 날로 subaccount 업데이트 함수 호출
-        const formattedDate = `${currYear}-${String(currMonth + 1).padStart(2, "0")}-${String(selectedDay).padStart(2, "0")}`;
         localStorage.setItem("selectedDate", formattedDate);
         if (window.updateSubCalendar) {
             window.updateSubCalendar(formattedDate);

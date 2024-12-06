@@ -69,7 +69,7 @@ $(document).ready(function() {
             const data = await response.json();
             if (data.result.result_code == 200) {
                 console.log('Schedule added successfully:', data.result.result_description);
-                $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
+                $('#mainleft').load('/view/month', function(response, status, xhr) {
                     if (status == "error") {
                         console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
                     }
