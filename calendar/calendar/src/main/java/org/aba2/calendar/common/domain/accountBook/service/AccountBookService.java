@@ -30,16 +30,10 @@ public class AccountBookService {
     private final AccountBookRepository acctBookRepository;
     private final UserService userService;
 
-    // UID로 가계부 리스트 조회 - 페이지
-//    public Page<AccountBookEntity> findAllByUIDAcctBookList(String userId, int page) {
-//        Pageable pageable = PageRequest.of(page, 10); // 페이지네이션만 설정
-//        return acctBookRepository.findAllByUser_idOrderByDateDesc(userId, pageable);
-//    }
-
     // UID+특정 날짜로 가계부 리스트 조회
     public List<AccountBookEntity> findByUIDAndDateWithThrow(String userId, LocalDate date) {
-        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdDesc(userId, date);
-//                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
+        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdDesc(userId, date)
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
     }
 
     public Page<DateTotalDTO> getPagedDateTotals(String userId, int page) {
@@ -74,12 +68,11 @@ public class AccountBookService {
     // 생성/수정 핸들
     @Transactional
     public void handleAcctBookSaveOrUpdate(AccountBookFormRequest request, String userId) {
-        createAcctBook(request, userId);
-//        if (acctBookRepository.findById(request.getId()).isPresent()) {
-//            updateAcctBook(request);
-//        } else {
-//            createAcctBook(request, userId);
-//        }
+        if (acctBookRepository.findById(request.getId()).isPresent()) {
+            updateAcctBook(request);
+        } else {
+            createAcctBook(request, userId);
+        }
     }
 
     // 생성하기
