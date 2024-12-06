@@ -26,7 +26,7 @@ public class CalendarService {
 
     // 그룹 일정 조회
     public List<CalendarEntity> getGroupScheduleList(String groupId) {
-        return calendarRepository.findAllByGroupIdAndIsGroupCalendarTrue(groupId);
+        return calendarRepository.findAllByGroup_GroupIdAndIsGroupCalendarTrue(groupId);
     }
 
     //전체 일정 조회
@@ -76,7 +76,7 @@ public class CalendarService {
 
     private  CalendarEntity validateOwnership(Long calId, String ownerId, boolean isGroup) {
         List<CalendarEntity> schedules = isGroup
-                ? calendarRepository.findAllByGroupIdAndIsGroupCalendarTrue(ownerId)
+                ? calendarRepository.findAllByGroup_GroupIdAndIsGroupCalendarTrue(ownerId)
                 : calendarRepository.findAllByUserIdAndIsGroupCalendarFalse(ownerId);
 
         return schedules.stream()

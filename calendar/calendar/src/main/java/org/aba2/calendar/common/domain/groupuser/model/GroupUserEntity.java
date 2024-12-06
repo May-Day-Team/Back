@@ -13,7 +13,7 @@ import org.aba2.calendar.common.domain.groupuser.model.enums.GroupStatus;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "group_user_table")
+@Table(name = "user_group_table")
 @IdClass(GroupUserId.class)
 public class GroupUserEntity {
 
