@@ -3,6 +3,7 @@ package org.aba2.calendar.common.domain.friend.service;
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.domain.friend.db.FriendRepository;
 import org.aba2.calendar.common.domain.friend.model.FriendEntity;
+import org.aba2.calendar.common.domain.friend.model.FriendResponse;
 import org.aba2.calendar.common.domain.friend.model.enums.FriendStatus;
 import org.aba2.calendar.common.domain.user.db.UserRepository;
 import org.aba2.calendar.common.errorcode.ErrorCode;
@@ -131,5 +132,11 @@ public class FriendService {
     // 자신에게 요청 온 친구 리스트 출력
     public List<FriendEntity> findAllByInvitationRequest(String userId) {
         return friendRepository.findAllByToUserIdAndStatus(userId, FriendStatus.WAIT);
+    }
+
+    public List<FriendEntity> getBlockList(String id) {
+
+        return friendRepository.findAllByToUserIdAndStatus(id, FriendStatus.BLOCK);
+
     }
 }
