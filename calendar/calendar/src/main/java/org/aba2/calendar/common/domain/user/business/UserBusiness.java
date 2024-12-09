@@ -27,8 +27,6 @@ public class UserBusiness {
     private final TokenBusiness tokenBusiness;
 
     public UserResponse login(Api<UserLoginRequest> req, HttpServletResponse response) {
-
-        System.out.println("hi");
         var user = req.getBody();
 
         if (Objects.isNull(user) || user.getUserId() == null || user.getPassword() == null) {
@@ -39,13 +37,10 @@ public class UserBusiness {
         var password = user.getPassword();
 
 
-        System.out.println("hi");
         var userEntity = userService.login(userId, password);
 
 
         tokenBusiness.cookieSettingToken(userId, response, 15, 60);
-
-        System.out.println("hi");
         return userConverter.toResponse(userEntity);
     }
 
@@ -57,8 +52,6 @@ public class UserBusiness {
         }
 
         var data = userRegisterRequestApi.getBody();
-
-        System.out.println(data);
 
         var entity = userConverter.toEntity(data);
 
@@ -74,6 +67,12 @@ public class UserBusiness {
         var entity = userService.findByIdWithThrow(userId);
 
         return userConverter.toResponse(entity);
+
+    }
+
+    public void logout(User user, HttpServletResponse response) {
+
+        tokenBusiness.cookieSettingToken(user.getId(), response, 0, 0);
 
     }
 }
