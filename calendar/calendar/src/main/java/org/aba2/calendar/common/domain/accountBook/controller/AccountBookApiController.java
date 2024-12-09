@@ -1,48 +1,55 @@
 package org.aba2.calendar.common.domain.accountBook.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aba2.calendar.common.annotation.UserSession;
 import org.aba2.calendar.common.api.Api;
+import org.aba2.calendar.common.domain.accountBook.buisiness.AccountBookBusiness;
 import org.aba2.calendar.common.domain.accountBook.dto.AccountBookFormRequest;
-import org.aba2.calendar.common.domain.accountBook.model.AccountBookEntity;
-import org.aba2.calendar.common.domain.accountBook.service.AccountBookService;
-import org.aba2.calendar.common.domain.calendar.model.CalendarResponse;
 import org.aba2.calendar.common.domain.user.model.User;
-import org.springframework.http.ResponseEntity;
+import org.aba2.calendar.common.errorcode.RecordErrorCode;
+import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/acctBk")
+@RequestMapping("/accountBook")
 @RequiredArgsConstructor
 public class AccountBookApiController {
 
-    private final AccountBookService accountBookService;
+    private final AccountBookBusiness accountBookBusiness;
 
     // 생성/수정-Post (여러 개의 AccountBook 저장)
     @PostMapping("/save")
-    public ResponseEntity<Api<Void>> saveAccountBook(
+    public Api<String> saveAccountBook(
             @UserSession User user,
-            @RequestBody List<AccountBookFormRequest> formList
+            @RequestBody @Valid List<AccountBookFormRequest> formList
     ) {
         // 여러 개의 데이터를 처리하는 로직
         for (AccountBookFormRequest form : formList) {
             log.info("Save AccountBook date:{} userID:{}", form.getDate(), user.getId());
-            accountBookService.handleAcctBookSaveOrUpdate(form, user.getId());
+            accountBookBusiness.saveAccountBookResponse(user, form);
         }
-        return ResponseEntity.ok(null);
+        return Api.OK("AccountBook saved successfully");
     }
 
     // 삭제
-    @DeleteMapping
-    public ResponseEntity<Api<Void>> deleteAccountBook(@RequestBody AccountBookFormRequest form) {
-        accountBookService.deleteAcctBook(form.getAccountBookId());
+    @DeleteMapping("/delete")
+    public Api<String> deleteAccountBook(
+            @UserSession User user,
+            @RequestBody AccountBookFormRequest form
+    ) {
+        if (form.getAccountBookId() == null) {
+            throw new ApiException(RecordErrorCode.VALIDATION_ERROR, "해당 일기는 존재하지 않습니다");
+        }
 
         log.info("Deleting AccountBook createAt:{}", form.getDate());
 
-        return ResponseEntity.ok(null);
+        var response = accountBookBusiness.deleteAccountBookResponse(user, form);
+
+        return Api.OK(response);
     }
 }

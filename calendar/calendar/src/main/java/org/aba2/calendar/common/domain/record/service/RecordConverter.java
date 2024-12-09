@@ -5,6 +5,7 @@ import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
 import org.aba2.calendar.common.domain.record.dto.RecordResponse;
 import org.aba2.calendar.common.domain.record.model.RecordEntity;
 import org.aba2.calendar.common.domain.record.model.RecordId;
+import org.aba2.calendar.common.domain.record.model.enums.Weather;
 
 @Converter
 public class RecordConverter {
@@ -14,7 +15,7 @@ public class RecordConverter {
                 .recordId(new RecordId(request.getCreateAt(), userId))
                 .title(request.getTitle())
                 .content(request.getContent())
-                .weather(request.getWeather())
+                .weather(Weather.get(request.getWeather()))
                 .build();
     }
 

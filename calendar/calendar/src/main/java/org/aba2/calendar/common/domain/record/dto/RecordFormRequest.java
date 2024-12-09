@@ -21,8 +21,7 @@ public class RecordFormRequest {
     @Size(max = 1000)
     private String content;
 
-    // todo ENUM으로 수정하기
-    @Pattern(regexp = "^(SUNNY|RAINY|CLOUDY|SNOWY)$", message = "올바른 날씨 값을 입력해주세요.")
+    @NotBlank(message = "예시로 나와있는 날씨를 기입해주세요")
     private String weather;
 
     @NotBlank(message = "작성/수정할 날짜를 정해주세요")

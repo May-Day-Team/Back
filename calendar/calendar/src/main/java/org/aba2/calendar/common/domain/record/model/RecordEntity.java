@@ -2,6 +2,7 @@ package org.aba2.calendar.common.domain.record.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.aba2.calendar.common.domain.record.model.enums.Weather;
 import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.hibernate.annotations.DynamicUpdate;
 import java.time.LocalDate;
@@ -22,7 +23,8 @@ public class RecordEntity {
 
     private String content;
 
-    private String weather;
+    @Enumerated(EnumType.STRING)
+    private Weather weather;
 
     private LocalDate updateAt;
 
@@ -31,7 +33,7 @@ public class RecordEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    public void updateRecord(String title, String content, String weather) {
+    public void updateRecord(String title, String content, Weather weather) {
         this.title = title;
         this.content = content;
         this.weather = weather;

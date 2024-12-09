@@ -1,6 +1,7 @@
 package org.aba2.calendar.common.domain.record.dto;
 
 import lombok.*;
+import org.aba2.calendar.common.domain.record.model.enums.Weather;
 
 import java.time.LocalDate;
 
@@ -12,7 +13,7 @@ public class RecordResponse {
 
     private String content;
 
-    private String weather;
+    private Weather weather;
 
     private LocalDate updateAt;
 }

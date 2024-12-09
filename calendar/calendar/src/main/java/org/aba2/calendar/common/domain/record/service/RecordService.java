@@ -6,6 +6,7 @@ import org.aba2.calendar.common.domain.record.db.RecordRepository;
 import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
 import org.aba2.calendar.common.domain.record.model.RecordEntity;
 import org.aba2.calendar.common.domain.record.model.RecordId;
+import org.aba2.calendar.common.domain.record.model.enums.Weather;
 import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.aba2.calendar.common.domain.user.service.UserService;
 import org.aba2.calendar.common.errorcode.RecordErrorCode;
@@ -46,11 +47,14 @@ public class RecordService {
         // user객체 넣어줘야함
         UserEntity user = userService.findByIdWithThrow(userId);
 
+        // 문자열로 받은걸 Weather ENUM으로 변환
+        Weather weather = Weather.get(request.getWeather());
+
         RecordEntity newRecord = RecordEntity.builder()
                 .recordId(recordId)
                 .title(request.getTitle())
                 .content(request.getContent())
-                .weather(request.getWeather())
+                .weather(weather)
                 .updateAt(request.getCreateAt())
                 .user(user)
                 .build();
@@ -65,11 +69,14 @@ public class RecordService {
         // 일기 수정 권한(작성자) 여부 확인
         validateUserAuthorization(userId, record);
 
+        // 문자열로 받은걸 Weather ENUM으로 변환
+        Weather weather = Weather.get(request.getWeather());
+
         //기존 일기의 필드 수정 - dirtyCheck
         record.updateRecord(
                 request.getTitle(),
                 request.getContent(),
-                request.getWeather()
+                weather
         );
         return record;
     }
@@ -82,6 +89,7 @@ public class RecordService {
         // 일기 삭제 권한(작성자) 여부 확인
         validateUserAuthorization(userId, record);
 
+        // 삭제
         recordRepository.delete(record);
     }
 

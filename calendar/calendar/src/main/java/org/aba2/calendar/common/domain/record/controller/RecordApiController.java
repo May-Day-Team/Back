@@ -9,6 +9,8 @@ import org.aba2.calendar.common.domain.record.business.RecordBusiness;
 import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
 import org.aba2.calendar.common.domain.record.dto.RecordResponse;
 import org.aba2.calendar.common.domain.user.model.User;
+import org.aba2.calendar.common.errorcode.RecordErrorCode;
+import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -39,6 +41,9 @@ public class RecordApiController {
             @UserSession User user,
             @RequestBody RecordFormRequest form
     ) {
+        if (form.getCreateAt() == null) {
+            throw new ApiException(RecordErrorCode.VALIDATION_ERROR, "해당 일기는 존재하지 않습니다");
+        }
 
         log.info("Deleting Record createAt:{} userId{}", form.getCreateAt(),user.getId());
 
