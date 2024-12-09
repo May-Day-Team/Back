@@ -13,6 +13,7 @@ public enum IncomeExpense {
     private final String incomeExpense;
     private final String symbol;
 
+    // +나 -일때만 변환함
     public static IncomeExpense get(String symbol) {
         for (IncomeExpense value : IncomeExpense.values()) {
             if (value.symbol.equals(symbol)) {

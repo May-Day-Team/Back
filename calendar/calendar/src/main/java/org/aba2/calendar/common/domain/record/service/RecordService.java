@@ -8,7 +8,7 @@ import org.aba2.calendar.common.domain.record.model.RecordEntity;
 import org.aba2.calendar.common.domain.record.model.RecordId;
 import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.aba2.calendar.common.domain.user.service.UserService;
-import org.aba2.calendar.common.errorcode.ErrorCode;
+import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,36 +31,39 @@ public class RecordService {
 
     // 생성/수정 핸들
     @Transactional
-    public void handleRecordSaveOrUpdate(RecordFormRequest request, String userId) {
-        if (recordRepository.findByRecordId(new RecordId(request.getCreateAt(), userId)).isPresent()) {
-            updateRecord(request, userId);
+    public RecordEntity handleRecordSaveOrUpdate(RecordFormRequest request, String userId) {
+        if (recordRepository.existsByRecordId(new RecordId(request.getCreateAt(), userId))) {
+            return updateRecord(request, userId);
         } else {
-            createRecord(request, userId);
+            return createRecord(request, userId);
         }
     }
 
     // 생성하기
-    private void createRecord(RecordFormRequest request, String userId) {
+    private RecordEntity createRecord(RecordFormRequest request, String userId) {
         RecordId recordId = new RecordId(request.getCreateAt(), userId);
 
         // user객체 넣어줘야함
         UserEntity user = userService.findByIdWithThrow(userId);
 
-        // 기존 다이어리 존재 여부 확인
         RecordEntity newRecord = RecordEntity.builder()
                 .recordId(recordId)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .weather(request.getWeather())
+                .updateAt(request.getCreateAt())
                 .user(user)
                 .build();
-        recordRepository.save(newRecord);
+        return recordRepository.save(newRecord);
     }
 
     // 수정하기
-    private void updateRecord(RecordFormRequest request, String userId) {
+    private RecordEntity updateRecord(RecordFormRequest request, String userId) {
         // 기존 다이어리 존재 여부 확인
         RecordEntity record = findByRecordIdWithThrow(userId, request.getCreateAt());
+
+        // 일기 수정 권한(작성자) 여부 확인
+        validateUserAuthorization(userId, record);
 
         //기존 일기의 필드 수정 - dirtyCheck
         record.updateRecord(
@@ -68,16 +71,30 @@ public class RecordService {
                 request.getContent(),
                 request.getWeather()
         );
+        return record;
     }
 
     // 일기 삭제
     public void deleteRecord(String userId, LocalDate date){
-        recordRepository.delete(findByRecordIdWithThrow(userId, date));
+        // 기존 다이어리 존재 여부 확인
+        RecordEntity record = findByRecordIdWithThrow(userId, date);
+
+        // 일기 삭제 권한(작성자) 여부 확인
+        validateUserAuthorization(userId, record);
+
+        recordRepository.delete(record);
     }
 
     // 일기 찾기
     public RecordEntity findByRecordIdWithThrow(String userId, LocalDate date) {
         return recordRepository.findByRecordId(new RecordId(date, userId))
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 일기는 존재하지 않습니다."));
+                .orElseThrow(() -> new ApiException(RecordErrorCode.RECORD_NOT_FOUND, "해당 일기를 찾을 수 없습니다"));
+    }
+    
+    // 권한 조회
+    private void validateUserAuthorization(String userId, RecordEntity record) {
+        if (!record.getUser().getUserId().equals(userId)) {
+            throw new ApiException(RecordErrorCode.UNAUTHORIZED_ACCESS, "권한이 없습니다.");
+        }
     }
 }

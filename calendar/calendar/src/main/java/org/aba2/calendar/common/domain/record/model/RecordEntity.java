@@ -24,8 +24,6 @@ public class RecordEntity {
 
     private String weather;
 
-    private boolean isFavorite;
-
     private LocalDate updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
