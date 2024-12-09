@@ -17,6 +17,6 @@ public class UserIdValidator implements ConstraintValidator<UserId, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return Pattern.matches(value, regexp);
+        return Pattern.matches(regexp, value);
     }
 }

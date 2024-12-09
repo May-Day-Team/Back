@@ -1,5 +1,3 @@
-document.getElementById('join').addEventListener('submit', handleJoin);
-
 async function handleJoin(event) {
     event.preventDefault(); // 폼 기본 제출 방지
 
@@ -29,12 +27,11 @@ async function handleJoin(event) {
             },
             body: JSON.stringify({body: joinRequest}) // JSON 형식으로 변환하여 전송
         });
-        console.log(response);
 
-        if (response.ok) {
+        const data = await response.json();
+        if (data.result.result_code == 200) {
             // 성공적으로 처리된 경우
-            const result = await response.json();
-            console.log('성공:', result);
+            alert("회원가입에 성공하셨습니다.");
             window.location.href = '/view/login';
         } else {
             // 오류가 발생한 경우
