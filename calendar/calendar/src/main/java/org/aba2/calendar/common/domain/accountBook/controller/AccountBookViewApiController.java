@@ -21,17 +21,6 @@ public class AccountBookViewApiController {
 
     private final AccountBookService accountBookService;
 
-    //가계부 전체보기
-//    @GetMapping
-//    public String list(Model model,
-//                       @UserSession User user,
-//                       @RequestParam(value="page", defaultValue="0") int page) {
-//
-//        Page<AccountBookEntity> paging = this.accountBookService.findAllByUIDAcctBookList(user.getId(), page);
-//        model.addAttribute("paging", paging);
-//        return "acctBook/list";
-//    }
-
     //가계부 전체보기-특정 날짜의 손익 합산
     @GetMapping
     public String list(Model model,
@@ -50,7 +39,8 @@ public class AccountBookViewApiController {
     public String detail(Model model,
                        @UserSession User user,
                        @PathVariable LocalDate date){
-        List<AccountBookEntity> list = accountBookService.findByUIDAndDateWithThrow(user.getId(), date);
+        List<AccountBookEntity> list = accountBookService.getUIDAndDateWithThrow(user.getId(), date);
+
         model.addAttribute("list", list);
 
         return "acctBook/detail";

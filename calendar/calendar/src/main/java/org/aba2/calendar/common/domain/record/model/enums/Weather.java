@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum Weather {
 
-    Sunny("Sunny"),
-    Rainy("Rainy"),
-    Cloudy("Cloudy"),
-    Snowy("Snowy")
+    SUNNY("Sunny"),
+    RAINY("Rainy"),
+    CLOUDY("Cloudy"),
+    SNOWY("Snowy")
     ;
 
     private final String weather;

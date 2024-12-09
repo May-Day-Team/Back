@@ -7,8 +7,6 @@ import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
@@ -21,7 +19,7 @@ public class AccountBookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long accountBookId;
 
     private String description; // 수입/지출 내역
 

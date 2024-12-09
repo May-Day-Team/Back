@@ -31,11 +31,12 @@ public class AccountBookService {
     private final UserService userService;
 
     // UID+특정 날짜로 가계부 리스트 조회
-    public List<AccountBookEntity> findByUIDAndDateWithThrow(String userId, LocalDate date) {
-        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdDesc(userId, date)
+    public List<AccountBookEntity> getUIDAndDateWithThrow(String userId, LocalDate date) {
+        return acctBookRepository.findAllByUser_UserIdAndDateOrderByAccountBookIdAsc(userId, date)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
     }
 
+    // UID로 가계부 리스트 조회 + 날짜별 그룹화 및 합산
     public Page<DateTotalDTO> getPagedDateTotals(String userId, int page) {
         // 모든 데이터 조회 (페이지네이션 없이)
         List<AccountBookEntity> accountBooks = acctBookRepository.findAllByUser_UserIdOrderByDateDesc(userId);
@@ -68,7 +69,7 @@ public class AccountBookService {
     // 생성/수정 핸들
     @Transactional
     public void handleAcctBookSaveOrUpdate(AccountBookFormRequest request, String userId) {
-        if (acctBookRepository.findById(request.getId()).isPresent()) {
+        if (request.getAccountBookId()!=null && acctBookRepository.existsById(request.getAccountBookId())) {
             updateAcctBook(request);
         } else {
             createAcctBook(request, userId);
@@ -98,7 +99,7 @@ public class AccountBookService {
     // 수정하기
     private void updateAcctBook(AccountBookFormRequest request) {
         // 기존 가계부 존재 여부 확인
-        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getId());
+        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getAccountBookId());
 
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());
@@ -113,13 +114,13 @@ public class AccountBookService {
     }
 
     // 가계부 삭제
-    public void deleteAcctBook(Long id) {
-        acctBookRepository.delete(findByAcctBookIdWithThrow(id));
+    public void deleteAcctBook(Long accountBookId) {
+        acctBookRepository.delete(findByAcctBookIdWithThrow(accountBookId));
     }
 
     // 특정 ID를 가진 가게부 '1개' 찾기
-    public AccountBookEntity findByAcctBookIdWithThrow(Long id) {
-        return acctBookRepository.findById(id)
+    public AccountBookEntity findByAcctBookIdWithThrow(Long accountBookId) {
+        return acctBookRepository.findById(accountBookId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 내역은 존재하지 않습니다."));
     }
 }
