@@ -32,7 +32,7 @@ public class AccountBookService {
 
     // UID+특정 날짜로 가계부 리스트 조회
     public List<AccountBookEntity> getUIDAndDateWithThrow(String userId, LocalDate date) {
-        return acctBookRepository.findAllByUser_UserIdAndDateOrderByAccountBookIdAsc(userId, date)
+        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdAsc(userId, date)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
     }
 
@@ -84,8 +84,6 @@ public class AccountBookService {
 
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());
-
-        System.out.println("hi2");
 
         // 기존 가계부 존재 여부 확인
         AccountBookEntity newAcctBook = AccountBookEntity.builder()

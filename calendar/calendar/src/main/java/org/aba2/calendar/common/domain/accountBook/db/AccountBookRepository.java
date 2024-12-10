@@ -13,5 +13,5 @@ public interface AccountBookRepository extends JpaRepository<AccountBookEntity, 
     List<AccountBookEntity> findAllByUser_UserIdOrderByDateDesc(String userId);
 
     // 사용자 ID와 날짜 기준으로 가계부 리스트 찾기
-    Optional<List<AccountBookEntity>> findAllByUser_UserIdAndDateOrderByAccountBookIdAsc(String userId, LocalDate date);
+    Optional<List<AccountBookEntity>> findAllByUser_UserIdAndDateOrderByIdAsc(String userId, LocalDate date);
 }

@@ -19,7 +19,7 @@ public class AccountBookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountBookId;
+    private Long id;
 
     private String description; // 수입/지출 내역
 
