@@ -69,7 +69,7 @@ public class AccountBookService {
     // 생성/수정 핸들
     @Transactional
     public void handleAcctBookSaveOrUpdate(AccountBookFormRequest request, String userId) {
-        if (request.getAccountBookId()!=null && acctBookRepository.existsById(request.getAccountBookId())) {
+        if (request.getId() != null) {
             updateAcctBook(request);
         } else {
             createAcctBook(request, userId);
@@ -85,6 +85,8 @@ public class AccountBookService {
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());
 
+        System.out.println("hi2");
+
         // 기존 가계부 존재 여부 확인
         AccountBookEntity newAcctBook = AccountBookEntity.builder()
                 .description(request.getDescription())
@@ -99,7 +101,7 @@ public class AccountBookService {
     // 수정하기
     private void updateAcctBook(AccountBookFormRequest request) {
         // 기존 가계부 존재 여부 확인
-        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getAccountBookId());
+        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getId());
 
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());

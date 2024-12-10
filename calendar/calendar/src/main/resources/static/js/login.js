@@ -19,14 +19,14 @@ async function handleLogin(event) {
       });
 
       const data = await response.json();
+      console.log(data.body);
       if (data.result.result_code == 200) {
         // 로그인 성공 후 처리
         console.log('Login successful:', data.result.result_description);
         // 예를 들어, 메인 페이지로 리다이렉트
         window.location.href = '/view/mayday';
       } else {
-        const errorMessage = await response.text();
-        alert('로그인 실패: ' + errorMessage);
+        alert('로그인 실패: ' + data.body);
       }
     } catch (error) {
       console.error('Error during login:', error);

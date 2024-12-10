@@ -1,7 +1,6 @@
 package org.aba2.calendar.common.domain.accountBook.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,10 +10,10 @@ import java.time.LocalDate;
 @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AccountBookFormRequest {
 
-    @Nullable
-    private Long accountBookId;
+    private Long id;
 
     @NotBlank(message = "설명은 필수 항목입니다")
     @Size(max = 50)

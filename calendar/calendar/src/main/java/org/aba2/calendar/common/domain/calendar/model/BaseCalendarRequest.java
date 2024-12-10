@@ -39,13 +39,13 @@ public class BaseCalendarRequest {
     private String repeatDay;
 
     @NotNull(message = "시작 시간은 필수 입력값입니다.")
-    private LocalTime startTime;
+    private String startTime;
 
     @NotNull(message = "종료 시간은 필수 입력값입니다.")
-    private LocalTime endTime;
+    private String endTime;
 
     //일정 알람시간
-    private LocalDateTime ringAt;
+    private String ringAt;
 
     //일정색상
     private Colors color;

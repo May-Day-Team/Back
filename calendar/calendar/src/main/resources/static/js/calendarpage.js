@@ -1,13 +1,21 @@
-// 데이터
+// 데이터 저장 객체
 const backupSchedules = {};
 
+// 선택된 날짜를 가져오는 함수
 function getSelectedDate() {
     return localStorage.getItem("selectedDate") || getCurrentDate();
 }
 
-const selectedDate = getSelectedDate();
-console.log(`Selected Date: ${selectedDate}`); // 디버깅용 로그
+// 현재 날짜를 YYYY-MM-DD 형식으로 반환
+function getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
+// 스케줄 데이터를 업데이트하는 함수
 function updateSchedules(date) {
     const schedules = backupSchedules[date] || []; // 데이터가 없으면 빈 배열 반환
     console.log(`Schedules: ${JSON.stringify(schedules)}`); // 디버깅용 로그
@@ -37,14 +45,41 @@ function updateSchedules(date) {
     }
 }
 
-function getCurrentDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+// /api/calendar에서 스케줄 데이터를 가져오는 함수
+async function fetchSchedules() {
+    try {
+        const selectedDate = getSelectedDate(); // 현재 선택된 날짜 가져오기
+        console.log(`Fetching schedules for date: ${selectedDate}`); // 디버깅용 로그
+
+        // API 호출
+        const response = await fetch(`/api/calendar`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch schedules: ${response.status}`);
+        }
+
+        // JSON 데이터 파싱
+        const data = await response.json();
+
+        console.log("Fetched Schedules Data:", data); // 디버깅용 로그
+
+        // 가져온 데이터를 backupSchedules에 저장
+        backupSchedules[selectedDate] = data;
+
+        // 스케줄 업데이트
+        updateSchedules(selectedDate);
+    } catch (error) {
+        console.error("Error fetching schedules:", error);
+    }
 }
 
+// 페이지 초기화 및 이벤트 설정
 $(document).ready(function () {
     let isAddSchedule = false; // 상태 변수 추가
 
@@ -105,20 +140,19 @@ $(document).ready(function () {
             }
         });
     });
+
+    // 스케줄 데이터 가져오기
+    fetchSchedules();
 });
 
 // 달력 초기화 함수 (예시)
 function initCalendar() {
-    // 여기에서 달력 초기화 로직을 작성합니다. 예를 들어, `calendarpage.js`에서 작성한 달력 초기화 코드들을 다시 실행합니다.
     console.log('Calendar is initialized');
-    // 달력 관련 JavaScript 코드 추가
-    // 예: loadCalendarData(), renderCalendar() 등
 }
 
 // 외부에서 호출할 수 있는 subcalendar 업데이트 함수
 window.updateSubCalendar = function (date) {
     localStorage.setItem("selectedDate", date); // 선택된 날짜를 localStorage에 저장
     console.log("Updating Sub Account with date:", date); // 디버깅용 로그
-    updateAccountBook(date);
     updateSchedules(date);
 };
