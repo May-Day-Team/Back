@@ -2,6 +2,7 @@ package org.aba2.calendar.common.domain.accountBook.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.UserSession;
+import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.accountBook.dto.AccountBookFormRequest;
 import org.aba2.calendar.common.domain.accountBook.service.AccountBookService;
 import org.aba2.calendar.common.domain.user.model.User;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/acctBk")
+@RequestMapping("/api/accountbook")
 @RequiredArgsConstructor
 public class AccountBookApiController {
 
@@ -26,7 +27,7 @@ public class AccountBookApiController {
 //    }
     // 생성/수정-Post (여러 개의 AccountBook 저장)
     @PostMapping("/save")
-    public void saveAccountBook(
+    public Api<String> saveAccountBook(
             @UserSession User user,
             @RequestBody List<AccountBookFormRequest> formList) {
 
@@ -34,6 +35,8 @@ public class AccountBookApiController {
         for (AccountBookFormRequest form : formList) {
             accountBookService.handleAcctBookSaveOrUpdate(form, user.getId());
         }
+
+        return Api.OK("가계부에 저장 완료");
     }
 
     // 삭제

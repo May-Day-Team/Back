@@ -3,7 +3,9 @@ package org.aba2.calendar.common.domain.accountBook.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.aba2.calendar.common.domain.accountBook.model.enums.IncomeExpense;
@@ -13,9 +15,9 @@ import java.time.LocalDate;
 @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AccountBookFormRequest {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "설명은 필수 항목입니다")
