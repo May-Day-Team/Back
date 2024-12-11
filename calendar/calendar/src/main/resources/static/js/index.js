@@ -42,7 +42,7 @@ const renderCalendar = () => {
     for (let i = 1; i <= lastDateofMonth; i++) {
         let isSelected = i === selectedDay ? "active" : "";
         let formattedDate = `${currYear}-${String(currMonth + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
-        let scheduleColors = dummySchedules[formattedDate] || [];
+        let scheduleColors = scheduleData[formattedDate] || [];  // dummySchedules → scheduleData
         let limitedScheduleColors = scheduleColors.slice(0, 4); // 최대 4개로 제한
         let scheduleColorDivs = limitedScheduleColors.map(schedule => `<div class="schedule-color" style="background-color: ${schedule.color};"></div>`).join("");
         liTag += `<li class="${isSelected}" data-month="${currMonth}" data-year="${currYear}" data-day="${i}">
@@ -83,7 +83,7 @@ const renderCalendar = () => {
             localStorage.setItem("selectedDate", formattedDate);
 
             if (window.updateSubCalendar) {
-                window.updateSubCalendar(formattedDate);
+                window.updateSubCalendar(formattedDate);  // 메인 페이지의 updateSubCalendar 호출
             }
         });
     });
@@ -100,7 +100,7 @@ const resetDate = () => {
 
     // 오늘 날짜로 subaccount 업데이트 함수 호출
     if (window.updateSubCalendar) {
-        window.updateSubCalendar(todayFormattedDate);
+        window.updateSubCalendar(todayFormattedDate);  // 메인 페이지의 updateSubCalendar 호출
     }
 };
 
@@ -134,10 +134,7 @@ prevNextIcon.forEach(icon => {
         const formattedDate = `${currYear}-${String(currMonth + 1).padStart(2, "0")}-01`;
         localStorage.setItem("selectedDate", formattedDate);
         if (window.updateSubCalendar) {
-            window.updateSubCalendar(formattedDate);
+            window.updateSubCalendar(formattedDate);  // 메인 페이지의 updateSubCalendar 호출
         }
     });
 });
-
-
-
