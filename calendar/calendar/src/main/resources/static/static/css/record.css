@@ -1,0 +1,167 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #F6F5F0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    max-height: 850px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 2.5px 3.5px 15px -2px #babebc;
+    padding: 20px;
+    padding-bottom: 50px;
+    background-color: #fff;
+    text-align: center;
+    font-family: "Roboto", sans-serif; /* Apply Roboto font */
+    box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
+}
+
+.header {
+    width: 100%;
+    max-width: 1200px;
+    max-height: 45px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* 좌우에 배치 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+
+.left-span {
+    margin-left: 10px;
+}
+
+.right-span {
+    margin-right: 20px;
+    position: relative; /* 부모 요소 기준으로 하부 영역 포지셔닝 */
+    display: flex;
+    gap: 30px; /* 메뉴 간의 간격 설정 */
+    font-size: 20px;
+}
+
+.menu-item {
+    position: relative;
+    cursor: pointer;
+    padding: 5px 10px; /* 메뉴 아이템 패딩 설정 */
+}
+
+.menu-item:hover .submenu {
+    display: block; /* 마우스를 올렸을 때 하부 영역 보이기 */
+}
+
+.submenu {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    top: 100%; /* 부모 요소의 아래에 위치 */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2.5px 3.5px 15px -2px #babebc;
+    padding: 10px;
+    z-index: 1000; /* 하부 영역을 위로 올리기 */
+    min-width: 100%; /* 메뉴 아이템의 너비에 맞추기 */
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 */
+    width: fit-content; /* 부모 메뉴의 너비에 맞추기 */
+}
+
+.submenu div {
+    padding: 5px 10px;
+}
+
+.maincontent {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    gap: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.journal-list {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    overflow-y: auto;
+}
+
+.journal-list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#entries {
+    list-style-type: none;
+    padding: 0;
+}
+
+#entries li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.journal-editor {
+    flex: 3;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 0 10px 10px 0;
+    border-left: 2px solid #ddd;
+}
+
+.journal-editor h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#journalTitle {
+    flex: 2;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#journalDate {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#journalContent {
+    width: 100%;
+    height: 45vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #808080;
+}

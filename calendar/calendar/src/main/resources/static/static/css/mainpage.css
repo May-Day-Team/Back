@@ -1,0 +1,233 @@
+/* 기본 스타일 설정 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #F6F5F0;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    max-height: 850px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 2.5px 3.5px 15px -2px #babebc;
+    padding: 20px;
+    padding-bottom: 50px;
+    background-color: #fff;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.header {
+    width: 100%;
+    max-width: 1200px;
+    max-height: 45px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-span {
+    margin-left: 10px;
+}
+
+.right-span {
+    margin-right: 20px;
+    position: relative;
+    display: flex;
+    gap: 30px;
+    font-size: 20px;
+}
+
+.menu-item {
+    position: relative;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2.5px 3.5px 15px -2px #babebc;
+    padding: 10px;
+    z-index: 1000;
+    min-width: 100%;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.submenu div {
+    padding: 5px 10px;
+}
+
+.maincontent {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+/*---메인화면 좌측 캘린더 화면---*/
+.mainleft {
+    flex: 2 0 0; /* 비율 고정 (좌측은 2/3 차지) */
+    background-color: #F6F5F0;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    height: 100%;
+    overflow: hidden;
+}
+
+.mainleft .calendar {
+    width: 100%;
+    height: 100%;
+}
+
+.calendar * {
+    max-width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+}
+
+/*---메인화면 우측 카테고리---*/
+.mainright {
+    flex: 1 1 0; /* 비율 고정 (우측은 1/3 차지) */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    border-radius: 20px;
+    max-height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto; /* 스크롤 활성화 */
+}
+
+/*---메인화면 우측 카테고리---*/
+.mainright .subcalendar, .mainright .subaccount {
+    flex: 1 1 auto; /* 크기를 균등하게 나눔 */
+    aspect-ratio: 1 / 1; /* 1:1 비율 설정 */
+    background-color: #f6f5f0;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 부모의 너비를 따라감 */
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+/* mainright 내부의 두 요소 간 간격 */
+.mainright .subcalendar + .subaccount {
+    margin-top: 20px; /* 두 블록 사이의 간격 설정 */
+}
+
+/* 서브캘린더 및 서브어카운트 제목 스타일 */
+.subaccount h4, .subcalendar h4 {
+    color: #333;
+    margin: 0;
+    position: relative; /* 부모 컨테이너에 상대적으로 배치 */
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* 리스트 스타일 */
+.account-list, .schedule-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.account-item, .schedule-item {
+    display: flex;
+    width: 300px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    justify-content: space-between;
+}
+
+.account-item:last-child, .schedule-item:last-child {
+    border-bottom: none;
+}
+
+.account-place {
+    font-weight: bold;
+    text-align: left;
+}
+
+.account-amount {
+    color: #007BFF;
+    text-align: right;
+}
+
+/* Schedule color styles for mainpage */
+.maincontent .schedule-color {
+    width: 60px !important;
+    height: 20px !important;
+    border-radius: 10%;
+    margin-right: 10px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+}
+
+/* 스크롤바 스타일 */
+.mainright::-webkit-scrollbar, .mainright .subcalendar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.mainright::-webkit-scrollbar-thumb, .mainright .subcalendar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.mainright::-webkit-scrollbar-track, .mainright .subcalendar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mainright {
+    scrollbar-width: thin; /* Firefox 스크롤바 */
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
