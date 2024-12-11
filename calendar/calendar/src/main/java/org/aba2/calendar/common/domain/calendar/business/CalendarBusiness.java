@@ -18,6 +18,7 @@ import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Business
@@ -47,12 +48,16 @@ public class CalendarBusiness {
         var groupSchedules = calendarService.getGroupScheduleList(userId);
 
         // 두 일정을 합쳐 반환
-        var allSchedules = Stream.concat(personalSchedules.stream(), groupSchedules.stream())
+        return Stream.concat(personalSchedules.stream(), groupSchedules.stream())
                 .map(calendarConverter::toResponse)
                 .toList();
-        return allSchedules;
+
     }
 
+    public Map<String, List<Map<String, String>>> getMainScheduleListForFrontend(String userId) {
+        var allSchedules = getMainScheduleList(userId);
+        return calendarConverter.convertToFrontendFormat(allSchedules);
+    }
 
 
     //개인 스케줄 등록
