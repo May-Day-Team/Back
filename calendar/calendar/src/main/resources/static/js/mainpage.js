@@ -21,7 +21,7 @@ async function fetchAccountData(date) {
 // 서버에서 일정 데이터를 가져오는 함수
 async function fetchScheduleData(date) {
     try {
-        const response = await fetch(`/api/schedules/${date}`);
+        const response = await fetch(`/api/calendar`);
         if (data.result.result_code == 200) {
             throw new Error('Failed to fetch schedule data');
         }
