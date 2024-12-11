@@ -38,6 +38,7 @@ public class CalendarBusiness {
 
     // 메인 스케줄 조회 (개인 + 그룹 일정 합치기)
     public List<CalendarResponse> getMainScheduleList(String userId) {
+        //todo 예외처리
 
         // 개인 일정 조회
         var personalSchedules = calendarService.getPersonalScheduleList(userId);

@@ -19,3 +19,4 @@ public class CalendarGroupRegisterRequest extends BaseCalendarRequest{
     private String groupName;
 
 }
+
