@@ -12,7 +12,7 @@ public class AccountBookConverter {
     // AccountBookFormRequest -> AccountBookEntity 변환
     public AccountBookResponse toEntity(AccountBookFormRequest request) {
         return AccountBookResponse.builder()
-                .accountBookId(request.getAccountBookId())
+                .accountBookId(request.getId())
                 .description(request.getDescription())
                 .incomeExpense(IncomeExpense.get(request.getIncomeExpense()))
                 .amount(request.getAmount())
@@ -23,7 +23,7 @@ public class AccountBookConverter {
     // AccountBookEntity -> AccountBookResponse 변환
     public AccountBookResponse toResponse(AccountBookEntity entity) {
         return AccountBookResponse.builder()
-                .accountBookId(entity.getAccountBookId())
+                .accountBookId(entity.getId())
                 .description(entity.getDescription())
                 .incomeExpense(entity.getIncomeExpense())
                 .amount(entity.getAmount())
