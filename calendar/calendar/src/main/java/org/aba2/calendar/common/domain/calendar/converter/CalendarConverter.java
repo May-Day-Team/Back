@@ -16,6 +16,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Converter
 public class CalendarConverter {
@@ -118,6 +122,19 @@ public class CalendarConverter {
     }
 
 
+
+    public Map<String, List<Map<String, String>>> convertToFrontendFormat(List<CalendarResponse> schedules) {
+        return schedules.stream()
+                .collect(Collectors.groupingBy(
+                        schedule -> schedule.getStartDate().toString(),
+                        Collectors.mapping(schedule -> {
+                            Map<String, String> scheduleMap = new HashMap<>();
+                            scheduleMap.put("color", schedule.getColor().toString());
+                            scheduleMap.put("title", schedule.getTitle());
+                            return scheduleMap;
+                        }, Collectors.toList())
+                ));
+    }
 
 
 

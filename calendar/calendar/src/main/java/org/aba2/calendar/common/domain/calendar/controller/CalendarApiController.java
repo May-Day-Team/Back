@@ -13,6 +13,7 @@ import org.aba2.calendar.common.domain.user.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/calendar")
@@ -24,12 +25,12 @@ public class CalendarApiController {
 
     //전체 스케줄 조회
     @GetMapping
-    public Api<List<CalendarResponse>> getMainScheduleList(
+    public Api<Map<String, List<Map<String, String>>>> getMainScheduleListForFrontend(
             @UserSession User user
     ){
         log.debug("Fetching main schedule list for user: {}", user.getId());
 
-        return Api.OK(calendarBusiness.getMainScheduleList(user.getId()));
+        return Api.OK(calendarBusiness.getMainScheduleListForFrontend(user.getId()));
     }
 
     //개인 캘린더 조회
@@ -64,24 +65,6 @@ public class CalendarApiController {
         Api<CalendarResponse> response = Api.OK(calendarBusiness.register(req, user));
         return ResponseEntity.ok(response);
 
-//        try {
-//            // 정상적으로 요청이 처리되었을 때
-//            CalendarResponse response = calendarBusiness.register(req, user);
-//            return ResponseEntity.ok(Api.OK(response));
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//            // ApiException 발생 시, 에러 코드와 설명을 포함하여 응답을 생성
-//            Api<?> errorResponse = Api.ERROR(e.getErrorCodeIfs());
-//            // ResponseEntity로 변환할 때, 제네릭 타입을 Api<CalendarResponse>로 변경
-//            return ResponseEntity.badRequest().body((Api<CalendarResponse>) errorResponse);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            // 일반적인 예외 발생 시, 에러 코드와 설명을 포함하여 응답을 생성
-//            Api<?> errorResponse = Api.ERROR(CalendarErrorCode.UNKNOWN_ERROR);
-//            // ResponseEntity로 변환할 때, 제네릭 타입을 Api<CalendarResponse>로 변경
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body((Api<CalendarResponse>) errorResponse);
-//        }
     }
 
 
@@ -158,10 +141,6 @@ public class CalendarApiController {
         calendarBusiness.deleteGroupCalendar(calId, req.getGroupId(), user);
         return ResponseEntity.ok(null);
     }
-
-
-
-
 
 
 
