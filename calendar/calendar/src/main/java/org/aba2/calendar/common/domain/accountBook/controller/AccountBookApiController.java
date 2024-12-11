@@ -33,7 +33,7 @@ public class AccountBookApiController {
             log.info("Save AccountBook date:{} userID:{}", form.getDate(), user.getId());
             accountBookBusiness.saveAccountBookResponse(user, form);
         }
-        return Api.OK("AccountBook saved successfully");
+        return Api.OK("가계부에 저장 완료");
     }
 
     // 삭제

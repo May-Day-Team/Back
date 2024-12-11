@@ -108,8 +108,6 @@ public class AccountBookService {
         // 가계부 삭제 권한(작성자)여부 확인
         validateUserAuthorization(userId, entity);
 
-        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getId());
-
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());
 
