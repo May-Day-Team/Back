@@ -13,6 +13,8 @@ import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/record")
@@ -20,6 +22,14 @@ import org.springframework.web.bind.annotation.*;
 public class RecordApiController {
 
     private final RecordBusiness recordBusiness;
+
+    @GetMapping
+    public Api<List<RecordResponse>> getRecordList(
+            @UserSession User user
+    ) {
+        return Api.OK(recordBusiness.getRecordList(user.getId()));
+    }
+
 
     // 생성/수정-Post
     @PostMapping("/save")

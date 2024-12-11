@@ -2,7 +2,6 @@ package org.aba2.calendar.common.domain.record.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.aba2.calendar.common.domain.accountBook.model.enums.IncomeExpense;
 import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 
@@ -10,10 +9,10 @@ import org.aba2.calendar.common.exception.ApiException;
 @AllArgsConstructor
 public enum Weather {
 
-    SUNNY("Sunny"),
-    RAINY("Rainy"),
-    CLOUDY("Cloudy"),
-    SNOWY("Snowy");
+    SUN("Sun"),
+    RAIN("Rain"),
+    CLOUD("Cloud"),
+    SNOW("Snow");
 
     private final String weather;
 

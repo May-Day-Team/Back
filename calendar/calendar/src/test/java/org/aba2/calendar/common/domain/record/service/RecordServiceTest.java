@@ -50,16 +50,16 @@ class RecordServiceTest {
 //                    .build();
 //            recordService.handleRecordSaveOrUpdate(recordFormRequest, "sjhoon1212!");
 //        }
-        for(int i=0; i<10; i++){
+        for(int i=0; i<100; i++){
             LocalDate date = LocalDate.now().plusDays(i);
             RecordFormRequest recordFormRequest = RecordFormRequest.builder()
                     .createAt(date)
                     .title("Title"+i)
                     .content("Content"+i)
-                    .weather("Sunny")
+                    .weather("Sun")
                     .createAt(date)
                     .build();
-            recordService.handleRecordSaveOrUpdate(recordFormRequest, "kkkkkk999!");
+            recordService.handleRecordSaveOrUpdate(recordFormRequest, "testUser99");
         }
     }
 

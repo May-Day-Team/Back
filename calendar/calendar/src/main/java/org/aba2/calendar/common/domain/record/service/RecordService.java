@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.domain.record.db.RecordRepository;
 import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
+import org.aba2.calendar.common.domain.record.dto.RecordResponse;
 import org.aba2.calendar.common.domain.record.model.RecordEntity;
 import org.aba2.calendar.common.domain.record.model.RecordId;
 import org.aba2.calendar.common.domain.record.model.enums.Weather;
@@ -12,10 +13,13 @@ import org.aba2.calendar.common.domain.user.service.UserService;
 import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +29,14 @@ public class RecordService {
     private final UserService userService;
 
     // 일기 리스트 조회 - 페이지
-    public Page<RecordEntity> getRecordList(String userId, int page) {
-        Pageable pageable = PageRequest.of(page, 10); // 페이지네이션만 설정
-        return recordRepository.findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(userId, pageable);
+//    public Page<RecordEntity> getRecordList(String userId, int page) {
+//        Pageable pageable = PageRequest.of(page, 10);
+//        return recordRepository.findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(userId, pageable);
+//    }
+
+    public List<RecordEntity> getRecordList(String userId){
+        return recordRepository.findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(userId)
+                .orElseThrow(() -> new ApiException(RecordErrorCode.RECORD_NOT_FOUND, "일기 목록이 없습니다"));
     }
 
     // 생성/수정 핸들

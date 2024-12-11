@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RecordRepository extends JpaRepository<RecordEntity, RecordId> {
     boolean existsByRecordId(RecordId recordId);
     Optional<RecordEntity> findByRecordId(RecordId recordId);
-    Page<RecordEntity> findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(String userId, Pageable pageable);
+//    Page<RecordEntity> findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(String userId, Pageable pageable);
+    Optional<List<RecordEntity>> findAllByRecordId_UserIdOrderByRecordId_CreateAtDesc(String userId);
 }
