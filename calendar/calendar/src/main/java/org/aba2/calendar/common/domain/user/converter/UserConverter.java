@@ -30,7 +30,7 @@ public class UserConverter {
                 .password(dto.getPassword())
                 .name(dto.getName())
                 .email(dto.getEmail())
-                .birthdate(dto.getBirthdate())
+                .birthdate(DateTimeConverter.convertToLocalDateTime(dto.getBirthdate()))
                 .phoneNumber(dto.getPhoneNumber())
                 .createAt(LocalDateTime.now())
                 .build()

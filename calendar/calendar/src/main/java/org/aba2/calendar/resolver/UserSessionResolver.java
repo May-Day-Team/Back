@@ -38,19 +38,18 @@ public class UserSessionResolver implements HandlerMethodArgumentResolver {
         // supportsParameter True 반환시 여기 실행
 
         // request context holder 에서 정보 찾아오기
-//        var requestContext = RequestContextHolder.getRequestAttributes();
-//
-//        assert requestContext != null;
-//        var userId = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
-//
-//        assert userId != null;
-//        var userEntity = userService.findByIdWithThrow(userId.toString());
+        var requestContext = RequestContextHolder.getRequestAttributes();
+
+        assert requestContext != null;
+        var userId = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+
+        assert userId != null;
+        var userEntity = userService.findByIdWithThrow(userId.toString());
 
         // 사용자 정보 세팅
         return User.builder()
-                .id("sjhoon1212!")
-                .password("aA123456$$$")
-                .name("jihoon")
+                .id(userEntity.getUserId())
+                .name(userEntity.getName())
                 .build()
                 ;
     }

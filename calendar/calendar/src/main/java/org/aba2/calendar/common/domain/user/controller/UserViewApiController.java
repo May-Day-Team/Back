@@ -26,6 +26,10 @@ public class UserViewApiController {
     public String calendar() {
         return "mainpage/calendarpage";
     }
+    @GetMapping("/group")
+    public String group() {
+        return "group/group";
+    }
     @GetMapping("/accountbook")
     public String accountbook() {
         return "accountbook/accountbook";
@@ -34,7 +38,26 @@ public class UserViewApiController {
     public String record() {
         return "record/record";
     }
-
+    @GetMapping("/addschedule")
+    public String addschedule() {
+        return "Calendar/addschedule";
+    }
+    @GetMapping("/index")
+    public String index() {
+        return "Calendar/index";
+    }
+    @GetMapping("/month")
+    public String month() {
+        return "Calendar/month";
+    }
+    @GetMapping("/week")
+    public String week() {
+        return "Calendar/week";
+    }
+    @GetMapping("/day")
+    public String day() {
+        return "Calendar/day";
+    }
 
 
 }

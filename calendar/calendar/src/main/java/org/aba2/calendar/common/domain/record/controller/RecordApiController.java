@@ -1,35 +1,54 @@
 package org.aba2.calendar.common.domain.record.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aba2.calendar.common.annotation.UserSession;
+import org.aba2.calendar.common.api.Api;
+import org.aba2.calendar.common.domain.record.business.RecordBusiness;
 import org.aba2.calendar.common.domain.record.dto.RecordFormRequest;
-import org.aba2.calendar.common.domain.record.service.RecordService;
+import org.aba2.calendar.common.domain.record.dto.RecordResponse;
 import org.aba2.calendar.common.domain.user.model.User;
-import org.springframework.http.ResponseEntity;
+import org.aba2.calendar.common.errorcode.RecordErrorCode;
+import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/record")
 @RequiredArgsConstructor
 public class RecordApiController {
 
-    private final RecordService recordService;
+    private final RecordBusiness recordBusiness;
 
     // 생성/수정-Post
     @PostMapping("/save")
-    public void saveRecord(
+    public Api<RecordResponse> saveRecord(
             @UserSession User user,
-            @RequestBody RecordFormRequest form) {
+            @RequestBody @Valid RecordFormRequest form
+    ) {
 
-        recordService.handleRecordSaveOrUpdate(form, user.getId());
+        log.info("Create/Update record createAt:{} userId{}", form.getCreateAt(), user.getId());
+
+        var response = recordBusiness.saveRecordResponse(user, form);
+
+        return Api.OK(response);
     }
 
     // 삭제
-    @DeleteMapping
-    public void deleteRecord(
+    @DeleteMapping("/delete")
+    public Api<String> deleteRecord(
             @UserSession User user,
-            @RequestBody RecordFormRequest form) {
+            @RequestBody RecordFormRequest form
+    ) {
+        if (form.getCreateAt() == null) {
+            throw new ApiException(RecordErrorCode.VALIDATION_ERROR, "해당 일기는 존재하지 않습니다");
+        }
 
-        recordService.deleteRecord(user.getId(), form.getCreateAt());
+        log.info("Deleting Record createAt:{} userId{}", form.getCreateAt(),user.getId());
+
+        var response = recordBusiness.deleteRecordResponse(user, form);
+
+        return Api.OK(response);
     }
 }

@@ -50,6 +50,16 @@ public class FriendApiController {
         return Api.OK(response);
     }
 
+    // 차단 리스트
+    @GetMapping("/block/list")
+    public Api<List<FriendResponse>> getBlockList(
+            @UserSession User user
+    ) {
+        var response = friendBusiness.getBlockList(user);
+
+        return Api.OK(response);
+    }
+
 
     // 자신에게 초대를 보낸 리스트 출력
     @GetMapping("/invitation/list")

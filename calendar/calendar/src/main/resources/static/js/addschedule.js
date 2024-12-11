@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('#close-modal, #cancel-schedule').click(function() {
         // mainleft에 month.html 로드 (단, 이미 로드된 상태에서는 다시 로드하지 않음)
         if ($('#mainleft').children().length === 0) {
-            $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
+            $('#mainleft').load('/view/month', function(response, status, xhr) {
                 if (status == "error") {
                     console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
                 }
@@ -39,16 +39,15 @@ $(document).ready(function() {
         const c_starttime = $('#c_starttime').val();
         const c_endtime = $('#c_endtime').val();
         const c_alarm = $('#c_alarm').val();
-        const c_color = $('#c_color').val();
+        const c_color = $('#c_color').val().toUpperCase();
 
         const scheduleRequest = {
-            user_id: userId,  // 사용자 아이디 추가
             start_date: c_startdate,
             end_date: c_enddate,
             title: c_title,
             content: c_content,
             place: c_place,
-            repeat_yn: c_repeat,  // 선택된 요일 배열 추가
+            repeat_date: c_repeat,  // 선택된 요일 배열 추가
             start_time: c_starttime,
             end_time: c_endtime,
             ring_at: c_alarm,
@@ -58,7 +57,7 @@ $(document).ready(function() {
         console.log(scheduleRequest);
 
         try {
-            const response = await fetch('/schedule/add', {
+            const response = await fetch('/api/calendar/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -69,7 +68,7 @@ $(document).ready(function() {
             const data = await response.json();
             if (data.result.result_code == 200) {
                 console.log('Schedule added successfully:', data.result.result_description);
-                $('#mainleft').load('../Calendar/month.html', function(response, status, xhr) {
+                $('#mainleft').load('/view/month', function(response, status, xhr) {
                     if (status == "error") {
                         console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
                     }

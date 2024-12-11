@@ -7,9 +7,12 @@ import org.aba2.calendar.common.domain.accountBook.dto.AccountBookFormRequest;
 import org.aba2.calendar.common.domain.accountBook.dto.DateTotalDTO;
 import org.aba2.calendar.common.domain.accountBook.model.AccountBookEntity;
 import org.aba2.calendar.common.domain.accountBook.model.enums.IncomeExpense;
+import org.aba2.calendar.common.domain.record.model.RecordEntity;
 import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.aba2.calendar.common.domain.user.service.UserService;
+import org.aba2.calendar.common.errorcode.AccountBookErrorCode;
 import org.aba2.calendar.common.errorcode.ErrorCode;
+import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,11 +34,12 @@ public class AccountBookService {
     private final UserService userService;
 
     // UID+특정 날짜로 가계부 리스트 조회
-    public List<AccountBookEntity> findByUIDAndDateWithThrow(String userId, LocalDate date) {
-        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdDesc(userId, date)
+    public List<AccountBookEntity> getUIDAndDateWithThrow(String userId, LocalDate date) {
+        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdAsc(userId, date)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
     }
 
+    // UID로 가계부 리스트 조회 + 날짜별 그룹화 및 합산
     public Page<DateTotalDTO> getPagedDateTotals(String userId, int page) {
         // 모든 데이터 조회 (페이지네이션 없이)
         List<AccountBookEntity> accountBooks = acctBookRepository.findAllByUser_UserIdOrderByDateDesc(userId);
@@ -68,15 +72,16 @@ public class AccountBookService {
     // 생성/수정 핸들
     @Transactional
     public void handleAcctBookSaveOrUpdate(AccountBookFormRequest request, String userId) {
-        if (acctBookRepository.findById(request.getId()).isPresent()) {
-            updateAcctBook(request);
-        } else {
-            createAcctBook(request, userId);
+        if (request.getId()!=null && acctBookRepository.existsById(request.getId())) {
+            updateAcctBook(userId, request);
+        }
+        else {
+            createAcctBook(userId, request);
         }
     }
 
     // 생성하기
-    private void createAcctBook(AccountBookFormRequest request, String userId) {
+    private void createAcctBook(String userId, AccountBookFormRequest request) {
 
         // user객체 넣어줘야함
         UserEntity user = userService.findByIdWithThrow(userId);
@@ -96,15 +101,18 @@ public class AccountBookService {
     }
 
     // 수정하기
-    private void updateAcctBook(AccountBookFormRequest request) {
+    private void updateAcctBook(String userId, AccountBookFormRequest request) {
         // 기존 가계부 존재 여부 확인
-        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getId());
+        AccountBookEntity entity = findByAcctBookIdWithThrow(request.getId());
+
+        // 가계부 삭제 권한(작성자)여부 확인
+        validateUserAuthorization(userId, entity);
 
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());
 
         //기존 가계부의 필드 수정 - dirtyCheck
-        acctBook.updateAcctBook(
+        entity.updateAcctBook(
                 request.getDescription(),
                 request.getAmount(),
                 request.getDate(),
@@ -113,13 +121,27 @@ public class AccountBookService {
     }
 
     // 가계부 삭제
-    public void deleteAcctBook(Long id) {
-        acctBookRepository.delete(findByAcctBookIdWithThrow(id));
+    public void deleteAcctBook(String userId, Long accountBookId) {
+        // 기존 가계부 존재 여부 확인
+        AccountBookEntity entity = findByAcctBookIdWithThrow(accountBookId);
+        
+        // 가계부 삭제 권한(작성자)여부 확인
+        validateUserAuthorization(userId, entity);
+        
+        // 삭제
+        acctBookRepository.delete(findByAcctBookIdWithThrow(accountBookId));
     }
 
     // 특정 ID를 가진 가게부 '1개' 찾기
-    public AccountBookEntity findByAcctBookIdWithThrow(Long id) {
-        return acctBookRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 내역은 존재하지 않습니다."));
+    public AccountBookEntity findByAcctBookIdWithThrow(Long accountBookId) {
+        return acctBookRepository.findById(accountBookId)
+                .orElseThrow(() -> new ApiException(AccountBookErrorCode.ACCOUNT_BOOK_NOT_FOUND, "해당 가계부를 찾을 수 없습니다."));
+    }
+
+    // 권한 조회
+    private void validateUserAuthorization(String userId, AccountBookEntity entity) {
+        if (!entity.getUser().getUserId().equals(userId)) {
+            throw new ApiException(AccountBookErrorCode.UNAUTHORIZED_ACCESS, "권한이 없습니다.");
+        }
     }
 }

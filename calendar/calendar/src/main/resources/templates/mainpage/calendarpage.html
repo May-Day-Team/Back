@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayday - record your schedule</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../static/js/calendarpage.js"></script>
-    <link rel="stylesheet" href="../../static/css/calendarpage.css" />
-    <script src="../../static/js/friendswindow.js"></script>
-    <link rel="stylesheet" href="../../static/css/friendswindow.css" />
+    <script src="../../js/calendarpage.js"></script>
+    <link rel="stylesheet" href="../../css/calendarpage.css" />
+    <script src="../../js/friendswindow.js"></script>
+    <link rel="stylesheet" href="../../css/friendswindow.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -17,8 +17,8 @@
         <div class="header">
             <!-- 로고 -->
             <span class="left-span">
-                <a href="../mainpage/mayday.html" class="link">
-                    <img src="../../static/image/logo_mayday2.png" alt="Logo">
+                <a href="/view/mayday" class="link">
+                    <img src="../../image/logo_mayday2.png" alt="Logo">
                 </a>
             </span>
             <!-- 우측 상단 메뉴바 -->
@@ -27,9 +27,9 @@
                 <div class="menu-item">
                     Category
                     <div class="submenu" id="submenu1">
-                        <div onclick="window.location.href='../mainpage/calendarpage.html'">Calendar</div>
-                        <div onclick="window.location.href='../accountbook/accountbook.html'">AccountBook</div>
-                        <div onclick="window.location.href='../record/record.html'">Record</div>
+                        <div onclick="window.location.href='/view/calendar'">Calendar</div>
+                        <div onclick="window.location.href='/view/accountbook'">AccountBook</div>
+                        <div onclick="window.location.href='/view/record'">Record</div>
                     </div>
                 </div>
                 <div class="menu-item">
@@ -39,7 +39,7 @@
                     Community
                     <div class="submenu" id="submenu3">
                         <div id="friends-option">Friends</div> <!-- friends-option 클릭 시 모달 띄우기 -->
-                        <div onclick="window.location.href='../group/group.html'">Groups</div>
+                        <div onclick="window.location.href='/view/group'">Groups</div>
                         <div>Share</div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     Setting
                     <div class="submenu" id="submenu4">
                         <div>Setting</div>
-                        <a href="../login/login.html">Logout</a>
+                        <a href="/view/login">Logout</a>
                     </div>
                 </div>
             </span>

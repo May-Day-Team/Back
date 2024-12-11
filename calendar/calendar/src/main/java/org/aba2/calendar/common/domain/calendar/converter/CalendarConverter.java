@@ -36,9 +36,9 @@ public class CalendarConverter {
         var startDate = combineDateAndTime(req.getStartDate(), LocalTime.MIDNIGHT);
         var endDate = combineDateAndTime(req.getEndDate(), LocalTime.MIDNIGHT);
 
-        var startTime = combineDateAndTime(req.getStartDate(), req.getStartTime());
-        var endTime = combineDateAndTime(req.getEndDate(), req.getEndTime());
-        var ringAt = req.getRingAt() != null ? combineDateAndTime(req.getStartDate(), req.getRingAt().toLocalTime()) : null;
+        var startTime = combineDateAndTime(req.getStartDate(), convertTime(req.getStartTime()));
+        var endTime = combineDateAndTime(req.getEndDate(), convertTime(req.getEndTime()));
+        var ringAt = req.getRingAt() != null ? combineDateAndTime(req.getStartDate(), convertTime(req.getRingAt())) : null;
         Colors color = req.getColor() != null ? Colors.valueOf(req.getColor().toString()) : Colors.WHITE;
 
 
@@ -80,8 +80,8 @@ public class CalendarConverter {
                 .content(req.getContent())
                 .startDate(startDate.toLocalDate())
                 .endTime(endDate.toLocalTime())
-                .startTime(req.getStartTime())
-                .endTime(req.getEndTime())
+                .startTime(convertTime(req.getStartTime()))
+                .endTime(convertTime(req.getEndTime()))
                 .memorialYn("N")
                 .blockYn("N")
                 .memo("Null")
@@ -123,6 +123,10 @@ public class CalendarConverter {
 
     public LocalDateTime combineDateAndTime(LocalDate date, LocalTime time) {
         return LocalDateTime.of(date, time);
+    }
+
+    public LocalTime convertTime(String time) {
+        return LocalTime.parse(time);
     }
 
 

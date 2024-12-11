@@ -29,7 +29,7 @@ public class UserRegisterRequest {
 
 //    @NotBlank
     @NotNull
-    private LocalDateTime birthdate;
+    private String birthdate;
 
     @Email
     private String email;

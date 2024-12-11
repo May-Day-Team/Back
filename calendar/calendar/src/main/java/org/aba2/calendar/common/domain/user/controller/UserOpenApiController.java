@@ -29,6 +29,7 @@ public class UserOpenApiController {
     // 로그인
     @PostMapping("/login")
     public Api<UserResponse> login(
+            @Valid
             @RequestBody
             Api<UserLoginRequest> userLoginRequestApi,
             HttpServletResponse res
@@ -42,7 +43,7 @@ public class UserOpenApiController {
     // 회원가입
     @PostMapping("/join")
     public Api<UserResponse> register(
-//            @Valid
+            @Valid
             @RequestBody
             Api<UserRegisterRequest> userRegisterRequestApi
     ) {

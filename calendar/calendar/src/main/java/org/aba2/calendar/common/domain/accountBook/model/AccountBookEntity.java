@@ -7,8 +7,6 @@ import org.aba2.calendar.common.domain.user.model.UserEntity;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
