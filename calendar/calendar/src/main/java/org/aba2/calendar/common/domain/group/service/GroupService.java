@@ -9,6 +9,7 @@ import org.aba2.calendar.common.errorcode.ErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -20,11 +21,14 @@ public class GroupService {
 
     // 그룹 생성하기
     public GroupEntity create(String groupName, String url) {
-        return GroupEntity.builder()
+        var entity = GroupEntity.builder()
                 .groupId(UUID.randomUUID().toString())
                 .groupName(groupName)
-                .profileUrl(url) // TODO URL 기본 이미지 만들기
+                .profileUrl(url)
+                .createAt(LocalDateTime.now())
                 .build();
+
+        return groupRepository.save(entity);
     }
 
     // 그룹 찾기

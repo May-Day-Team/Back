@@ -6,6 +6,7 @@ import org.aba2.calendar.common.domain.groupuser.model.GroupUserEntity;
 import org.aba2.calendar.common.domain.groupuser.model.GroupUserId;
 import org.aba2.calendar.common.domain.groupuser.model.enums.GroupRole;
 import org.aba2.calendar.common.domain.groupuser.model.enums.GroupStatus;
+import org.aba2.calendar.common.domain.user.db.UserRepository;
 import org.aba2.calendar.common.errorcode.ErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,10 @@ import java.util.List;
 public class GroupUserService {
 
     private final GroupUserRepository groupUserRepository;
+    private final UserRepository userRepository;
 
     // 그룹 생성하기 (자동으로 권한 어드민)
-    public void initialization(String groupId, String userId) {
+    public GroupUserEntity initialization(String groupId, String userId) {
         var entity = GroupUserEntity.builder()
                 .groupId(groupId)
                 .userId(userId)
@@ -28,7 +30,7 @@ public class GroupUserService {
                 .build()
                 ;
 
-        groupUserRepository.save(entity);
+        return groupUserRepository.save(entity);
     }
 
     // 상태 변화
@@ -72,7 +74,14 @@ public class GroupUserService {
     }
 
     // 유저 초대하기
-    public GroupUserEntity invitationUser(GroupUserId groupUserId) {
+    public GroupUserEntity invitationUser(String groupId, String userId) {
+
+        var groupUserId = getGroupUserId(groupId, userId);
+
+        if (!userRepository.existsById(userId)) {
+            throw new ApiException(ErrorCode.BAD_REQUEST, "존재하지 않는 유저입니다.");
+        }
+
         // 이미 그룹에 존재하는지
         if (groupUserRepository.existsById(groupUserId)) {
             throw new ApiException(ErrorCode.BAD_REQUEST, "이미 초대한 유저입니다.");
@@ -81,8 +90,8 @@ public class GroupUserService {
 
         // 존재하지 않을 때 초대하기
         var newEntity = GroupUserEntity.builder()
-                .groupId(groupUserId.getGroupId())
-                .userId(groupUserId.getUserId())
+                .groupId(groupId)
+                .userId(userId)
                 .role(GroupRole.USER)
                 .status(GroupStatus.WAIT)
                 .build()

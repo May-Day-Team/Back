@@ -8,6 +8,7 @@ import org.aba2.calendar.common.domain.group.model.GroupUpdateRequest;
 import org.aba2.calendar.common.domain.group.service.GroupConverter;
 import org.aba2.calendar.common.domain.group.service.GroupService;
 import org.aba2.calendar.common.domain.groupuser.business.GroupUserBusiness;
+import org.aba2.calendar.common.domain.user.model.User;
 import org.aba2.calendar.common.errorcode.ErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 
@@ -21,9 +22,9 @@ public class GroupBusiness {
 
 
     // 그룹 생성하기
-    public GroupResponse create(GroupCreateRequest req) {
+    public GroupResponse create(GroupCreateRequest req, User user) {
         var groupName = req.getGroupName();
-        var userId = req.getUserId();
+        var userId = user.getId();
         var url = req.getProfileUrl();
 
         if (groupName == null || userId == null) {
@@ -35,12 +36,12 @@ public class GroupBusiness {
             url = "default.png"; // todo 기본 url
         }
 
-        var response = groupService.create(groupName, url);
+        var groupEntity = groupService.create(groupName, url);
 
         // 그룹을 생성할 때 방장으로 권한 설정
-        groupUserBusiness.initialization(response.getGroupId(), userId);
+        groupUserBusiness.initialization(groupEntity.getGroupId(), groupEntity.getGroupId());
 
-        return groupConverter.toResponse(response);
+        return groupConverter.toResponse(groupEntity);
     }
 
 
@@ -57,8 +58,6 @@ public class GroupBusiness {
 
     // 그룹 삭제하기
     public void deleteGroup(String groupId) {
-
-        // TODO 요청하는 사람 권한 확인하기
 
         groupService.deleteGroup(groupId);
 

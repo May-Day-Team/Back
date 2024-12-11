@@ -3,6 +3,7 @@ package org.aba2.calendar.common.domain.friend.business;
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
 import org.aba2.calendar.common.domain.friend.model.FriendResponse;
+import org.aba2.calendar.common.domain.friend.model.enums.FriendInvitation;
 import org.aba2.calendar.common.domain.friend.model.enums.FriendStatus;
 import org.aba2.calendar.common.domain.friend.service.FriendConverter;
 import org.aba2.calendar.common.domain.friend.service.FriendService;
@@ -25,28 +26,28 @@ public class FriendBusiness {
     // TODO 전화번호로 친구 추가 만들기
     // TODO 중복된 코드 처리하기
     // 친구 추가 요청
-    public FriendResponse invitationRequest(User user, String toUserId) {
-        if (Objects.isNull(user) || user.getId() == null || toUserId == null) {
+    public FriendResponse invitationRequest(User user, FriendInvitation req) {
+        if (Objects.isNull(user) || user.getId() == null || req.getToUserId() == null) {
             throw new ApiException(ErrorCode.NULL_POINT);
         }
 
         var fromUserId = user.getId();
 
-        var response = friendService.invitationRequest(fromUserId, toUserId);
+        var response = friendService.invitationRequest(fromUserId, req.getToUserId());
 
         return friendConverter.toResponse(response);
     }
 
     // TODO 중복된 코드 처리하기
     // 친구 추가 응답
-    public FriendResponse invitationResponse(User user, String toUserId) {
-        if (Objects.isNull(user) || user.getId() == null || toUserId == null) {
+    public FriendResponse invitationResponse(User user, FriendInvitation req) {
+        if (Objects.isNull(user) || user.getId() == null || req.getToUserId() == null) {
             throw new ApiException(ErrorCode.NULL_POINT);
         }
 
         var fromUserId = user.getId();
 
-        var response = friendService.invitationResponse(fromUserId, toUserId);
+        var response = friendService.invitationResponse(fromUserId, req.getToUserId());
 
         return friendConverter.toResponse(response);
     }

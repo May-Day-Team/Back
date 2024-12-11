@@ -1,3 +1,101 @@
+/* 그룹 모달 오버레이 스타일 */
+.create-group-modal {
+    display: none; /* 초기에는 모달을 숨깁니다 */
+    position: fixed; /* 화면을 고정 위치 */
+    z-index: 2000; /* 다른 내용 위에 표시 */
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%; /* 전체 화면 너비 */
+    height: 100%; /* 전체 화면 높이 */
+    overflow: auto; /* 필요 시 스크롤 추가 */
+    background-color: rgba(0,0,0,0.4); /* 배경 색상 */
+
+}
+@media (max-width: 768px) {
+    .create-window {
+        width: 90%;  /* 모바일에서는 너비를 더 좁게 설정 */
+    }
+}
+.create-window {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    border: 1.7px solid #000;
+    border-radius: 12px;
+    background-color: #fff;
+    color: #222;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+/* 모달 내부 그룹 프로필 스타일 */
+.create-window__div {
+    padding: 15px 25px;
+    justify-items: center;
+    align-items: center;
+}
+.create-window__img {
+    /* overflow-y: auto; */
+    max-height: 419px;
+    padding: 10px 30px;
+}
+.profile__thumbnail {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .1);
+}
+.profile__image {
+    border-radius: inherit;
+    vertical-align: top;
+}
+.profileChange {
+    position: absolute;
+    right: 3px;
+    bottom: -6px;
+}
+.profileChange > button {
+    background-image: url(https://ssl.pstatic.net/static/nng/resource/img/sp/pcw/sp_mw3.png);
+    background-size: 648px 626px;
+    background-repeat: no-repeat;
+    background-position: -608px -205px;
+    width: 36px;
+    height: 36px;
+    vertical-align: top;
+    border: 0;
+}
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+}
+/* 모달 내부 그룹 리스트 */
+.create-list__div {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-left: 1.5px solid #f0f0f0;
+
+}
+.create-list {
+    position: relative;
+    margin: 30px auto;
+    height: 330px;
+    width: 220px;
+    overflow: auto;
+    background-color: #babebc;
+
+}
+
 /* 전체 페이지 설정 */
 body {
     display: flex;
@@ -11,6 +109,13 @@ body {
 li, ul {
     text-decoration: none;
     list-style: none;
+}
+
+button {
+    border: 0;
+    border-radius: 0;
+    background: 0 0;
+    cursor: pointer;
 }
 
 /* 컨테이너 스타일 */
@@ -124,11 +229,12 @@ li, ul {
     display: block;
     position: relative;
     height: auto;
+    text-align: right;
 }
 .groupheader-icon .material-icons {
     position: relative;
     top: 0;
-    right: 0;
+    right: 10px;
 }
 .groupheader-body {
     align-items: center;
@@ -141,17 +247,24 @@ li, ul {
     /* 리스트의 추가 스타일 */
 }
 .grouplist-area {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
     align-items: center;
+    height: 100%;
+    text-align: center;
 }
 
 /* 그룹 리스트 바디 스타일 */
 .grouplist-body {
-    display: block;
     position: relative;
-    height: auto;
-    overflow: hidden;
-    overflow-y: scroll;
+    height: 350px;
+    width: 70%;
+}
+.grouplist-body__scroll {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
 }
 
 /* 그룹 버튼들 스타일 */
