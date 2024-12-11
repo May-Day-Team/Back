@@ -5,6 +5,7 @@ import org.aba2.calendar.common.annotation.UserSession;
 import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.friend.business.FriendBusiness;
 import org.aba2.calendar.common.domain.friend.model.FriendResponse;
+import org.aba2.calendar.common.domain.friend.model.enums.FriendInvitation;
 import org.aba2.calendar.common.domain.friend.model.enums.FriendStatus;
 import org.aba2.calendar.common.domain.user.model.User;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,9 @@ public class FriendApiController {
     @PostMapping("/invitation/request")
     public Api<FriendResponse> invitationRequest(
             @UserSession User user,
-            @RequestParam String toUserId
+            @RequestBody FriendInvitation req
     ) {
-        var response = friendBusiness.invitationRequest(user, toUserId);
+        var response = friendBusiness.invitationRequest(user, req);
 
         return Api.OK(response);
     }
@@ -33,9 +34,9 @@ public class FriendApiController {
     @PostMapping("/invitation/response")
     public Api<FriendResponse> invitationResponse(
             @UserSession User user,
-            @RequestParam String toUserId
+            @RequestBody FriendInvitation req
     ) {
-        var response = friendBusiness.invitationResponse(user, toUserId);
+        var response = friendBusiness.invitationResponse(user, req);
 
         return Api.OK(response);
     }

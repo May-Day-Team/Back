@@ -13,8 +13,6 @@ public class GroupCreateRequest {
 
     private String groupName;
 
-    private String userId;
-
     private String profileUrl;
 
 }

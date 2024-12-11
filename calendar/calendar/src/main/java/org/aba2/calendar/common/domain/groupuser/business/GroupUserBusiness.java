@@ -2,10 +2,14 @@ package org.aba2.calendar.common.domain.groupuser.business;
 
 import lombok.RequiredArgsConstructor;
 import org.aba2.calendar.common.annotation.Business;
+import org.aba2.calendar.common.domain.group.model.GroupEntity;
+import org.aba2.calendar.common.domain.groupuser.model.GroupUserEntity;
+import org.aba2.calendar.common.domain.groupuser.model.GroupUserInitialization;
 import org.aba2.calendar.common.domain.groupuser.model.GroupUserResponse;
 import org.aba2.calendar.common.domain.groupuser.model.enums.GroupStatus;
 import org.aba2.calendar.common.domain.groupuser.service.GroupUserConverter;
 import org.aba2.calendar.common.domain.groupuser.service.GroupUserService;
+import org.aba2.calendar.common.domain.user.model.User;
 
 import java.util.List;
 
@@ -18,15 +22,15 @@ public class GroupUserBusiness {
 
 
     // 방 만들 때 어드민으로 생성하기
-    public void initialization(String groupId, String userId) {
-        groupUserService.initialization(groupId, userId);
+    public GroupUserResponse initialization(String groupId, String userId) {
+        var response = groupUserService.initialization(groupId, userId);
+
+        return groupUserConverter.toResponse(response);
     }
 
     // 초대하기
-    public GroupUserResponse invitationUser(String groupId, String userId) {
-        var groupUserId = groupUserService.getGroupUserId(groupId, userId);
-
-        var response = groupUserService.invitationUser(groupUserId);
+    public GroupUserResponse invitationUser(GroupUserInitialization request, User user) {
+        var response = groupUserService.invitationUser(request.getGroupId(), request.getUserId());
 
         return groupUserConverter.toResponse(response);
     }
