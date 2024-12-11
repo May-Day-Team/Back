@@ -7,10 +7,10 @@ spring:
     hibernate:
   #      ddl-auto: validate
   datasource:
-    url: jdbc:mysql://localhost:13306/calendar?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/calendar?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: root1234!!
   thymeleaf:
     prefix: classpath:/templates/    # 템플릿 파일 경로
     suffix: .html                   # 기본 확장자

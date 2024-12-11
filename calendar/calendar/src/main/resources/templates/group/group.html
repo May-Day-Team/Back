@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +7,32 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../css/group.css" />
     <script src="../../js/group.js"></script>
-    <script src="../../js/friendswindow.js"></script>
     <link rel="stylesheet" href="../../css/friendswindow.css" />
+    <!-- 친구 · 그룹 창 js -->
+    <script src="../../js/friendswindow.js"></script>
+    <!-- 친구 수락/거절 창 js -->
+    <script src="../../js/friendaccept.js"></script>
+    <!-- 친구 차단 창 js -->
+    <script src="../../js/friendblock.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
 <body>
-    <div class="container">
-        <!-- 상단 카테고리 -->
-        <div class="header">
-            <!-- 로고 -->
-            <span class="left-span">
+<div class="container">
+    <!-- 상단 카테고리 -->
+    <div class="header">
+        <!-- 로고 -->
+        <span class="left-span">
                 <a href="/view/mayday" class="link">
                     <img src="../../image/logo_mayday2.png" alt="Logo">
                 </a>
             </span>
-            <!-- 우측 상단 메뉴바 -->
-            <span class="right-span">
+        <!-- 우측 상단 메뉴바 -->
+        <span class="right-span">
                 <!-- 카테고리 별 사항 -->
                 <div class="menu-item">
                     Category
                     <div class="submenu" id="submenu1">
-                        <div onclick="window.location.href='/view/calendar'">Calendar</div>
+                        <div onclick="window.location.href='/view/calendarpage'">Calendar</div>
                         <div onclick="window.location.href='/view/accountbook'">AccountBook</div>
                         <div onclick="window.location.href='/view/record'">Record</div>
                     </div>
@@ -51,48 +56,129 @@
                     </div>
                 </div>
             </span>
-        </div>
+    </div>
 
-        <!-- 메인 콘텐츠 -->
-        <div class="maincontent">
-            <!-- 1/3 영역 -->
-            <div class="groupheader-list">
-                <div class="groupheader">
-                    <h3>groupheader</h3>
-                    <!-- groupheader 콘텐츠 -->
+    <!-- 메인 콘텐츠 -->
+    <div class="maincontent">
+        <div class="groupheader-list">
+            <div class="groupheader">
+                <div class="groupheader-icon">
+                    <div id="expandsion" class="material-icons">menu</div>
                 </div>
-                <div class="grouplist">
-                    <h3>grouplist</h3>
-                    <!-- list 콘텐츠 -->
+                <div class="groupheader-body">
+                    <div class="create-window__img">
+                        <div class="profile__thumbnail">
+                            <img class="profile__image" id="out-profile-image" src="/image/img.gif" alt="" width="120" height="120">
+                            <div class="profileChange">
+                                <button type="button" aria-expanded="false" aria-haspopup="listbox" aria-controls="profile-image-layer" id="out-profile-change-button">
+                                    <span class="blind">이미지 수정</span>
+                                </button>
+                                <input type="file" id="out-profile-image-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="groupheader-body">
+                        <h3 id="groupheader">groupheader</h3> <!-- 그룹 이름 표시 -->
+                    </div>
                 </div>
             </div>
-            <!-- 3/3 영역 -->
-            <div class="groupcalendar" id="groupcalendar">
-                <!-- calendar 콘텐츠 -->
+            <div class="grouplist">
+                <div class="grouplist-area">
+                    <h3>grouplist</h3>
+                    <!-- list 콘텐츠 -->
+                    <div class="grouplist-body">
+                        <div class="grouplist-body__scroll">
+                            <div id="group-members">
+                                <!-- 그룹원의 아이디가 여기에 추가될 것 -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="group-buttons">
+                        <button class="create-group">그룹 생성하기</button>
+                        <button class="invite-group">그룹 초대하기</button>
+                        <button class="exit-group">그룹 나가기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 3/3 영역 -->
+        <div class="groupcalendar" id="groupcalendar">
+            <!-- calendar 콘텐츠 -->
+        </div>
+    </div>
+
+
+
+    <!---------------- 그룹 생성 모달 (숨겨져 있음) ---------------->
+    <div class="create-group-modal" id="create-group-modal">
+        <div class="create-window">
+            <div class="create-window__div">
+                <div class="create-window__img">
+                    <div class="profile__thumbnail">
+                        <img class="profile__image" id="profile-image" src="" alt="" width="120" height="120" />
+                        <div class="profileChange">
+                            <button type="button" aria-expanded="false" aria-haspopup="listbox" aria-controls="profile-image-layer" id="profile-change-button">
+                                <span class="blind">이미지 수정</span>
+                            </button>
+                            <input type="file" id="profile-image-input" accept="image/*" style="display: none;" />
+                        </div>
+                    </div>
+                </div>
+                <div class="group-name-span">
+                    <h4>그룹 이름</h4>
+                    <input class="group-name-input" type="text" />
+                </div>
+                <div class="search-text-span">
+                    <h4>그룹 인원 추가</h4>
+                    <input class="search-text-input" type="text" placeholder="아이디 또는 전화번호" id="search-input" />
+                    <!-- <p id="no-user-found" style="color: red; display: none;">없는 유저입니다.</p> -->
+                </div>
+                <div class="make-group-div">
+                    <button class="make-group" id="make-group">그룹 생성</button>
+                </div>
+            </div>
+            <div class="create-list__div">
+                <div class="create-list">
+                    <div class="group-list__user" id="group-list__me">
+
+                    </div>
+                    <div class="group-list__user" id="group-list__other-users">
+                        <!-- 검색된 사용자들이 여기에 추가됨 -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+
+
+
+    <!--------------- 친구 창 모달 (숨겨져 있음) ------------------>
     <div class="friends-modal-overlay" id="friends-modal-overlay">
         <div class="friends-window">
             <div class="friends-window__area">
                 <div class="friends-window__head">
-                    <div class="friends-plus"> 
-                        <div class="material-icons">person_add</div>    
+                    <div class="window-close">
+                        <div class="material-icons">close</div>
+                    </div>
+                    <div class="friends-plus">
+                        <div class="material-icons">person_add</div>
                     </div>
                     <div class="friends-search">
                         <div class="material-icons">search</div>
                     </div>
                 </div>
                 <div class="friends-plus-input-container">
-                </div>    
+                </div>
                 <div class="friends-search-input-container">
                 </div>
 
                 <div class="friends-window__body">
                     <div class="friends-online">
-                        <input class="friends-plus__text" type="text" placeholder="아이디 또는 전화번호" /> 
-                        <input class="friends-search__text" type="text" placeholder="" />   
+                        <input class="friends-plus__text" type="text" placeholder="아이디 또는 전화번호" />
+                        <input class="friends-search__text" type="text" placeholder="" />
+                        <!-- 친구 목록 부분 -->
                         <div class="friends-online__bar">
                             <div class="friends-online__count"></div>
                             <li class="friendsGawEI">친구</li>
@@ -101,18 +187,60 @@
                         <div class="online-list">
                         </div>
                     </div>
-                    
-                    <div class="friends-waiting">
-                        <span id="prev" class="material-icons">chevron_left</span>
-                        <span id="next" class="material-icons">chevron_right</span>
-                        <div class="friends-waiting__list"></div>
+
+                    <!-- 그룹 목록 부분 -->
+                    <div class="head-group">
+                        <div class="head-group__bar">
+                            <div class="head-group__null"></div>
+                            <li class="friendsGawEI">그룹 목록</li>
+                            <div id="expandsion" class="material-icons">keyboard_arrow_left</div>
+                        </div>
+                        <div class="friends-group">
+                            <div class="group-list">
+                            </div>
+                        </div>
                     </div>
 
+
+                    <!-- 차단 목록 부분 -->
+                    <div class="head-block">
+                        <div class="head-block__bar">
+                            <div class="head-block__count"></div>
+                            <li class="friendsGawEI">차단 목록</li>
+                            <div id="expandsion" class="material-icons">keyboard_arrow_left</div>
+                        </div>
+                        <div class="block-list">
+                            <div class="block-bar">
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="friends-window__bg"></div>
+
+                    <div class="friends-waiting">
+                        <span id="prev" class="left material-icons">chevron_left</span>
+                        <div class="friends-waiting__list" id="friends-waiting-list">
+                            <div class="friends-waiting__bar">
+                                <div class="friends-waiting-id"></div>
+                                <div class="friends-waiting__btn">
+                                    <div class="friends-waiting-accept">수락</div>
+                                    <div class="friends-waiting-refuse">거절</div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="next" class="right material-icons">chevron_right</span>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-    
+
+
+</div>
+
+
+
 </body>
 </html>
