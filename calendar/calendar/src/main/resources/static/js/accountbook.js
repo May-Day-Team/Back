@@ -114,57 +114,59 @@ $(document).ready(function() {
     });
 
     // 저장 버튼 클릭 이벤트
-    $(document).on('click', '.save-btn', async function() {
-        const rows = $('#accountTable tbody tr').not('.loaded-row').get(); // 불러온 데이터는 제외하고 새로운 데이터만 저장
+    $(document).on('click', '.save-btn', async function () {
+      const rows = $('#accountTable tbody tr').not('.loaded-row').get(); // 불러온 데이터는 제외하고 새로운 데이터만 저장
 
-        // 저장할 데이터가 없는 경우 리턴
-        if (rows.length === 0) {
-            return;
-        } 
+      if (rows.length === 0) {
+        alert('저장할 데이터가 없습니다!');
+        return;
+      }
 
-        rows.forEach(row => {
-            const date = $(row).find('.date-input').val();
-            const place = $(row).find('td:nth-child(2)').text();
-            const amountType = $(row).find('.amount-type').val();
-            const amount = $(row).find('.amount-input').val();
-            const parsedAmount = parseFloat(amount.replace(/,/g, '')) || 0;
-            const finalAmount = amountType === "-" ? -parsedAmount : parsedAmount;
+      const accountBookRequests = [];
 
-            if (date) {
-                if (!storedData[date]) {
-                    storedData[date] = [];
-                }
-                storedData[date].push({ place, amount: finalAmount });
-            }
+      rows.forEach((row) => {
+        const date = $(row).find('.date-input').val();
+        const place = $(row).find('td:nth-child(2)').text();
+        const amountType = $(row).find('.amount-type').val();
+        const amount = $(row).find('.amount-input').val();
+        const parsedAmount = parseInt(amount.replace(/,/g, '')) || 0;
+
+        accountBookRequests.push({
+          description: place,
+          income_expense: amountType,
+          amount: parsedAmount,
+          date: date,
+        });
+      });
+
+      const accountRequest = {
+        data: accountBookRequests,
+      };
+
+      try {
+        const response = await fetch('/api/accountbook/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(accountRequest.data),
         });
 
-        const accountRequest = {
-            data: storedData
-        };
-
-        try {
-            const response = await fetch('/accountbook/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(accountRequest)
-            });
-
-            const data = await response.json();
-            if (data.result.result_code == 200) {
-                console.log('Data saved successfully:', data.result.result_description);
-            } else {
-                alert('데이터 저장 실패: ' + data.result.result_description);
-            }  
-        } catch (error) {
-            console.error('Error during data saving:', error);
-            alert('데이터 저장 중 오류가 발생했습니다.');
+        const data = await response.json();
+        if (data.result.result_code == 200) {
+          alert('데이터 저장 성공');
+        } else {
+          alert('데이터 저장 실패');
         }
+      } catch (error) {
+        console.error('Error during data saving:', error);
+        alert('서버 오류');
+      }
 
-        updateDateList();
-        $('#accountTable tbody').empty(); // 오른쪽 내용 초기화
+      updateDateList();
+      $('#accountTable tbody').empty();
     });
+
 
     // 새로하기 버튼 클릭 이벤트
     $(document).on('click', '.clear-btn', function() {

@@ -35,7 +35,7 @@ public class AccountBookService {
 
     // UID+특정 날짜로 가계부 리스트 조회
     public List<AccountBookEntity> getUIDAndDateWithThrow(String userId, LocalDate date) {
-        return acctBookRepository.findAllByUser_UserIdAndDateOrderByAccountBookIdAsc(userId, date)
+        return acctBookRepository.findAllByUser_UserIdAndDateOrderByIdAsc(userId, date)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "해당 날짜엔 수입과 지출이 없습니다"));
     }
 
@@ -72,9 +72,10 @@ public class AccountBookService {
     // 생성/수정 핸들
     @Transactional
     public void handleAcctBookSaveOrUpdate(AccountBookFormRequest request, String userId) {
-        if (request.getAccountBookId()!=null && acctBookRepository.existsById(request.getAccountBookId())) {
+        if (request.getId()!=null && acctBookRepository.existsById(request.getId())) {
             updateAcctBook(userId, request);
-        } else {
+        }
+        else {
             createAcctBook(userId, request);
         }
     }
@@ -102,10 +103,12 @@ public class AccountBookService {
     // 수정하기
     private void updateAcctBook(String userId, AccountBookFormRequest request) {
         // 기존 가계부 존재 여부 확인
-        AccountBookEntity entity = findByAcctBookIdWithThrow(request.getAccountBookId());
+        AccountBookEntity entity = findByAcctBookIdWithThrow(request.getId());
 
         // 가계부 삭제 권한(작성자)여부 확인
         validateUserAuthorization(userId, entity);
+
+        AccountBookEntity acctBook = findByAcctBookIdWithThrow(request.getId());
 
         // +나 -문자열로 오기 때문에 이걸로 형변환을 해준다.
         IncomeExpense incomeExpense = IncomeExpense.get(request.getIncomeExpense());

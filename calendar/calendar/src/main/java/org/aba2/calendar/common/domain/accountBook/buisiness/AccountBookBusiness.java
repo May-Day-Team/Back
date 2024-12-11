@@ -38,7 +38,7 @@ public class AccountBookBusiness {
             throw new ApiException(ErrorCode.NULL_POINT);
         }
 
-        accountBookService.deleteAcctBook(user.getId(), request.getAccountBookId());
+        accountBookService.deleteAcctBook(user.getId(), request.getId());
 
         return "AccountBook deleted successfully";
     }

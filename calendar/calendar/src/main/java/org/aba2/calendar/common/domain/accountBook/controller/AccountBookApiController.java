@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/accountBook")
+@RequestMapping("/api/accountbook")
 @RequiredArgsConstructor
 public class AccountBookApiController {
 
@@ -42,7 +42,7 @@ public class AccountBookApiController {
             @UserSession User user,
             @RequestBody AccountBookFormRequest form
     ) {
-        if (form.getAccountBookId() == null) {
+        if (form.getId() == null) {
             throw new ApiException(RecordErrorCode.VALIDATION_ERROR, "해당 일기는 존재하지 않습니다");
         }
 
@@ -50,6 +50,6 @@ public class AccountBookApiController {
 
         var response = accountBookBusiness.deleteAccountBookResponse(user, form);
 
-        return Api.OK(response);
+        return Api.OK("삭제 완료");
     }
 }
