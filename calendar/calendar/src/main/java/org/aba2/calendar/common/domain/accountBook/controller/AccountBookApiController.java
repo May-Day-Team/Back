@@ -50,6 +50,6 @@ public class AccountBookApiController {
 
         var response = accountBookBusiness.deleteAccountBookResponse(user, form);
 
-        return Api.OK("삭제 완료");
+        return Api.OK(response);
     }
 }
