@@ -2,17 +2,16 @@ package org.aba2.calendar.common.domain.accountBook.service;
 
 import org.aba2.calendar.common.annotation.Converter;
 import org.aba2.calendar.common.domain.accountBook.dto.AccountBookFormRequest;
-import org.aba2.calendar.common.domain.accountBook.dto.AccountBookResponse;
+import org.aba2.calendar.common.domain.accountBook.dto.AccountBookDetailResponse;
 import org.aba2.calendar.common.domain.accountBook.model.AccountBookEntity;
 import org.aba2.calendar.common.domain.accountBook.model.enums.IncomeExpense;
-import org.aba2.calendar.common.domain.record.model.RecordEntity;
 
 @Converter
 public class AccountBookConverter {
     // AccountBookFormRequest -> AccountBookEntity 변환
-    public AccountBookResponse toEntity(AccountBookFormRequest request) {
-        return AccountBookResponse.builder()
-                .accountBookId(request.getId())
+    public AccountBookDetailResponse toEntity(AccountBookFormRequest request) {
+        return AccountBookDetailResponse.builder()
+                .id(request.getId())
                 .description(request.getDescription())
                 .incomeExpense(IncomeExpense.get(request.getIncomeExpense()))
                 .amount(request.getAmount())
@@ -21,9 +20,9 @@ public class AccountBookConverter {
     }
 
     // AccountBookEntity -> AccountBookResponse 변환
-    public AccountBookResponse toResponse(AccountBookEntity entity) {
-        return AccountBookResponse.builder()
-                .accountBookId(entity.getId())
+    public AccountBookDetailResponse toResponse(AccountBookEntity entity) {
+        return AccountBookDetailResponse.builder()
+                .id(entity.getId())
                 .description(entity.getDescription())
                 .incomeExpense(entity.getIncomeExpense())
                 .amount(entity.getAmount())

@@ -25,29 +25,29 @@ public class AccountBookViewApiController {
     private final AccountBookService accountBookService;
 
     //가계부 전체보기-특정 날짜의 손익 합산
-    @GetMapping
-    public String list(Model model,
-                       @UserSession User user,
-                       @RequestParam(value="page", defaultValue="0") int page) {
-
-        if (page < 0) {
-            throw new ApiException(AccountBookErrorCode.INVALID_PAGE_REQUEST, "페이지 번호는 0 이상이어야 합니다.");
-        }
-
-        Page<DateTotalDTO> dateTotals = accountBookService.getPagedDateTotals(user.getId(), page);
-        model.addAttribute("paging", dateTotals);
-        return "accountBook/list";
-    }
+//    @GetMapping
+//    public String list(Model model,
+//                       @UserSession User user,
+//                       @RequestParam(value="page", defaultValue="0") int page) {
+//
+//        if (page < 0) {
+//            throw new ApiException(AccountBookErrorCode.INVALID_PAGE_REQUEST, "페이지 번호는 0 이상이어야 합니다.");
+//        }
+//
+//        Page<DateTotalDTO> dateTotals = accountBookService.getPagedDateTotals(user.getId(), page);
+//        model.addAttribute("paging", dateTotals);
+//        return "accountBook/list";
+//    }
 
     //해당 날짜의 가계부 전부 보기
-    @GetMapping("/{date}")
-    public String detail(Model model,
-                       @UserSession User user,
-                       @PathVariable LocalDate date){
-        List<AccountBookEntity> list = accountBookService.getUIDAndDateWithThrow(user.getId(), date);
-
-        model.addAttribute("list", list);
-
-        return "accountBook/detail";
-    }
+//    @GetMapping("/{date}")
+//    public String detail(Model model,
+//                       @UserSession User user,
+//                       @PathVariable LocalDate date){
+//        List<AccountBookEntity> list = accountBookService.getUIDAndDateWithThrow(user.getId(), date);
+//
+//        model.addAttribute("list", list);
+//
+//        return "accountBook/detail";
+//    }
 }

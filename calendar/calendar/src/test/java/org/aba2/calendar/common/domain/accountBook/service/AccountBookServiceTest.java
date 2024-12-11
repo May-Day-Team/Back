@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,22 +24,29 @@ class AccountBookServiceTest {
     @Test
     void handleAcctBookSaveOrUpdate() {
         // UserId를 가정
-        String userId = "sjhoon1212!";
+        String userId = "testUser99";
 
         // 오늘 날짜부터 10일간
         LocalDate startDate = LocalDate.now();
 
-        // 10일간 10개씩 가계부 저장
+        Random random = new Random();  // Random 객체 생성
+
         for (int dayOffset = 0; dayOffset < 10; dayOffset++) {
             LocalDate date = startDate.plusDays(dayOffset); // 각 날짜 생성
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 2; i++) {
+                // 랜덤하게 수입/지출을 결정
+                String incomeExpense = random.nextBoolean() ? "+" : "-"; // 수입(+) 또는 지출(-) 랜덤 설정
+
+                // 랜덤한 금액 생성 (예: 1000~10000 사이의 금액)
+                int amount = (random.nextInt(10) + 1) * 1000;  // 1000 ~ 10000 사이의 금액
+
                 // AccountBookFormRequest 생성
                 AccountBookFormRequest request = AccountBookFormRequest.builder()
                         .description("Test Description " + i)
-                        .amount((i + 1) * 1000) // 예시로 금액을 설정
+                        .amount(amount)
                         .date(date)
-                        .incomeExpense(i % 2 == 0 ? "+" : "-") // 수입과 지출을 번갈아 설정
+                        .incomeExpense(incomeExpense) // 랜덤으로 수입/지출 설정
                         .build();
 
                 // save or update 처리

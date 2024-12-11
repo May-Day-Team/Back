@@ -7,11 +7,15 @@ import org.aba2.calendar.common.annotation.UserSession;
 import org.aba2.calendar.common.api.Api;
 import org.aba2.calendar.common.domain.accountBook.buisiness.AccountBookBusiness;
 import org.aba2.calendar.common.domain.accountBook.dto.AccountBookFormRequest;
+import org.aba2.calendar.common.domain.accountBook.dto.AccountBookDetailResponse;
+import org.aba2.calendar.common.domain.accountBook.dto.AccountBookTotalResponse;
+import org.aba2.calendar.common.domain.accountBook.service.AccountBookService;
 import org.aba2.calendar.common.domain.user.model.User;
 import org.aba2.calendar.common.errorcode.RecordErrorCode;
 import org.aba2.calendar.common.exception.ApiException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -21,6 +25,21 @@ import java.util.List;
 public class AccountBookApiController {
 
     private final AccountBookBusiness accountBookBusiness;
+    private final AccountBookService accountBookService;
+
+    // 해당 날짜에 작성한 가게부 리스트 반환
+    @GetMapping("/{date}")
+    @ResponseBody
+    public List<AccountBookDetailResponse> detail(@UserSession User user, @PathVariable LocalDate date) {
+        return accountBookBusiness.getAccountBookDetail(user.getId(), date);
+    }
+
+
+    // 날짜 역순으로 정렬된 지출, 수입 합산 리스트
+    @GetMapping("/list")
+    public List<AccountBookTotalResponse> accountBookList(@UserSession User user) {
+        return accountBookBusiness.getAccountBookList(user.getId());
+    }
 
     // 생성/수정-Post (여러 개의 AccountBook 저장)
     @PostMapping("/save")
@@ -48,8 +67,8 @@ public class AccountBookApiController {
 
         log.info("Deleting AccountBook createAt:{}", form.getDate());
 
-        var response = accountBookBusiness.deleteAccountBookResponse(user, form);
+        accountBookBusiness.deleteAccountBookResponse(user, form);
 
-        return Api.OK(response);
+        return Api.OK("가계부 삭제 완료");
     }
 }
