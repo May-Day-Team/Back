@@ -1,44 +1,48 @@
-// 더미 데이터
-const dummyData = {
-    '2024-12-01': [
-        { place: 'Restaurant', amount: 25000 },
-        { place: 'Cafe', amount: 8000 }
-    ],
-    '2024-12-02': [
-        { place: 'Supermarket', amount: 15000 },
-        { place: 'Bookstore', amount: 12000 }
-    ],
-    '2024-12-03': [
-        { place: 'Gym', amount: 20000 },
-        { place: 'Pharmacy', amount: 5000 }
-    ],
-    '2024-11-01': [
-        { place: 'Restaurant', amount: 25000 },
-        { place: 'Cafe', amount: 8000 }
-    ],
-    '2024-12-11': [
-        { place: '데이트', amount: 100000 },
-        { place: '대실', amount: 20000 }
-    ],
-    '2024-12-21': [
-        { place: '롤스킨', amount: 25000 },
-        { place: '피시방', amount: 8000 },
-        { place: '피시방', amount: 8000 },
-        { place: '피시방', amount: 8000 },
-        { place: '피시방', amount: 8000 },
-        { place: '피시방', amount: 8000 }
-    ]
-};
+// 초기 데이터 (서버에서 데이터 불러오기 전에 기본값을 설정)
+let accountData = {};  // 가계부 데이터
+let scheduleData = {};  // 일정 데이터
 
-// 날짜별 데이터 업데이트 함수
+// 서버에서 가계부 데이터를 가져오는 함수
+async function fetchAccountData(date) {
+    try {
+        const response = await fetch(`/api/account/${date}`);
+        if (data.result.result_code == 200) {
+            throw new Error('Failed to fetch account data');
+        }
+        accountData = await response.json();
+        updateAccountBook(date); // 가계부 업데이트
+    } catch (error) {
+        console.error('Error fetching account data:', error);
+        accountData = {}; // 데이터 가져오지 못하면 빈 객체로 처리
+        updateAccountBook(date);
+    }
+}
+
+// 서버에서 일정 데이터를 가져오는 함수
+async function fetchScheduleData(date) {
+    try {
+        const response = await fetch(`/api/schedules/${date}`);
+        if (data.result.result_code == 200) {
+            throw new Error('Failed to fetch schedule data');
+        }
+        scheduleData = await response.json();
+        updateSchedules(date); // 일정 업데이트
+    } catch (error) {
+        console.error('Error fetching schedule data:', error);
+        scheduleData = {}; // 데이터 가져오지 못하면 빈 객체로 처리
+        updateSchedules(date);
+    }
+}
+
+// 가계부 데이터 업데이트 함수
 function updateAccountBook(date) {
     const accountList = document.getElementById('account-list');
     accountList.innerHTML = '';
 
-    console.log(`Updating account book for date: ${date}`); // 디버깅용 로그
-    if (dummyData[date]) {
-        console.log(`Found data for date: ${date}`); // 디버깅용 로그
-        dummyData[date].forEach(entry => {
+    console.log(`Updating account book for date: ${date}`);
+    if (accountData[date]) {
+        console.log(`Found data for date: ${date}`);
+        accountData[date].forEach(entry => {
             const listItem = document.createElement('li');
             listItem.className = 'account-item';
 
@@ -55,59 +59,20 @@ function updateAccountBook(date) {
             accountList.appendChild(listItem);
         });
     } else {
-        console.log(`No data found for date: ${date}`); // 디버깅용 로그
+        console.log(`No data found for date: ${date}`);
         accountList.innerHTML = '<li>No entries for this date.</li>';
     }
 }
 
-// 더미 데이터
-const dummySchedules = {
-    '2024-12-01': [
-        { color: 'red', title: '회의' },
-        { color: 'blue', title: '운동' }
-    ],
-    '2024-12-02': [
-        { color: 'green', title: '저녁 약속' },
-        { color: 'purple', title: '프레젠테이션 준비' }
-    ],
-    '2024-12-03': [
-        { color: 'orange', title: '점심 약속' },
-        { color: 'gray', title: '산책' }
-    ],
-    '2024-11-01': [
-        { color: 'red', title: '회의' },
-        { color: 'blue', title: '운동' }
-    ],
-    '2024-12-11': [
-        { color: 'black', title: '데이트' },
-        { color: 'yellow', title: '외박' }
-    ],
-    '2024-12-21': [
-        { color: 'skyblue', title: '내전' },
-        { color: 'pink', title: '친구랑 피시방' },
-        { color: 'white', title: '외식' },
-        { color: 'pink', title: '친구랑 피시방' },
-        { color: 'white', title: '외식' },
-        { color: 'pink', title: '친구랑 피시방' },
-        { color: 'white', title: '외식' }
-    ]
-};
-
-function getSelectedDate() {
-    return localStorage.getItem("selectedDate") || getCurrentDate();
-}
-
-const selectedDate = getSelectedDate();
-console.log(`Selected Date: ${selectedDate}`); // 디버깅용 로그
-
+// 일정 업데이트 함수
 function updateSchedules(date) {
-    const schedules = dummySchedules[date];
-    console.log(`Schedules: ${JSON.stringify(schedules)}`); // 디버깅용 로그
+    const schedules = scheduleData[date] || []; // 일정이 없으면 빈 배열
+    console.log(`Schedules for ${date}: ${JSON.stringify(schedules)}`);
 
     const scheduleList = document.getElementById('schedule-list');
     scheduleList.innerHTML = '';
 
-    if (schedules) {
+    if (schedules.length > 0) {
         schedules.forEach(schedule => {
             const listItem = document.createElement('li');
             listItem.className = 'schedule-item';
@@ -129,12 +94,20 @@ function updateSchedules(date) {
     }
 }
 
-function getCurrentDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+// 날짜 업데이트를 위한 기본 함수
+function getSelectedDate() {
+    return localStorage.getItem("selectedDate") || getCurrentDate();
+}
+
+const selectedDate = getSelectedDate();
+console.log(`Selected Date: ${selectedDate}`);
+
+// 날짜 선택 시 스케줄과 가계부 업데이트
+function updateSubCalendar(date) {
+    localStorage.setItem("selectedDate", date); // 선택된 날짜를 localStorage에 저장
+    console.log("Updating Sub Account with date:", date);
+    fetchAccountData(date);  // 가계부 데이터 가져오기
+    fetchScheduleData(date); // 일정 데이터 가져오기
 }
 
 // 초기 로드 시 데이터 업데이트
@@ -169,11 +142,10 @@ $(document).ready(function() {
     });
 });
 
-
 // 외부에서 호출할 수 있는 subcalendar 업데이트 함수
 window.updateSubCalendar = function(date) {
     localStorage.setItem("selectedDate", date); // 선택된 날짜를 localStorage에 저장
     console.log("Updating Sub Account with date:", date); // 디버깅용 로그
-    updateAccountBook(date);
-    updateSchedules(date);
+    fetchAccountData(date);  // 가계부 데이터 가져오기
+    fetchScheduleData(date); // 일정 데이터 가져오기
 };
